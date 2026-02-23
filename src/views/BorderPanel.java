@@ -24,10 +24,10 @@ public class BorderPanel extends JPanel {
 		panelSuperior.setBackground(Color.blue);
 		add(panelSuperior, BorderLayout.NORTH);
 		
-		JLabel bienvenida = new JLabel("Bienvenido al juego");
-		bienvenida.setForeground(Color.white);
-		bienvenida.setFont(new Font("Verdana", Font.BOLD, 15));
-		panelSuperior.add(bienvenida);
+		JLabel saludo = new JLabel("Bienvenido al juego");
+		saludo.setForeground(Color.white);
+		saludo.setFont(new Font("Verdana", Font.BOLD, 15));
+		panelSuperior.add(saludo);
 		
 		//JButton b = new JButton("Hola");
 		//panelSuperior.add(b);
