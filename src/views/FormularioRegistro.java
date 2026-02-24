@@ -48,7 +48,7 @@ public class FormularioRegistro extends JFrame{
 	
 		panelComponentes.setBackground(new Color(0, 31, 84));
 		
-		String[] campos = {"Nombre","Apellido Paterno","Apellido Materno","Correo Electrónico","Teléfono",};
+		String[] campos = {"Nombre","Apellido Paterno","Apellido Materno","Correo Electrónico","Teléfono","Agrega una descripción general tuya"};
 		int numeroCampos = campos.length;
 		
 		for(int i = 0; i < numeroCampos; i++) {
