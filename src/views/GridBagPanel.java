@@ -54,8 +54,8 @@ public class GridBagPanel extends JPanel {
         usuario.setBackground(Color.WHITE);
 
         c.gridx = 1;
-        c.weightx = 1.0;  // 👈 importante
-        c.fill = GridBagConstraints.HORIZONTAL; // 👈 importante
+        c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
         add(usuario, c);
 
         // Error usuario
