@@ -2,6 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -23,7 +24,7 @@ public class FormularioRegistro extends JFrame{
 
 	public FormularioRegistro() {
 		
-		setSize(400, 400);
+		setSize(450, 450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setLocation(100,100);
 		//setBounds(100,100,500,500);
@@ -43,14 +44,24 @@ public class FormularioRegistro extends JFrame{
 	public void inicializarComponentes() {
 		
 		Color colorFondo = new Color(0, 31, 84);
+		Font fuenteNormal = new Font("Verdana", Font.BOLD, 12);
 		
+		// TITULO "FORMULARIO DE REGISTRO"
+		JPanel barraSuperior = new JPanel();
+		barraSuperior.setBackground(colorFondo);
+		barraSuperior.setLayout(new FlowLayout(FlowLayout.CENTER));
+
 		JLabel titulo = new JLabel("FORMULARIO DE REGISTRO");
-		titulo.setFont(new Font("Arial", Font.BOLD, 20));
-		add(titulo, BorderLayout.NORTH);
+		titulo.setForeground(Color.WHITE);
+		titulo.setFont(new Font("Verdana", Font.BOLD, 20));
+
+		barraSuperior.add(titulo);
+		add(barraSuperior, BorderLayout.NORTH);
 		
+		// FORMULARIO
 		JPanel panelComponentes = new JPanel();
 		panelComponentes.setLayout(new BoxLayout(panelComponentes, BoxLayout.Y_AXIS));
-		panelComponentes.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		panelComponentes.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 	
 		panelComponentes.setBackground(colorFondo);
 		
@@ -60,21 +71,43 @@ public class FormularioRegistro extends JFrame{
 		for(int i = 0; i < numeroCampos; i++) {
 			
 			if(campos[i].equals("Contraseña") || campos[i].equals("Confirmar Contraseña")) {
+				
+				JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT));
+				fila.setBackground(colorFondo);
+
 				JLabel contrasena = new JLabel(campos[i]);
+				
 				contrasena.setForeground(Color.WHITE);
+				contrasena.setFont(fuenteNormal);
+				
 				panelComponentes.add(contrasena);
 				
-				JPasswordField campoContrasena = new JPasswordField(10);
-				panelComponentes.add(campoContrasena);
+				JPasswordField campoContrasena = new JPasswordField(15);
+				campoContrasena.setFont(fuenteNormal);
+				
+				fila.add(contrasena);
+				fila.add(campoContrasena);
+				
+				panelComponentes.add(fila);
 				continue;
 			}
 			
+			JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			fila.setBackground(colorFondo);
+
 			JLabel etiqueta = new JLabel(campos[i]);
 			etiqueta.setForeground(Color.WHITE);
 			panelComponentes.add(etiqueta);
+			etiqueta.setFont(fuenteNormal);
 			
-			JTextField texto = new JTextField(10);
+			JTextField texto = new JTextField(15);
 			panelComponentes.add(texto);
+			texto.setFont(fuenteNormal);
+			
+			fila.add(etiqueta);
+			fila.add(texto);
+			
+			panelComponentes.add(fila);
 		}
 		
 		JLabel sexoUsuario = new JLabel("Sexo");
@@ -82,34 +115,53 @@ public class FormularioRegistro extends JFrame{
 		
 		panelComponentes.add(sexoUsuario);
 		
+		// PANEL DE OPCIÓN DE SEXO
+		JPanel panelSexo = new JPanel();
+		panelSexo.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelSexo.setBackground(colorFondo);
+		
 		JRadioButton hombre = new JRadioButton("Hombre");
 		JRadioButton mujer = new JRadioButton("Mujer");
 		JRadioButton noDecir = new JRadioButton("Prefiero no decirlo");
 		
-		hombre.setBackground(colorFondo);
+		hombre.setOpaque(false);
+		hombre.setFont(fuenteNormal);
 		hombre.setForeground(Color.WHITE);
 		
-		mujer.setBackground(colorFondo);
+		mujer.setOpaque(false);
+		mujer.setFont(fuenteNormal);
 		mujer.setForeground(Color.WHITE);
 		
-		noDecir.setBackground(colorFondo);
+		noDecir.setOpaque(false);
+		noDecir.setFont(fuenteNormal);
 		noDecir.setForeground(Color.WHITE);
 
 		ButtonGroup sexos = new ButtonGroup();
+		
 		sexos.add(hombre);
 		sexos.add(mujer);
 		sexos.add(noDecir);
 		
-		panelComponentes.add(hombre);
-		panelComponentes.add(mujer);
-		panelComponentes.add(noDecir);
+		panelSexo.add(hombre);
+		panelSexo.add(mujer);
+		panelSexo.add(noDecir);
+		
+		panelComponentes.add(panelSexo);
+		
+		JPanel panelTerminosYCondiciones = new JPanel();
+		panelTerminosYCondiciones.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		panelTerminosYCondiciones.setBackground(colorFondo);
 		
 		JRadioButton terminosYCondiciones = new JRadioButton("Acepto terminos y condiciones");
-		terminosYCondiciones.setBackground(colorFondo);
+		terminosYCondiciones.setOpaque(false);
 		terminosYCondiciones.setForeground(Color.WHITE);
+		terminosYCondiciones.setFont(fuenteNormal);
 		
-		panelComponentes.add(terminosYCondiciones);
+		panelTerminosYCondiciones.add(terminosYCondiciones);
 		
+		panelComponentes.add(panelTerminosYCondiciones);
+		
+		/*
 		JLabel carreraPersonaje = new JLabel("Elige tu carrera (tipo de personaje)");
 		carreraPersonaje.setForeground(Color.WHITE);
 		panelComponentes.add(carreraPersonaje);
@@ -147,20 +199,11 @@ public class FormularioRegistro extends JFrame{
 		dificultad.setPaintLabels(true);
 		
 		panelComponentes.add(dificultad);
+		*/
 		
 		JScrollPane scroll = new JScrollPane(panelComponentes);
+		scroll.setHorizontalScrollBar(null);
 		
 		add(scroll);
-		
-		add(panelComponentes);
 	}
-	
-	/*public void cargarFuente() {
-		
-		Font fuente = null;
-		
-		try {
-			
-		}
-	}*/
 }
