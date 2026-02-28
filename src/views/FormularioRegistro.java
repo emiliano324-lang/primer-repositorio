@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -65,7 +66,7 @@ public class FormularioRegistro extends JFrame{
 	
 		panelComponentes.setBackground(colorFondo);
 		
-		String[] campos = {"Nombre de Usuario","Correo Electrónico","Contraseña","Confirmar Contraseña"};
+		String[] campos = {"Nombre de Usuario","Correo Electrónico","Numero de Telefono","Contraseña","Confirmar Contraseña"};
 		int numeroCampos = campos.length;
 		
 		for(int i = 0; i < numeroCampos; i++) {
@@ -160,6 +161,25 @@ public class FormularioRegistro extends JFrame{
 		panelTerminosYCondiciones.add(terminosYCondiciones);
 		
 		panelComponentes.add(panelTerminosYCondiciones);
+		
+		
+		JPanel panelBotones = new JPanel();
+		panelBotones.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelBotones.setBackground(colorFondo);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.setFont(fuenteNormal);
+		
+		JButton btnRegistroButton = new JButton("Registrarme");
+		btnRegistroButton.setFont(fuenteNormal);
+		
+		panelBotones.add(btnSalir);
+		panelBotones.add(btnRegistroButton);
+		
+		panelComponentes.add(panelBotones);
+		
+		
+		
 		
 		/*
 		JLabel carreraPersonaje = new JLabel("Elige tu carrera (tipo de personaje)");
