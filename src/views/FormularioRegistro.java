@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.concurrent.Flow;
@@ -11,6 +12,7 @@ import java.util.concurrent.Flow;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +22,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class FormularioRegistro extends JFrame{
@@ -70,62 +73,85 @@ public class FormularioRegistro extends JFrame{
 		panelComponentes.setBackground(colorFondo);
 		
 		// APARTADO DE DATOS IMPORTANTE (NOMBRE DE USUARIO, CORREO, CONTRASEÑA, ETC.)
+		JPanel alinearEtiquetaDatosImportantes = new JPanel();
+		alinearEtiquetaDatosImportantes.setLayout(ajustarAlCentro);
+		alinearEtiquetaDatosImportantes.setOpaque(false);
+		
 		JLabel etiquetaDatosImportantes = new JLabel("Datos Importantes");
 		etiquetaDatosImportantes.setFont(fuenteSubtitulo);
 		etiquetaDatosImportantes.setForeground(Color.WHITE);
 		
-		panelComponentes.add(etiquetaDatosImportantes);
-
-		String[] campos = {"Nombre de Usuario","Correo Electrónico","Contraseña","Confirmar Contraseña"};
-		int numeroCampos = campos.length;
+		alinearEtiquetaDatosImportantes.add(etiquetaDatosImportantes);
 		
-		for(int i = 0; i < numeroCampos; i++) {
-			
-			if(campos[i].equals("Contraseña") || campos[i].equals("Confirmar Contraseña")) {
-				
-				JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT));
-				fila.setBackground(colorFondo);
+		panelComponentes.add(alinearEtiquetaDatosImportantes);
 
-				JLabel contrasena = new JLabel(campos[i]);
-				
-				contrasena.setForeground(Color.WHITE);
-				contrasena.setFont(fuenteNormal);
-				
-				panelComponentes.add(contrasena);
-				
-				JPasswordField campoContrasena = new JPasswordField(15);
-				campoContrasena.setFont(fuenteNormal);
-				
-				fila.add(contrasena);
-				fila.add(campoContrasena);
-				
-				panelComponentes.add(fila);
-				continue;
-			}
-			
-			JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			fila.setBackground(colorFondo);
-
-			JLabel etiqueta = new JLabel(campos[i]);
-			etiqueta.setForeground(Color.WHITE);
-			panelComponentes.add(etiqueta);
-			etiqueta.setFont(fuenteNormal);
-			
-			JTextField texto = new JTextField(15);
-			panelComponentes.add(texto);
-			texto.setFont(fuenteNormal);
-			
-			fila.add(etiqueta);
-			fila.add(texto);
-			
-			panelComponentes.add(fila);
-		}
+		/*String[] campos = {"Nombre de Usuario","Correo Electrónico","Contraseña","Confirmar Contraseña"};
+		int numeroCampos = campos.length;*/
+		
+		JPanel datosImportantes = new JPanel(new GridLayout(1,2,10,0));
+		datosImportantes.setOpaque(false);
+		
+		JPanel columnaEtiquetas = new JPanel();
+		columnaEtiquetas.setLayout(new BoxLayout(columnaEtiquetas,BoxLayout.Y_AXIS));
+		columnaEtiquetas.setOpaque(false);
+		
+		JLabel etiquetaNombreUsuario = new JLabel("Nombre de Usuario");
+		JLabel etiquetaCorreo = new JLabel("Correo Electrónico");
+		JLabel etiquetaContrasena = new JLabel("Contraseña");
+		JLabel etiquetaConfirmarContrasena = new JLabel("Confirmar Contraseña");
+		
+		// Espaciado para alinear las etiquetas con los campos
+		etiquetaNombreUsuario.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		etiquetaCorreo.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		etiquetaContrasena.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		etiquetaConfirmarContrasena.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		
+		// Color de texto de etiquetas
+		etiquetaNombreUsuario.setForeground(Color.WHITE);
+		etiquetaCorreo.setForeground(Color.WHITE);
+		etiquetaContrasena.setForeground(Color.WHITE);
+		etiquetaConfirmarContrasena.setForeground(Color.WHITE);
+		
+		// Fuente de etiquetas
+		etiquetaNombreUsuario.setFont(fuenteNormal);
+		etiquetaCorreo.setFont(fuenteNormal);
+		etiquetaContrasena.setFont(fuenteNormal);
+		etiquetaConfirmarContrasena.setFont(fuenteNormal);
+		
+		// Añadir etiquetas a la columna de la izquierda
+		columnaEtiquetas.add(etiquetaNombreUsuario);
+		columnaEtiquetas.add(etiquetaCorreo);
+		columnaEtiquetas.add(etiquetaContrasena);
+		columnaEtiquetas.add(etiquetaConfirmarContrasena);
+		
+		datosImportantes.add(columnaEtiquetas);
+		
+		JPanel columnaCampos = new JPanel();
+		columnaCampos.setLayout(new BoxLayout(columnaCampos,BoxLayout.Y_AXIS));
+		
+		JTextField campoNombreUsuario = new JTextField();
+		JTextField campoCorreo = new JTextField();
+		JPasswordField campoContrasena = new JPasswordField();
+		JPasswordField campoConfirmarContrasena = new JPasswordField();
+		
+		campoNombreUsuario.setFont(fuenteNormal);
+		campoCorreo.setFont(fuenteNormal);
+		campoContrasena.setFont(fuenteNormal);
+		campoConfirmarContrasena.setFont(fuenteNormal);
+		
+		columnaCampos.add(campoNombreUsuario);
+		columnaCampos.add(campoCorreo);
+		columnaCampos.add(campoContrasena);
+		columnaCampos.add(campoConfirmarContrasena);
+		
+		datosImportantes.add(columnaCampos);
+		
+		panelComponentes.add(datosImportantes);
 		
 		// APARTADO DE SEXO
 		JPanel alinearEtiquetaSexo = new JPanel();
 		alinearEtiquetaSexo.setLayout(ajustarAlCentro);
 		alinearEtiquetaSexo.setOpaque(false);
-		//alinearEtiquetaSexo.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
 		JLabel etiquetaSexo = new JLabel("Sexo");
 		etiquetaSexo.setFont(fuenteSubtitulo);
@@ -169,11 +195,17 @@ public class FormularioRegistro extends JFrame{
 		panelComponentes.add(panelSexo);
 		
 		// APARTADO DE PRIVACIDAD
+		JPanel alinearEtiquetaPrivacidad = new JPanel();
+		alinearEtiquetaPrivacidad.setLayout(ajustarAlCentro);
+		alinearEtiquetaPrivacidad.setOpaque(false);
+
 		JLabel etiquetaPrivacidad = new JLabel("Privacidad");
 		etiquetaPrivacidad.setFont(fuenteSubtitulo);
 		etiquetaPrivacidad.setForeground(Color.WHITE);
 
-		panelComponentes.add(etiquetaPrivacidad);
+		alinearEtiquetaPrivacidad.add(etiquetaPrivacidad);
+		
+		panelComponentes.add(alinearEtiquetaPrivacidad);
 		
 		JPanel panelTerminosYCondiciones = new JPanel();
 		panelTerminosYCondiciones.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -187,6 +219,22 @@ public class FormularioRegistro extends JFrame{
 		panelTerminosYCondiciones.add(terminosYCondiciones);
 		
 		panelComponentes.add(panelTerminosYCondiciones);
+		
+		// BOTONES DE SALIR Y REGISTRARSE
+		JPanel panelBotones = new JPanel();
+		panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		panelBotones.setBackground(colorFondo);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.setFont(fuenteNormal);
+		
+		JButton btnRegistroButton = new JButton("Registrarme");
+		btnRegistroButton.setFont(fuenteNormal);
+		
+		panelBotones.add(btnSalir);
+		panelBotones.add(btnRegistroButton);
+		
+		panelComponentes.add(panelBotones);
 		
 		/*
 		JLabel carreraPersonaje = new JLabel("Elige tu carrera (tipo de personaje)");
