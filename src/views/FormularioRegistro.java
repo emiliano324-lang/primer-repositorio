@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.concurrent.Flow;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,6 +20,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class FormularioRegistro extends JFrame{
 
@@ -45,6 +47,8 @@ public class FormularioRegistro extends JFrame{
 		
 		Color colorFondo = new Color(0, 31, 84);
 		Font fuenteNormal = new Font("Verdana", Font.BOLD, 12);
+		Font fuenteSubtitulo = new Font("Verdana", Font.BOLD, 16);
+		FlowLayout ajustarAlCentro = new FlowLayout(FlowLayout.CENTER);
 		
 		// TITULO "FORMULARIO DE REGISTRO"
 		JPanel barraSuperior = new JPanel();
@@ -58,13 +62,20 @@ public class FormularioRegistro extends JFrame{
 		barraSuperior.add(titulo);
 		add(barraSuperior, BorderLayout.NORTH);
 		
-		// FORMULARIO
+		// CREAR FORMULARIO
 		JPanel panelComponentes = new JPanel();
 		panelComponentes.setLayout(new BoxLayout(panelComponentes, BoxLayout.Y_AXIS));
 		panelComponentes.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 	
 		panelComponentes.setBackground(colorFondo);
 		
+		// APARTADO DE DATOS IMPORTANTE (NOMBRE DE USUARIO, CORREO, CONTRASEÑA, ETC.)
+		JLabel etiquetaDatosImportantes = new JLabel("Datos Importantes");
+		etiquetaDatosImportantes.setFont(fuenteSubtitulo);
+		etiquetaDatosImportantes.setForeground(Color.WHITE);
+		
+		panelComponentes.add(etiquetaDatosImportantes);
+
 		String[] campos = {"Nombre de Usuario","Correo Electrónico","Contraseña","Confirmar Contraseña"};
 		int numeroCampos = campos.length;
 		
@@ -110,14 +121,23 @@ public class FormularioRegistro extends JFrame{
 			panelComponentes.add(fila);
 		}
 		
-		JLabel sexoUsuario = new JLabel("Sexo");
-		sexoUsuario.setForeground(Color.WHITE);
+		// APARTADO DE SEXO
+		JPanel alinearEtiquetaSexo = new JPanel();
+		alinearEtiquetaSexo.setLayout(ajustarAlCentro);
+		alinearEtiquetaSexo.setOpaque(false);
+		//alinearEtiquetaSexo.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
-		panelComponentes.add(sexoUsuario);
+		JLabel etiquetaSexo = new JLabel("Sexo");
+		etiquetaSexo.setFont(fuenteSubtitulo);
+		etiquetaSexo.setForeground(Color.WHITE);
+		
+		alinearEtiquetaSexo.add(etiquetaSexo);
+		
+		panelComponentes.add(alinearEtiquetaSexo);
 		
 		// PANEL DE OPCIÓN DE SEXO
 		JPanel panelSexo = new JPanel();
-		panelSexo.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelSexo.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panelSexo.setBackground(colorFondo);
 		
 		JRadioButton hombre = new JRadioButton("Hombre");
@@ -148,8 +168,15 @@ public class FormularioRegistro extends JFrame{
 		
 		panelComponentes.add(panelSexo);
 		
+		// APARTADO DE PRIVACIDAD
+		JLabel etiquetaPrivacidad = new JLabel("Privacidad");
+		etiquetaPrivacidad.setFont(fuenteSubtitulo);
+		etiquetaPrivacidad.setForeground(Color.WHITE);
+
+		panelComponentes.add(etiquetaPrivacidad);
+		
 		JPanel panelTerminosYCondiciones = new JPanel();
-		panelTerminosYCondiciones.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		panelTerminosYCondiciones.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panelTerminosYCondiciones.setBackground(colorFondo);
 		
 		JRadioButton terminosYCondiciones = new JRadioButton("Acepto terminos y condiciones");
