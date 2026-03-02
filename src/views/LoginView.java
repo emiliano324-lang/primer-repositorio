@@ -2,9 +2,12 @@ package views;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.PasswordAuthentication;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -69,5 +72,15 @@ public class LoginView extends JPanel{
 		boton.setBounds(330, 420, 150, 30);
 		boton.setFont(new Font("Arial", Font.PLAIN, 15));
 		add(boton);
+		
+		boton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Se acciono el boton");
+				JOptionPane.showConfirmDialog(null,"Se inicio sesion","Sesion Iniciada",JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		
 	}
 }
