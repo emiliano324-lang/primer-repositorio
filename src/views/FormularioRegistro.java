@@ -7,7 +7,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+<<<<<<< HEAD
 //import java.util.concurrent.Flow;
+=======
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.Flow;
+>>>>>>> 2f092640ea5265a39005f787fdf9c8cd3ccabe4d
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -15,6 +21,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -235,6 +242,30 @@ public class FormularioRegistro extends JFrame{
 		panelBotones.add(btnRegistroButton);
 		
 		panelComponentes.add(panelBotones);
+		
+		
+		
+		
+		btnRegistroButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Se acciono el boton");
+				System.out.println("Se acciono el boton");
+				JOptionPane.showMessageDialog(null,"Iniciar sesion","Sesion Iniciada",JOptionPane.INFORMATION_MESSAGE);
+			}	
+		});
+		
+		btnSalir.addActionListener(e -> {
+			System.out.println("Se acciono el boton");
+			System.out.println("Se acciono el boton");
+			JOptionPane.showMessageDialog(null,"Salir","Seguro que quieres salir",JOptionPane.INFORMATION_MESSAGE);
+		
+			
+		});
+		
+		
+		
 		
 		/*
 		JLabel carreraPersonaje = new JLabel("Elige tu carrera (tipo de personaje)");

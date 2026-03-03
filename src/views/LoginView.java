@@ -2,6 +2,8 @@ package views;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.PasswordAuthentication;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -72,6 +74,7 @@ public class LoginView extends JPanel{
 		
 		add(boton);
 		
+<<<<<<< HEAD
 		boton.addActionListener(e -> {
 			JOptionPane.showMessageDialog(
 				null,
@@ -79,6 +82,15 @@ public class LoginView extends JPanel{
 				"Iniciado",
 				JOptionPane.INFORMATION_MESSAGE
 			);
+=======
+		boton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Se acciono el boton");
+				JOptionPane.showConfirmDialog(null,"Se inicio sesion","Sesion Iniciada",JOptionPane.INFORMATION_MESSAGE);
+			}
+>>>>>>> 2f092640ea5265a39005f787fdf9c8cd3ccabe4d
 		});
 		
 	}
