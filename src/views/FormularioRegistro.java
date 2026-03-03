@@ -7,13 +7,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-<<<<<<< HEAD
+
 //import java.util.concurrent.Flow;
-=======
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Flow;
->>>>>>> 2f092640ea5265a39005f787fdf9c8cd3ccabe4d
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;

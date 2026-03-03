@@ -5,9 +5,12 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -111,5 +114,24 @@ public class GridBagPanel extends JPanel {
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;
         add(iniciarSesion, c);
+        
+        
+        iniciarSesion.addActionListener(e -> {
+			JOptionPane.showMessageDialog(
+				null,
+				"Sesion iniciada",
+				"Iniciado",
+				JOptionPane.INFORMATION_MESSAGE
+			);
+			iniciarSesion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Se acciono el boton");
+				JOptionPane.showConfirmDialog(null,"Se inicio sesion","Sesion Iniciada",JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		
+		});
     }
 }
