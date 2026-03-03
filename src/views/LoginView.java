@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.net.PasswordAuthentication;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -51,15 +52,15 @@ public class LoginView extends JPanel{
 		add(contrasena);
 		
 		// Etiqueta para indicar error en campo de texto Usuario 
-		JLabel errorCampoUsuario = new JLabel("!");
-		errorCampoUsuario.setBounds(120, 300, 30, 30);
+		JLabel errorCampoUsuario = new JLabel("Error: Este campo es obligatorio");
+		errorCampoUsuario.setBounds(140, 320, 200, 30);
 		errorCampoUsuario.setFont(new Font("Verdana", Font.PLAIN, 30));
 		errorCampoUsuario.setForeground(Color.red);
 		add(errorCampoUsuario);
 		
 		// Etiqueta para indicar error en campo de texto Contraseña
-		JLabel errorCampoContrasena = new JLabel("!");
-		errorCampoContrasena.setBounds(120, 350, 30, 30);
+		JLabel errorCampoContrasena = new JLabel("Error: Este campo es obligatorio");
+		errorCampoContrasena.setBounds(140, 370, 200, 30);
 		errorCampoContrasena.setFont(new Font("Verdana", Font.PLAIN, 30));
 		errorCampoContrasena.setForeground(Color.red);
 		add(errorCampoContrasena);
@@ -68,6 +69,17 @@ public class LoginView extends JPanel{
 		JButton boton = new JButton("Iniciar Sesión");
 		boton.setBounds(330, 420, 150, 30);
 		boton.setFont(new Font("Arial", Font.PLAIN, 15));
+		
 		add(boton);
+		
+		boton.addActionListener(e -> {
+			JOptionPane.showMessageDialog(
+				null,
+				"Sesion iniciada",
+				"Iniciado",
+				JOptionPane.INFORMATION_MESSAGE
+			);
+		});
+		
 	}
 }

@@ -20,7 +20,7 @@ public class GridBagPanel extends JPanel {
         setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(10, 10, 10, 10);
+        c.insets = new Insets(5, 5, 5, 5);
 
         // Bienvenida
         JLabel saludo = new JLabel("BIENVENIDO");
@@ -59,11 +59,12 @@ public class GridBagPanel extends JPanel {
         add(usuario, c);
 
         // Error usuario
-        JLabel errorCampoUsuario = new JLabel("!");
-        errorCampoUsuario.setFont(new Font("Verdana", Font.PLAIN, 30));
+        JLabel errorCampoUsuario = new JLabel("Error: este campo es obligatorio");
+        errorCampoUsuario.setFont(new Font("Verdana", Font.PLAIN, 15));
         errorCampoUsuario.setForeground(Color.red);
+        errorCampoUsuario.setVisible(false);
 
-        c.gridx = 2;
+        c.gridy = 2;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
         add(errorCampoUsuario, c);
@@ -74,7 +75,7 @@ public class GridBagPanel extends JPanel {
         etiquetaContrasena.setFont(new Font("Verdana", Font.BOLD, 18));
 
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         c.anchor = GridBagConstraints.EAST;
         add(etiquetaContrasena, c);
 
@@ -89,11 +90,12 @@ public class GridBagPanel extends JPanel {
         add(contrasena, c);
 
         // Error contraseña
-        JLabel errorCampoContrasena = new JLabel("!");
-        errorCampoContrasena.setFont(new Font("Verdana", Font.PLAIN, 30));
+        JLabel errorCampoContrasena = new JLabel("Error: este campo es obligatorio");
+        errorCampoContrasena.setFont(new Font("Verdana", Font.PLAIN, 15));
         errorCampoContrasena.setForeground(Color.red);
-
-        c.gridx = 2;
+        errorCampoContrasena.setVisible(false);
+        
+        c.gridy = 4;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
         add(errorCampoContrasena, c);
@@ -101,9 +103,9 @@ public class GridBagPanel extends JPanel {
         // Boton
         JButton iniciarSesion = new JButton("Iniciar Sesión");
         iniciarSesion.setFont(new Font("Arial", Font.PLAIN, 15));
-
+        
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 5;
         c.gridwidth = 3;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;

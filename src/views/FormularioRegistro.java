@@ -7,7 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.util.concurrent.Flow;
+//import java.util.concurrent.Flow;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -18,12 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
+//import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
+//import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
+//import javax.swing.border.Border;
+//import javax.swing.border.EmptyBorder;
 
 public class FormularioRegistro extends JFrame{
 
