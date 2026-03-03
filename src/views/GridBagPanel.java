@@ -127,7 +127,6 @@ public class GridBagPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se acciono el boton");
 				JOptionPane.showConfirmDialog(null,"Se inicio sesion","Sesion Iniciada",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});

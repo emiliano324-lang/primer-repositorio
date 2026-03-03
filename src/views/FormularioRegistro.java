@@ -11,7 +11,7 @@ import java.awt.Toolkit;
 //import java.util.concurrent.Flow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.Flow;
+//import java.util.concurrent.Flow;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -56,6 +56,8 @@ public class FormularioRegistro extends JFrame{
 		Color colorFondo = new Color(0, 31, 84);
 		Font fuenteNormal = new Font("Verdana", Font.BOLD, 12);
 		Font fuenteSubtitulo = new Font("Verdana", Font.BOLD, 16);
+		Font fuenteError = new Font("Verdana", Font.BOLD, 11);
+
 		FlowLayout ajustarAlCentro = new FlowLayout(FlowLayout.CENTER);
 		
 		// TITULO "FORMULARIO DE REGISTRO"
@@ -151,6 +153,45 @@ public class FormularioRegistro extends JFrame{
 		
 		datosImportantes.add(columnaCampos);
 		
+		// ETIQUETAS DE ERROR
+		JLabel errorNombre = new JLabel("El nombre es obligatorio");
+		JLabel errorCorreo = new JLabel("El correo es obligatorio");
+		JLabel errorContrasena = new JLabel("La contraseña es obligatoria");
+		JLabel errorConfirmar = new JLabel("Debes confirmar la contraseña");
+		JLabel errorCoincidencia = new JLabel("Las contraseñas no coinciden");
+
+		errorNombre.setFont(fuenteError);
+		errorCorreo.setFont(fuenteError);
+		errorContrasena.setFont(fuenteError);
+		errorConfirmar.setFont(fuenteError);
+		errorCoincidencia.setFont(fuenteError);
+
+		errorNombre.setForeground(Color.RED);
+		errorCorreo.setForeground(Color.RED);
+		errorContrasena.setForeground(Color.RED);
+		errorConfirmar.setForeground(Color.RED);
+		errorCoincidencia.setForeground(Color.RED);
+
+		// Ocultarlos al inicio
+		errorNombre.setVisible(false);
+		errorCorreo.setVisible(false);
+		errorContrasena.setVisible(false);
+		errorConfirmar.setVisible(false);
+		errorCoincidencia.setVisible(false);
+		
+		columnaCampos.add(campoNombreUsuario);
+		columnaCampos.add(errorNombre);
+
+		columnaCampos.add(campoCorreo);
+		columnaCampos.add(errorCorreo);
+
+		columnaCampos.add(campoContrasena);
+		columnaCampos.add(errorContrasena);
+
+		columnaCampos.add(campoConfirmarContrasena);
+		columnaCampos.add(errorConfirmar);
+		columnaCampos.add(errorCoincidencia);
+		
 		panelComponentes.add(datosImportantes);
 		
 		// APARTADO DE SEXO
@@ -244,22 +285,69 @@ public class FormularioRegistro extends JFrame{
 		
 		
 		
-		btnRegistroButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se acciono el boton");
-				System.out.println("Se acciono el boton");
-				JOptionPane.showMessageDialog(null,"Iniciar sesion","Sesion Iniciada",JOptionPane.INFORMATION_MESSAGE);
-			}	
-		});
 		
-		btnSalir.addActionListener(e -> {
-			System.out.println("Se acciono el boton");
-			System.out.println("Se acciono el boton");
-			JOptionPane.showMessageDialog(null,"Salir","Seguro que quieres salir",JOptionPane.INFORMATION_MESSAGE);
-		
-			
+		btnRegistroButton.addActionListener(e -> {
+
+		    boolean hayError = false;
+
+		    // Validar nombre
+		    if (campoNombreUsuario.getText().trim().isEmpty()) {
+		        errorNombre.setVisible(true);
+		        hayError = true;
+		    } else {
+		        errorNombre.setVisible(false);
+		    }
+
+		    // Validar correo
+		    if (campoCorreo.getText().trim().isEmpty()) {
+		        errorCorreo.setVisible(true);
+		        hayError = true;
+		    } else {
+		        errorCorreo.setVisible(false);
+		    }
+
+		    // Validar contraseña
+		    String pass = new String(campoContrasena.getPassword());
+		    String confirmPass = new String(campoConfirmarContrasena.getPassword());
+
+		    if (pass.isEmpty()) {
+		        errorContrasena.setVisible(true);
+		        hayError = true;
+		    } else {
+		        errorContrasena.setVisible(false);
+		    }
+
+		    if (confirmPass.isEmpty()) {
+		        errorConfirmar.setVisible(true);
+		        hayError = true;
+		    } else {
+		        errorConfirmar.setVisible(false);
+		    }
+
+		    if (!pass.equals(confirmPass)) {
+		        errorCoincidencia.setVisible(true);
+		        hayError = true;
+		    } else {
+		        errorCoincidencia.setVisible(false);
+		    }
+
+		    // Validar términos
+		    if (!terminosYCondiciones.isSelected()) {
+		        JOptionPane.showMessageDialog(null,
+		                "Debes aceptar los términos y condiciones",
+		                "Error",
+		                JOptionPane.WARNING_MESSAGE);
+		        hayError = true;
+		    }
+
+		    // Si todo está correcto
+		    if (!hayError) {
+		        JOptionPane.showMessageDialog(null,
+		                "Registro exitoso",
+		                "Éxito",
+		                JOptionPane.INFORMATION_MESSAGE);
+		    }
+
 		});
 		
 		
