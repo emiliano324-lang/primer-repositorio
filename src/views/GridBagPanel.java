@@ -117,20 +117,34 @@ public class GridBagPanel extends JPanel {
         
         
         iniciarSesion.addActionListener(e -> {
-			JOptionPane.showMessageDialog(
-				null,
-				"Sesion iniciada",
-				"Iniciado",
-				JOptionPane.INFORMATION_MESSAGE
-			);
-			iniciarSesion.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null,"Se inicio sesion","Sesion Iniciada",JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
-		
-		});
+
+            boolean hayError = false;
+
+            // Validar usuario
+            if (usuario.getText().trim().isEmpty()) {
+                errorCampoUsuario.setVisible(true);
+                hayError = true;
+            } else {
+                errorCampoUsuario.setVisible(false);
+            }
+
+            // Validar contraseña
+            if (new String(contrasena.getPassword()).trim().isEmpty()) {
+                errorCampoContrasena.setVisible(true);
+                hayError = true;
+            } else {
+                errorCampoContrasena.setVisible(false);
+            }
+
+            // Si no hay errores
+            if (!hayError) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Sesión iniciada correctamente",
+                        "Iniciado",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
     }
 }
