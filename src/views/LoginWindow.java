@@ -13,8 +13,6 @@ public class LoginWindow extends JFrame {
 		
 		setSize(400, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setLocation(100,100);
-		//setBounds(100,100,500,500);
 		setResizable(true);
 		setTitle("Mi Aplicación");
 		setLocationRelativeTo(null);
@@ -28,17 +26,11 @@ public class LoginWindow extends JFrame {
 		new Point(0,0), "Mi Cursor");
 		setCursor(miCursor);
 		
-		//LoginView panelito = new LoginView();
-		//SpringPanel panelito = new SpringPanel();
-		GridBagPanel panelito = new GridBagPanel();
+		LoginView panelito = new LoginView();
 		
 		add(panelito);
 		
 		setVisible(true);
-		//pack();
-		
-		//validate();
-		//repaint();
 	}
 	
 }

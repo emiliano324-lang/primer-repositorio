@@ -32,6 +32,8 @@ import javax.swing.JTextField;
 
 public class FormularioRegistro extends JFrame{
 
+	LoginWindow window;
+	
 	public FormularioRegistro() {
 		
 		setSize(450, 450);
@@ -54,8 +56,8 @@ public class FormularioRegistro extends JFrame{
 	public void inicializarComponentes() {
 		
 		Color colorFondo = new Color(0, 31, 84);
-		Font fuenteNormal = new Font("Verdana", Font.BOLD, 12);
 		Font fuenteSubtitulo = new Font("Verdana", Font.BOLD, 16);
+		Font fuenteNormal = new Font("Verdana", Font.BOLD, 12);
 		FlowLayout ajustarAlCentro = new FlowLayout(FlowLayout.CENTER);
 		
 		// CREAR TITULO "FORMULARIO DE REGISTRO"
@@ -87,6 +89,8 @@ public class FormularioRegistro extends JFrame{
 		etiquetaDatosImportantes.setFont(fuenteSubtitulo);
 		etiquetaDatosImportantes.setForeground(Color.WHITE);
 
+		alinearEtiquetaDatosImportantes.add(etiquetaDatosImportantes);
+
 		// CREAR PANEL GRID DE DOS COLUMNAS
 		JPanel datosImportantes = new JPanel(new GridLayout(1,2,10,0));
 		datosImportantes.setOpaque(false);
@@ -106,19 +110,24 @@ public class FormularioRegistro extends JFrame{
 		JLabel lblPassword = createLabel("Contraseña", columnaEtiquetas);
 		JLabel lblConfirmPassword = createLabel("Confirmar contraseña", columnaEtiquetas);
 		
-		// ETIQUETAS DE ERROR
+		// CAMPOS Y SU ETIQUETA DE ERROR
+		JTextField txtFieldName = createTextField(columnaCampos);
 		JLabel lblEmptyFieldName = createErrorLabel("El nombre es obligatorio", columnaCampos);
+		
+		JTextField txtFieldEmail = createTextField(columnaCampos);
 		JLabel lblEmptyFieldEmail = createErrorLabel("El correo es obligatorio", columnaCampos);
 		JLabel lblUnvalidEmail = createErrorLabel("Correo no válido", columnaCampos);
+		
+		JPasswordField pwdPassword = createPasswordField(columnaCampos);
 		JLabel lblEmptyFieldPassword = createErrorLabel("La contraseña es obligatoria", columnaCampos);
+
+		JPasswordField pwdConfirmPassword = createPasswordField(columnaCampos);
 		JLabel lblEmptyFieldConfirmPassword = createErrorLabel("Debes confirmar la contraseña", columnaCampos);
 		JLabel lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", columnaCampos);
 		
-		// CAMPOS 
-		JTextField txtFieldName = createTextField(columnaCampos, lblEmptyFieldName, null);
-		JTextField txtFieldEmail = createTextField(columnaCampos, lblEmptyFieldEmail, lblUnvalidEmail);
-		JPasswordField pwdPassword = createPasswordField(columnaCampos, lblEmptyFieldPassword, null);
-		JPasswordField pwdConfirmPassword = createPasswordField(columnaCampos, lblEmptyFieldPassword, lblErrorUnequalPasswords);
+		// AÑADIR AMBAS COLUMNAS EN EL PANEL
+		datosImportantes.add(columnaEtiquetas);
+		datosImportantes.add(columnaCampos);
 		
 		// APARTADO DE SEXO
 		JPanel alinearEtiquetaSexo = new JPanel();
@@ -128,10 +137,6 @@ public class FormularioRegistro extends JFrame{
 		JLabel etiquetaSexo = new JLabel("Sexo");
 		etiquetaSexo.setFont(fuenteSubtitulo);
 		etiquetaSexo.setForeground(Color.WHITE);
-		
-		alinearEtiquetaSexo.add(etiquetaSexo);
-		
-		panelComponentes.add(alinearEtiquetaSexo);
 		
 		// PANEL DE OPCIÓN DE SEXO
 		JPanel panelSexo = new JPanel();
@@ -164,7 +169,7 @@ public class FormularioRegistro extends JFrame{
 		panelSexo.add(mujer);
 		panelSexo.add(noDecir);
 		
-		panelComponentes.add(panelSexo);
+		alinearEtiquetaSexo.add(etiquetaSexo);
 		
 		// APARTADO DE PRIVACIDAD
 		JPanel alinearEtiquetaPrivacidad = new JPanel();
@@ -177,8 +182,6 @@ public class FormularioRegistro extends JFrame{
 
 		alinearEtiquetaPrivacidad.add(etiquetaPrivacidad);
 		
-		panelComponentes.add(alinearEtiquetaPrivacidad);
-		
 		JPanel panelTerminosYCondiciones = new JPanel();
 		panelTerminosYCondiciones.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panelTerminosYCondiciones.setBackground(colorFondo);
@@ -189,8 +192,6 @@ public class FormularioRegistro extends JFrame{
 		terminosYCondiciones.setFont(fuenteNormal);
 		
 		panelTerminosYCondiciones.add(terminosYCondiciones);
-		
-		panelComponentes.add(panelTerminosYCondiciones);
 		
 		// BOTONES DE SALIR Y REGISTRARSE
 		JPanel panelBotones = new JPanel();
@@ -208,19 +209,23 @@ public class FormularioRegistro extends JFrame{
 		add(barraSuperior, BorderLayout.NORTH);
 		
 		// AÑADIR PANEL "DATOS IMPORTANTES"
-		alinearEtiquetaDatosImportantes.add(etiquetaDatosImportantes);
 		panelComponentes.add(alinearEtiquetaDatosImportantes);
 		
 		//AÑADIR AMBOS PANELES AL GRID
-		datosImportantes.add(columnaEtiquetas);
-		datosImportantes.add(columnaCampos);
 		panelComponentes.add(datosImportantes);
+		
+		// Label sexo
+		panelComponentes.add(alinearEtiquetaSexo);
+		
+		panelComponentes.add(panelSexo);
+		
+		panelComponentes.add(alinearEtiquetaPrivacidad);
+		panelComponentes.add(panelTerminosYCondiciones);
 		
 		// AÑADIR BOTONES DE REGISTRAR Y SALIR
 		panelBotones.add(btnSalir);
 		panelBotones.add(btnRegistroButton);
 		panelComponentes.add(panelBotones);
-		
 		
 		btnRegistroButton.addActionListener(e -> {
 
@@ -228,10 +233,9 @@ public class FormularioRegistro extends JFrame{
 
 		    // Validar nombre
 		    if (txtFieldName.getText().trim().isEmpty()) {
-		    	
-		    		
 		        lblEmptyFieldName.setVisible(true);
 		        hayError = true;
+
 		    } else {
 		        lblEmptyFieldName.setVisible(false);
 		    }
@@ -269,7 +273,7 @@ public class FormularioRegistro extends JFrame{
 		    		lblEmptyFieldConfirmPassword.setVisible(false);
 		    }
 
-		    if (!pass.equals(confirmPass)) {
+		    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
 		    		lblErrorUnequalPasswords.setVisible(true);
 		        hayError = true;
 		    } else {
@@ -291,49 +295,10 @@ public class FormularioRegistro extends JFrame{
 		                "Registro exitoso",
 		                "Éxito",
 		                JOptionPane.INFORMATION_MESSAGE);
+		        handleLogin();
 		    }
 
 		});
-		
-		/*
-		JLabel carreraPersonaje = new JLabel("Elige tu carrera (tipo de personaje)");
-		carreraPersonaje.setForeground(Color.WHITE);
-		panelComponentes.add(carreraPersonaje);
-		
-		JRadioButton ids = new JRadioButton("IDS");
-		JRadioButton itc = new JRadioButton("ITC");
-		JRadioButton lati = new JRadioButton("LATI");
-		JRadioButton ic = new JRadioButton("IC");
-		
-		ids.setBackground(colorFondo);
-		ids.setForeground(Color.WHITE);
-		
-		itc.setBackground(colorFondo);
-		itc.setForeground(Color.WHITE);
-		
-		lati.setBackground(colorFondo);
-		lati.setForeground(Color.WHITE);
-		
-		ic.setBackground(colorFondo);
-		ic.setForeground(Color.WHITE);
-		
-		ButtonGroup carreras = new ButtonGroup();
-		carreras.add(ids);
-		carreras.add(itc);
-		carreras.add(lati);
-		carreras.add(ic);
-		
-		panelComponentes.add(ids);
-		panelComponentes.add(itc);
-		panelComponentes.add(lati);
-		panelComponentes.add(ic);
-		
-		JSlider dificultad = new JSlider(1,8,4);
-		dificultad.setPaintTicks(true);
-		dificultad.setPaintLabels(true);
-		
-		panelComponentes.add(dificultad);
-		*/
 		
 		JScrollPane scroll = new JScrollPane(panelComponentes);
 		scroll.setHorizontalScrollBar(null);
@@ -355,34 +320,24 @@ public class FormularioRegistro extends JFrame{
 		return label;
 	}
 	
-	private JTextField createTextField(JPanel panel, JLabel lblError1, JLabel lblError2) {
+	private JTextField createTextField(JPanel panel) {
 		
 		JTextField textField = new JTextField();
 		
 		textField.setFont(new Font("Verdana", Font.BOLD, 12));
 		
 		panel.add(textField);
-		panel.add(lblError1);
-		
-		if(lblError2 != null) {
-			panel.add(lblError2);
-		}
 		
 		return textField;
 	}
 	
-	private JPasswordField createPasswordField(JPanel panel, JLabel lblError1, JLabel lblError2) {
+	private JPasswordField createPasswordField(JPanel panel) {
 		
 		JPasswordField passwordField = new JPasswordField();
 		
 		passwordField.setFont(new Font("Verdana", Font.BOLD, 12));
 		
 		panel.add(passwordField);
-		panel.add(lblError1);
-		
-		if(lblError2 != null) {
-			panel.add(lblError2);
-		}
 		
 		return passwordField;
 	}
@@ -398,5 +353,11 @@ public class FormularioRegistro extends JFrame{
 		panel.add(errorLabel);
 		
 		return errorLabel;
+	}
+	
+	 private void handleLogin() {
+		new MainWindow();
+		
+		window.dispose();
 	}
 }
