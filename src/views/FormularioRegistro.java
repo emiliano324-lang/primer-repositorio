@@ -56,143 +56,69 @@ public class FormularioRegistro extends JFrame{
 		Color colorFondo = new Color(0, 31, 84);
 		Font fuenteNormal = new Font("Verdana", Font.BOLD, 12);
 		Font fuenteSubtitulo = new Font("Verdana", Font.BOLD, 16);
-		Font fuenteError = new Font("Verdana", Font.BOLD, 11);
-
 		FlowLayout ajustarAlCentro = new FlowLayout(FlowLayout.CENTER);
 		
-		// TITULO "FORMULARIO DE REGISTRO"
+		// CREAR TITULO "FORMULARIO DE REGISTRO"
 		JPanel barraSuperior = new JPanel();
+		
 		barraSuperior.setBackground(colorFondo);
 		barraSuperior.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		JLabel titulo = new JLabel("FORMULARIO DE REGISTRO");
+		
 		titulo.setForeground(Color.WHITE);
 		titulo.setFont(new Font("Verdana", Font.BOLD, 20));
-
-		barraSuperior.add(titulo);
-		add(barraSuperior, BorderLayout.NORTH);
 		
 		// CREAR FORMULARIO
 		JPanel panelComponentes = new JPanel();
+		
 		panelComponentes.setLayout(new BoxLayout(panelComponentes, BoxLayout.Y_AXIS));
 		panelComponentes.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	
 		panelComponentes.setBackground(colorFondo);
 		
 		// APARTADO DE DATOS IMPORTANTE (NOMBRE DE USUARIO, CORREO, CONTRASEÑA, ETC.)
 		JPanel alinearEtiquetaDatosImportantes = new JPanel();
+		
 		alinearEtiquetaDatosImportantes.setLayout(ajustarAlCentro);
 		alinearEtiquetaDatosImportantes.setOpaque(false);
 		
 		JLabel etiquetaDatosImportantes = new JLabel("Datos Importantes");
+		
 		etiquetaDatosImportantes.setFont(fuenteSubtitulo);
 		etiquetaDatosImportantes.setForeground(Color.WHITE);
-		
-		alinearEtiquetaDatosImportantes.add(etiquetaDatosImportantes);
-		
-		panelComponentes.add(alinearEtiquetaDatosImportantes);
 
-		/*String[] campos = {"Nombre de Usuario","Correo Electrónico","Contraseña","Confirmar Contraseña"};
-		int numeroCampos = campos.length;*/
-		
+		// CREAR PANEL GRID DE DOS COLUMNAS
 		JPanel datosImportantes = new JPanel(new GridLayout(1,2,10,0));
 		datosImportantes.setOpaque(false);
 		
+		// COLUMNA IZQUIERDA
 		JPanel columnaEtiquetas = new JPanel();
 		columnaEtiquetas.setLayout(new BoxLayout(columnaEtiquetas,BoxLayout.Y_AXIS));
 		columnaEtiquetas.setOpaque(false);
 		
-		JLabel etiquetaNombreUsuario = new JLabel("Nombre de Usuario");
-		JLabel etiquetaCorreo = new JLabel("Correo Electrónico");
-		JLabel etiquetaContrasena = new JLabel("Contraseña");
-		JLabel etiquetaConfirmarContrasena = new JLabel("Confirmar Contraseña");
-		
-		// Espaciado para alinear las etiquetas con los campos
-		etiquetaNombreUsuario.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-		etiquetaCorreo.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-		etiquetaContrasena.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-		etiquetaConfirmarContrasena.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-		
-		// Color de texto de etiquetas
-		etiquetaNombreUsuario.setForeground(Color.WHITE);
-		etiquetaCorreo.setForeground(Color.WHITE);
-		etiquetaContrasena.setForeground(Color.WHITE);
-		etiquetaConfirmarContrasena.setForeground(Color.WHITE);
-		
-		// Fuente de etiquetas
-		etiquetaNombreUsuario.setFont(fuenteNormal);
-		etiquetaCorreo.setFont(fuenteNormal);
-		etiquetaContrasena.setFont(fuenteNormal);
-		etiquetaConfirmarContrasena.setFont(fuenteNormal);
-		
-		// Añadir etiquetas a la columna de la izquierda
-		columnaEtiquetas.add(etiquetaNombreUsuario);
-		columnaEtiquetas.add(etiquetaCorreo);
-		columnaEtiquetas.add(etiquetaContrasena);
-		columnaEtiquetas.add(etiquetaConfirmarContrasena);
-		
-		datosImportantes.add(columnaEtiquetas);
-		
+		// COLUMNA DERECHA
 		JPanel columnaCampos = new JPanel();
 		columnaCampos.setLayout(new BoxLayout(columnaCampos,BoxLayout.Y_AXIS));
 		
-		JTextField campoNombreUsuario = new JTextField();
-		JTextField campoCorreo = new JTextField();
-		JPasswordField campoContrasena = new JPasswordField();
-		JPasswordField campoConfirmarContrasena = new JPasswordField();
-		
-		campoNombreUsuario.setFont(fuenteNormal);
-		campoCorreo.setFont(fuenteNormal);
-		campoContrasena.setFont(fuenteNormal);
-		campoConfirmarContrasena.setFont(fuenteNormal);
-		
-		columnaCampos.add(campoNombreUsuario);
-		columnaCampos.add(campoCorreo);
-		columnaCampos.add(campoContrasena);
-		columnaCampos.add(campoConfirmarContrasena);
-		
-		datosImportantes.add(columnaCampos);
+		// ETIQUETAS
+		JLabel lblName = createLabel("Nombre de Usuario", columnaEtiquetas);
+		JLabel lblEmail = createLabel("Email", columnaEtiquetas);
+		JLabel lblPassword = createLabel("Contraseña", columnaEtiquetas);
+		JLabel lblConfirmPassword = createLabel("Confirmar contraseña", columnaEtiquetas);
 		
 		// ETIQUETAS DE ERROR
-		JLabel errorNombre = new JLabel("El nombre es obligatorio");
-		JLabel errorCorreo = new JLabel("El correo es obligatorio");
-		JLabel errorContrasena = new JLabel("La contraseña es obligatoria");
-		JLabel errorConfirmar = new JLabel("Debes confirmar la contraseña");
-		JLabel errorCoincidencia = new JLabel("Las contraseñas no coinciden");
-
-		errorNombre.setFont(fuenteError);
-		errorCorreo.setFont(fuenteError);
-		errorContrasena.setFont(fuenteError);
-		errorConfirmar.setFont(fuenteError);
-		errorCoincidencia.setFont(fuenteError);
-
-		errorNombre.setForeground(Color.RED);
-		errorCorreo.setForeground(Color.RED);
-		errorContrasena.setForeground(Color.RED);
-		errorConfirmar.setForeground(Color.RED);
-		errorCoincidencia.setForeground(Color.RED);
-
-		// Ocultarlos al inicio
-		errorNombre.setVisible(false);
-		errorCorreo.setVisible(false);
-		errorContrasena.setVisible(false);
-		errorConfirmar.setVisible(false);
-		errorCoincidencia.setVisible(false);
+		JLabel lblEmptyFieldName = createErrorLabel("El nombre es obligatorio", columnaCampos);
+		JLabel lblEmptyFieldEmail = createErrorLabel("El correo es obligatorio", columnaCampos);
+		JLabel lblUnvalidEmail = createErrorLabel("Correo no válido", columnaCampos);
+		JLabel lblEmptyFieldPassword = createErrorLabel("La contraseña es obligatoria", columnaCampos);
+		JLabel lblEmptyFieldConfirmPassword = createErrorLabel("Debes confirmar la contraseña", columnaCampos);
+		JLabel lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", columnaCampos);
 		
-		columnaCampos.add(campoNombreUsuario);
-		columnaCampos.add(errorNombre);
-
-		columnaCampos.add(campoCorreo);
-		columnaCampos.add(errorCorreo);
-
-		columnaCampos.add(campoContrasena);
-		columnaCampos.add(errorContrasena);
-
-		columnaCampos.add(campoConfirmarContrasena);
-		columnaCampos.add(errorConfirmar);
-		columnaCampos.add(errorCoincidencia);
-		
-		panelComponentes.add(datosImportantes);
+		// CAMPOS 
+		JTextField txtFieldName = createTextField(columnaCampos, lblEmptyFieldName, null);
+		JTextField txtFieldEmail = createTextField(columnaCampos, lblEmptyFieldEmail, lblUnvalidEmail);
+		JPasswordField pwdPassword = createPasswordField(columnaCampos, lblEmptyFieldPassword, null);
+		JPasswordField pwdConfirmPassword = createPasswordField(columnaCampos, lblEmptyFieldPassword, lblErrorUnequalPasswords);
 		
 		// APARTADO DE SEXO
 		JPanel alinearEtiquetaSexo = new JPanel();
@@ -277,13 +203,23 @@ public class FormularioRegistro extends JFrame{
 		JButton btnRegistroButton = new JButton("Registrarme");
 		btnRegistroButton.setFont(fuenteNormal);
 		
+		// AÑADIR TITULO
+		barraSuperior.add(titulo);
+		add(barraSuperior, BorderLayout.NORTH);
+		
+		// AÑADIR PANEL "DATOS IMPORTANTES"
+		alinearEtiquetaDatosImportantes.add(etiquetaDatosImportantes);
+		panelComponentes.add(alinearEtiquetaDatosImportantes);
+		
+		//AÑADIR AMBOS PANELES AL GRID
+		datosImportantes.add(columnaEtiquetas);
+		datosImportantes.add(columnaCampos);
+		panelComponentes.add(datosImportantes);
+		
+		// AÑADIR BOTONES DE REGISTRAR Y SALIR
 		panelBotones.add(btnSalir);
 		panelBotones.add(btnRegistroButton);
-		
 		panelComponentes.add(panelBotones);
-		
-		
-		
 		
 		
 		btnRegistroButton.addActionListener(e -> {
@@ -291,44 +227,53 @@ public class FormularioRegistro extends JFrame{
 		    boolean hayError = false;
 
 		    // Validar nombre
-		    if (campoNombreUsuario.getText().trim().isEmpty()) {
-		        errorNombre.setVisible(true);
+		    if (txtFieldName.getText().trim().isEmpty()) {
+		    	
+		    		
+		        lblEmptyFieldName.setVisible(true);
 		        hayError = true;
 		    } else {
-		        errorNombre.setVisible(false);
+		        lblEmptyFieldName.setVisible(false);
 		    }
 
 		    // Validar correo
-		    if (campoCorreo.getText().trim().isEmpty()) {
-		        errorCorreo.setVisible(true);
+		    if (txtFieldEmail.getText().trim().isEmpty()) {
+			    	lblEmptyFieldEmail.setVisible(true);
 		        hayError = true;
+		        
+		    } else if (!txtFieldEmail.getText().contains("@")) {
+		    		lblEmptyFieldEmail.setVisible(false);
+			    	lblUnvalidEmail.setVisible(true);
+		    		
 		    } else {
-		        errorCorreo.setVisible(false);
+		    		lblEmptyFieldEmail.setVisible(false);
+			    	lblUnvalidEmail.setVisible(false);
+
 		    }
 
 		    // Validar contraseña
-		    String pass = new String(campoContrasena.getPassword());
-		    String confirmPass = new String(campoConfirmarContrasena.getPassword());
+		    String pass = new String(pwdPassword.getPassword());
+		    String confirmPass = new String(pwdConfirmPassword.getPassword());
 
 		    if (pass.isEmpty()) {
-		        errorContrasena.setVisible(true);
+		    		lblEmptyFieldPassword.setVisible(true);
 		        hayError = true;
 		    } else {
-		        errorContrasena.setVisible(false);
+		    		lblEmptyFieldPassword.setVisible(false);
 		    }
 
 		    if (confirmPass.isEmpty()) {
-		        errorConfirmar.setVisible(true);
+		        lblEmptyFieldConfirmPassword.setVisible(true);
 		        hayError = true;
 		    } else {
-		        errorConfirmar.setVisible(false);
+		    		lblEmptyFieldConfirmPassword.setVisible(false);
 		    }
 
 		    if (!pass.equals(confirmPass)) {
-		        errorCoincidencia.setVisible(true);
+		    		lblErrorUnequalPasswords.setVisible(true);
 		        hayError = true;
 		    } else {
-		        errorCoincidencia.setVisible(false);
+		    		lblErrorUnequalPasswords.setVisible(false);
 		    }
 
 		    // Validar términos
@@ -349,9 +294,6 @@ public class FormularioRegistro extends JFrame{
 		    }
 
 		});
-		
-		
-		
 		
 		/*
 		JLabel carreraPersonaje = new JLabel("Elige tu carrera (tipo de personaje)");
@@ -397,5 +339,64 @@ public class FormularioRegistro extends JFrame{
 		scroll.setHorizontalScrollBar(null);
 		
 		add(scroll);
+	}
+	
+	private JLabel createLabel(String lblText, JPanel panel) {
+		
+		JLabel label = new JLabel(lblText);
+		
+		label.setFont(new Font("Verdana", Font.BOLD, 12));
+		label.setForeground(Color.WHITE);
+		label.setVisible(true);
+		label.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+
+		panel.add(label);
+		
+		return label;
+	}
+	
+	private JTextField createTextField(JPanel panel, JLabel lblError1, JLabel lblError2) {
+		
+		JTextField textField = new JTextField();
+		
+		textField.setFont(new Font("Verdana", Font.BOLD, 12));
+		
+		panel.add(textField);
+		panel.add(lblError1);
+		
+		if(lblError2 != null) {
+			panel.add(lblError2);
+		}
+		
+		return textField;
+	}
+	
+	private JPasswordField createPasswordField(JPanel panel, JLabel lblError1, JLabel lblError2) {
+		
+		JPasswordField passwordField = new JPasswordField();
+		
+		passwordField.setFont(new Font("Verdana", Font.BOLD, 12));
+		
+		panel.add(passwordField);
+		panel.add(lblError1);
+		
+		if(lblError2 != null) {
+			panel.add(lblError2);
+		}
+		
+		return passwordField;
+	}
+	
+	private JLabel createErrorLabel(String lblText, JPanel panel) {
+		
+		JLabel errorLabel = new JLabel(lblText);
+		
+		errorLabel.setFont(new Font("Verdana", Font.BOLD, 11));
+		errorLabel.setForeground(Color.RED);
+		errorLabel.setVisible(false);
+		
+		panel.add(errorLabel);
+		
+		return errorLabel;
 	}
 }

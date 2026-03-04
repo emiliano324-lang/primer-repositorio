@@ -115,7 +115,6 @@ public class GridBagPanel extends JPanel {
         c.anchor = GridBagConstraints.CENTER;
         add(iniciarSesion, c);
         
-        
         iniciarSesion.addActionListener(e -> {
 
             boolean hayError = false;
