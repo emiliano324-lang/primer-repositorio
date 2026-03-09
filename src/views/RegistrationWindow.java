@@ -151,55 +151,47 @@ public class RegistrationWindow extends JFrame{
 		JPanel termsAndConditionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		termsAndConditionsPanel.setOpaque(false);
 		
-		JRadioButton terminosYCondiciones = new JRadioButton("Acepto terminos y condiciones");
-		terminosYCondiciones.setOpaque(false);
-		terminosYCondiciones.setForeground(Color.WHITE);
-		terminosYCondiciones.setFont(textFont);
-		
-		termsAndConditionsPanel.add(terminosYCondiciones);
+		JRadioButton rbTermsAndConditions = createJRadioButton("Acepto terminos y condiciones", null, termsAndConditionsPanel);
 		
 		// BOTONES DE SALIR Y REGISTRARSE
-		JPanel panelBotones = new JPanel();
-		panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		panelBotones.setBackground(customBlue);
+		JPanel exitAndRegisterButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		exitAndRegisterButtons.setBackground(customBlue);
 		
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.setFont(textFont);
+		JButton btnExit = new JButton("Salir");
+		btnExit.setFont(textFont);
 		
-		JButton btnRegistroButton = new JButton("Registrarme");
-		btnRegistroButton.setFont(textFont);
+		JButton btnRegistrate = new JButton("Registrarme");
+		btnRegistrate.setFont(textFont);
 		
 		// AÑADIR TITULO
 		superiorBar.add(title);
 		add(superiorBar, BorderLayout.NORTH);
 		
-		// AÑADIR PANEL "DATOS IMPORTANTES"
+		// AÑADIR APARTADO DE DATOS IMPORTANTES
 		componentsPanel.add(importantDataSection);
-		
-		//AÑADIR AMBOS PANELES AL GRID
 		componentsPanel.add(importantDataGrid);
 		
-		// Label sexo
+		// AÑADIR APARTADO SEXO
 		componentsPanel.add(sexSection);
-		
 		componentsPanel.add(sexFlowPanel);
 		
+		// AÑADIR APARTADO DE PRIVACIDAD
 		componentsPanel.add(privacySection);
 		componentsPanel.add(termsAndConditionsPanel);
 		
 		// AÑADIR BOTONES DE REGISTRAR Y SALIR
-		panelBotones.add(btnSalir);
-		panelBotones.add(btnRegistroButton);
-		componentsPanel.add(panelBotones);
-		
-		btnRegistroButton.addActionListener(e -> {
+		exitAndRegisterButtons.add(btnExit);
+		exitAndRegisterButtons.add(btnRegistrate);
+		componentsPanel.add(exitAndRegisterButtons);
+	
+		btnRegistrate.addActionListener(e -> {
 
-		    boolean hayError = false;
+		    boolean errorFound = false;
 
 		    // Validar nombre
 		    if (txtFieldName.getText().trim().isEmpty()) {
 		        lblEmptyFieldName.setVisible(true);
-		        hayError = true;
+		        errorFound = true;
 
 		    } else {
 		        lblEmptyFieldName.setVisible(false);
@@ -208,7 +200,7 @@ public class RegistrationWindow extends JFrame{
 		    // Validar correo
 		    if (txtFieldEmail.getText().trim().isEmpty()) {
 			    	lblEmptyFieldEmail.setVisible(true);
-		        hayError = true;
+		        errorFound = true;
 		        
 		    } else if (!txtFieldEmail.getText().contains("@")) {
 		    		lblEmptyFieldEmail.setVisible(false);
@@ -226,36 +218,36 @@ public class RegistrationWindow extends JFrame{
 
 		    if (pass.isEmpty()) {
 		    		lblEmptyFieldPassword.setVisible(true);
-		        hayError = true;
+		        errorFound = true;
 		    } else {
 		    		lblEmptyFieldPassword.setVisible(false);
 		    }
 
 		    if (confirmPass.isEmpty()) {
 		        lblEmptyFieldConfirmPassword.setVisible(true);
-		        hayError = true;
+		        errorFound = true;
 		    } else {
 		    		lblEmptyFieldConfirmPassword.setVisible(false);
 		    }
 
 		    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
 		    		lblErrorUnequalPasswords.setVisible(true);
-		        hayError = true;
+		        errorFound = true;
 		    } else {
 		    		lblErrorUnequalPasswords.setVisible(false);
 		    }
 
 		    // Validar términos
-		    if (!terminosYCondiciones.isSelected()) {
+		    if (!rbTermsAndConditions.isSelected()) {
 		        JOptionPane.showMessageDialog(null,
 		                "Debes aceptar los términos y condiciones",
 		                "Error",
 		                JOptionPane.WARNING_MESSAGE);
-		        hayError = true;
+		        errorFound = true;
 		    }
 
 		    // Si todo está correcto
-		    if (!hayError) {
+		    if (!errorFound) {
 		        JOptionPane.showMessageDialog(null,
 		                "Registro exitoso",
 		                "Éxito",
@@ -315,8 +307,13 @@ public class RegistrationWindow extends JFrame{
 		button.setFont(new Font("Verdana", Font.BOLD, 12));
 		button.setForeground(Color.WHITE);
 		
-		grpButtons.add(button);
-		panel.add(button);
+		if(grpButtons != null) {
+			grpButtons.add(button);
+		}
+		
+		if(panel != null) {
+			panel.add(button);
+		}
 		
 		return button;
 	}
