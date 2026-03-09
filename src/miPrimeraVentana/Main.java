@@ -1,6 +1,6 @@
 package miPrimeraVentana;
 
-import views.FormularioRegistro;
+import views.RegistrationWindow;
 import views.LoginWindow;
 
 public class Main {
@@ -8,8 +8,8 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		LoginWindow miVentana = new LoginWindow();
-		//FormularioRegistro formulario = new FormularioRegistro();
+		//LoginWindow miVentana = new LoginWindow();
+		RegistrationWindow form = new RegistrationWindow();
 	}
 	
 }

@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.Toolkit;
 
 //import java.util.concurrent.Flow;
@@ -30,11 +31,11 @@ import javax.swing.JTextField;
 //import javax.swing.border.Border;
 //import javax.swing.border.EmptyBorder;
 
-public class FormularioRegistro extends JFrame{
+public class RegistrationWindow extends JFrame{
 
 	LoginWindow window;
 	
-	public FormularioRegistro() {
+	public RegistrationWindow() {
 		
 		setSize(450, 450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,187 +46,151 @@ public class FormularioRegistro extends JFrame{
 		setLocationRelativeTo(null);
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
-		Image icono = tk.getImage("src/img/logo_uabcs.png");
-		setIconImage(icono);
+		Image icon = tk.getImage("src/img/logo_uabcs.png");
+		setIconImage(icon);
 		
-		inicializarComponentes();
+		initializeComponents();
 		
 		setVisible(true);
 	}
 	
-	public void inicializarComponentes() {
+	public void initializeComponents() {
 		
-		Color colorFondo = new Color(0, 31, 84);
-		Font fuenteSubtitulo = new Font("Verdana", Font.BOLD, 16);
-		Font fuenteNormal = new Font("Verdana", Font.BOLD, 12);
-		FlowLayout ajustarAlCentro = new FlowLayout(FlowLayout.CENTER);
+		Color customBlue = new Color(0, 31, 84);
+		Font subtitleFont = new Font("Verdana", Font.BOLD, 16);
+		Font textFont = new Font("Verdana", Font.BOLD, 12);
+		FlowLayout alignToCenter = new FlowLayout(FlowLayout.CENTER);
 		
 		// CREAR TITULO "FORMULARIO DE REGISTRO"
-		JPanel barraSuperior = new JPanel();
-		
-		barraSuperior.setBackground(colorFondo);
-		barraSuperior.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JPanel superiorBar = new JPanel(alignToCenter);
 
-		JLabel titulo = new JLabel("FORMULARIO DE REGISTRO");
+		superiorBar.setBackground(customBlue);
+
+		JLabel title = new JLabel("FORMULARIO DE REGISTRO");
 		
-		titulo.setForeground(Color.WHITE);
-		titulo.setFont(new Font("Verdana", Font.BOLD, 20));
+		title.setForeground(Color.WHITE);
+		title.setFont(new Font("Verdana", Font.BOLD, 20));
 		
 		// CREAR FORMULARIO
-		JPanel panelComponentes = new JPanel();
+		JPanel componentsPanel = new JPanel();
 		
-		panelComponentes.setLayout(new BoxLayout(panelComponentes, BoxLayout.Y_AXIS));
-		panelComponentes.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		panelComponentes.setBackground(colorFondo);
+		componentsPanel.setLayout(new BoxLayout(componentsPanel, BoxLayout.Y_AXIS));
+		componentsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		componentsPanel.setBackground(customBlue);
 		
 		// APARTADO DE DATOS IMPORTANTE (NOMBRE DE USUARIO, CORREO, CONTRASEÑA, ETC.)
-		JPanel alinearEtiquetaDatosImportantes = new JPanel();
+		JPanel importantDataSection = new JPanel(alignToCenter);
 		
-		alinearEtiquetaDatosImportantes.setLayout(ajustarAlCentro);
-		alinearEtiquetaDatosImportantes.setOpaque(false);
+		importantDataSection.setOpaque(false);
 		
-		JLabel etiquetaDatosImportantes = new JLabel("Datos Importantes");
-		
-		etiquetaDatosImportantes.setFont(fuenteSubtitulo);
-		etiquetaDatosImportantes.setForeground(Color.WHITE);
-
-		alinearEtiquetaDatosImportantes.add(etiquetaDatosImportantes);
+		JLabel lblImportantData = createLabel("Datos Importantes", subtitleFont, importantDataSection);
 
 		// CREAR PANEL GRID DE DOS COLUMNAS
-		JPanel datosImportantes = new JPanel(new GridLayout(1,2,10,0));
-		datosImportantes.setOpaque(false);
+		JPanel importantDataGrid = new JPanel(new GridLayout(1,2,10,0));
+		importantDataGrid.setOpaque(false);
 		
 		// COLUMNA IZQUIERDA
-		JPanel columnaEtiquetas = new JPanel();
-		columnaEtiquetas.setLayout(new BoxLayout(columnaEtiquetas,BoxLayout.Y_AXIS));
-		columnaEtiquetas.setOpaque(false);
+		JPanel labelsColumn = new JPanel();
+		labelsColumn.setLayout(new BoxLayout(labelsColumn,BoxLayout.Y_AXIS));
+		labelsColumn.setOpaque(false);
 		
 		// COLUMNA DERECHA
-		JPanel columnaCampos = new JPanel();
-		columnaCampos.setLayout(new BoxLayout(columnaCampos,BoxLayout.Y_AXIS));
+		JPanel fieldsColumn = new JPanel();
+		fieldsColumn.setLayout(new BoxLayout(fieldsColumn,BoxLayout.Y_AXIS));
 		
 		// ETIQUETAS
-		JLabel lblName = createLabel("Nombre de Usuario", columnaEtiquetas);
-		JLabel lblEmail = createLabel("Email", columnaEtiquetas);
-		JLabel lblPassword = createLabel("Contraseña", columnaEtiquetas);
-		JLabel lblConfirmPassword = createLabel("Confirmar contraseña", columnaEtiquetas);
+		JLabel lblName = createLabel("Nombre de Usuario", textFont, labelsColumn);
+		JLabel lblEmail = createLabel("Email", textFont, labelsColumn);
+		JLabel lblPassword = createLabel("Contraseña", textFont, labelsColumn);
+		JLabel lblConfirmPassword = createLabel("Confirmar contraseña", textFont, labelsColumn);
 		
 		// CAMPOS Y SU ETIQUETA DE ERROR
-		JTextField txtFieldName = createTextField(columnaCampos);
-		JLabel lblEmptyFieldName = createErrorLabel("El nombre es obligatorio", columnaCampos);
+		JTextField txtFieldName = createTextField(fieldsColumn);
+		JLabel lblEmptyFieldName = createErrorLabel("El nombre es obligatorio", fieldsColumn);
 		
-		JTextField txtFieldEmail = createTextField(columnaCampos);
-		JLabel lblEmptyFieldEmail = createErrorLabel("El correo es obligatorio", columnaCampos);
-		JLabel lblUnvalidEmail = createErrorLabel("Correo no válido", columnaCampos);
+		JTextField txtFieldEmail = createTextField(fieldsColumn);
+		JLabel lblEmptyFieldEmail = createErrorLabel("El correo es obligatorio", fieldsColumn);
+		JLabel lblUnvalidEmail = createErrorLabel("Correo no válido", fieldsColumn);
 		
-		JPasswordField pwdPassword = createPasswordField(columnaCampos);
-		JLabel lblEmptyFieldPassword = createErrorLabel("La contraseña es obligatoria", columnaCampos);
+		JPasswordField pwdPassword = createPasswordField(fieldsColumn);
+		JLabel lblEmptyFieldPassword = createErrorLabel("La contraseña es obligatoria", fieldsColumn);
 
-		JPasswordField pwdConfirmPassword = createPasswordField(columnaCampos);
-		JLabel lblEmptyFieldConfirmPassword = createErrorLabel("Debes confirmar la contraseña", columnaCampos);
-		JLabel lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", columnaCampos);
+		JPasswordField pwdConfirmPassword = createPasswordField(fieldsColumn);
+		JLabel lblEmptyFieldConfirmPassword = createErrorLabel("Debes confirmar la contraseña", fieldsColumn);
+		JLabel lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", fieldsColumn);
 		
 		// AÑADIR AMBAS COLUMNAS EN EL PANEL
-		datosImportantes.add(columnaEtiquetas);
-		datosImportantes.add(columnaCampos);
+		importantDataGrid.add(labelsColumn);
+		importantDataGrid.add(fieldsColumn);
 		
 		// APARTADO DE SEXO
-		JPanel alinearEtiquetaSexo = new JPanel();
-		alinearEtiquetaSexo.setLayout(ajustarAlCentro);
-		alinearEtiquetaSexo.setOpaque(false);
+		JPanel sexSection = new JPanel(alignToCenter);
+
+		sexSection.setOpaque(false);
 		
-		JLabel etiquetaSexo = new JLabel("Sexo");
-		etiquetaSexo.setFont(fuenteSubtitulo);
-		etiquetaSexo.setForeground(Color.WHITE);
+		JLabel lblSex = createLabel("Sexo", subtitleFont, sexSection);
 		
 		// PANEL DE OPCIÓN DE SEXO
-		JPanel panelSexo = new JPanel();
-		panelSexo.setLayout(new FlowLayout(FlowLayout.CENTER));
-		panelSexo.setBackground(colorFondo);
+		JPanel sexFlowPanel = new JPanel(alignToCenter);
 		
-		JRadioButton hombre = new JRadioButton("Hombre");
-		JRadioButton mujer = new JRadioButton("Mujer");
-		JRadioButton noDecir = new JRadioButton("Prefiero no decirlo");
+		sexFlowPanel.setOpaque(false);
 		
-		hombre.setOpaque(false);
-		hombre.setFont(fuenteNormal);
-		hombre.setForeground(Color.WHITE);
+		ButtonGroup grpSexes = new ButtonGroup();
 		
-		mujer.setOpaque(false);
-		mujer.setFont(fuenteNormal);
-		mujer.setForeground(Color.WHITE);
-		
-		noDecir.setOpaque(false);
-		noDecir.setFont(fuenteNormal);
-		noDecir.setForeground(Color.WHITE);
-
-		ButtonGroup sexos = new ButtonGroup();
-		
-		sexos.add(hombre);
-		sexos.add(mujer);
-		sexos.add(noDecir);
-		
-		panelSexo.add(hombre);
-		panelSexo.add(mujer);
-		panelSexo.add(noDecir);
-		
-		alinearEtiquetaSexo.add(etiquetaSexo);
+		JRadioButton rbMan = createJRadioButton("Hombre", grpSexes, sexFlowPanel);
+		JRadioButton rbWoman = createJRadioButton("Mujer", grpSexes, sexFlowPanel);
+		JRadioButton rbDoNotSay = createJRadioButton("Prefiero no decir", grpSexes, sexFlowPanel);
 		
 		// APARTADO DE PRIVACIDAD
-		JPanel alinearEtiquetaPrivacidad = new JPanel();
-		alinearEtiquetaPrivacidad.setLayout(ajustarAlCentro);
-		alinearEtiquetaPrivacidad.setOpaque(false);
-
-		JLabel etiquetaPrivacidad = new JLabel("Privacidad");
-		etiquetaPrivacidad.setFont(fuenteSubtitulo);
-		etiquetaPrivacidad.setForeground(Color.WHITE);
-
-		alinearEtiquetaPrivacidad.add(etiquetaPrivacidad);
+		JPanel privacySection = new JPanel(alignToCenter);
 		
-		JPanel panelTerminosYCondiciones = new JPanel();
-		panelTerminosYCondiciones.setLayout(new FlowLayout(FlowLayout.LEFT));
-		panelTerminosYCondiciones.setBackground(colorFondo);
+		privacySection.setOpaque(false);
+
+		JLabel lblPrivacy = createLabel("Privacidad", subtitleFont, privacySection);
+		
+		JPanel termsAndConditionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		termsAndConditionsPanel.setOpaque(false);
 		
 		JRadioButton terminosYCondiciones = new JRadioButton("Acepto terminos y condiciones");
 		terminosYCondiciones.setOpaque(false);
 		terminosYCondiciones.setForeground(Color.WHITE);
-		terminosYCondiciones.setFont(fuenteNormal);
+		terminosYCondiciones.setFont(textFont);
 		
-		panelTerminosYCondiciones.add(terminosYCondiciones);
+		termsAndConditionsPanel.add(terminosYCondiciones);
 		
 		// BOTONES DE SALIR Y REGISTRARSE
 		JPanel panelBotones = new JPanel();
 		panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		panelBotones.setBackground(colorFondo);
+		panelBotones.setBackground(customBlue);
 		
 		JButton btnSalir = new JButton("Salir");
-		btnSalir.setFont(fuenteNormal);
+		btnSalir.setFont(textFont);
 		
 		JButton btnRegistroButton = new JButton("Registrarme");
-		btnRegistroButton.setFont(fuenteNormal);
+		btnRegistroButton.setFont(textFont);
 		
 		// AÑADIR TITULO
-		barraSuperior.add(titulo);
-		add(barraSuperior, BorderLayout.NORTH);
+		superiorBar.add(title);
+		add(superiorBar, BorderLayout.NORTH);
 		
 		// AÑADIR PANEL "DATOS IMPORTANTES"
-		panelComponentes.add(alinearEtiquetaDatosImportantes);
+		componentsPanel.add(importantDataSection);
 		
 		//AÑADIR AMBOS PANELES AL GRID
-		panelComponentes.add(datosImportantes);
+		componentsPanel.add(importantDataGrid);
 		
 		// Label sexo
-		panelComponentes.add(alinearEtiquetaSexo);
+		componentsPanel.add(sexSection);
 		
-		panelComponentes.add(panelSexo);
+		componentsPanel.add(sexFlowPanel);
 		
-		panelComponentes.add(alinearEtiquetaPrivacidad);
-		panelComponentes.add(panelTerminosYCondiciones);
+		componentsPanel.add(privacySection);
+		componentsPanel.add(termsAndConditionsPanel);
 		
 		// AÑADIR BOTONES DE REGISTRAR Y SALIR
 		panelBotones.add(btnSalir);
 		panelBotones.add(btnRegistroButton);
-		panelComponentes.add(panelBotones);
+		componentsPanel.add(panelBotones);
 		
 		btnRegistroButton.addActionListener(e -> {
 
@@ -300,17 +265,17 @@ public class FormularioRegistro extends JFrame{
 
 		});
 		
-		JScrollPane scroll = new JScrollPane(panelComponentes);
+		JScrollPane scroll = new JScrollPane(componentsPanel);
 		scroll.setHorizontalScrollBar(null);
 		
 		add(scroll);
 	}
 	
-	private JLabel createLabel(String lblText, JPanel panel) {
+	private JLabel createLabel(String lblText, Font font, JPanel panel) {
 		
 		JLabel label = new JLabel(lblText);
 		
-		label.setFont(new Font("Verdana", Font.BOLD, 12));
+		label.setFont(font);
 		label.setForeground(Color.WHITE);
 		label.setVisible(true);
 		label.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
@@ -342,6 +307,20 @@ public class FormularioRegistro extends JFrame{
 		return passwordField;
 	}
 	
+	private JRadioButton createJRadioButton(String lblText, ButtonGroup grpButtons, JPanel panel) {
+		
+		JRadioButton button = new JRadioButton(lblText);
+		
+		button.setOpaque(false);
+		button.setFont(new Font("Verdana", Font.BOLD, 12));
+		button.setForeground(Color.WHITE);
+		
+		grpButtons.add(button);
+		panel.add(button);
+		
+		return button;
+	}
+	
 	private JLabel createErrorLabel(String lblText, JPanel panel) {
 		
 		JLabel errorLabel = new JLabel(lblText);
@@ -351,6 +330,7 @@ public class FormularioRegistro extends JFrame{
 		errorLabel.setVisible(false);
 		
 		panel.add(errorLabel);
+		
 		
 		return errorLabel;
 	}

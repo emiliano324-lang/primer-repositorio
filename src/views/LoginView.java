@@ -23,6 +23,7 @@ public class LoginView extends JPanel {
     public LoginView() {
     	
     		this.window = window;
+    		
     		font = new Font("Verdana", Font.BOLD, 18);
     		
         setBackground(new Color(0, 31, 84));
@@ -162,7 +163,7 @@ public class LoginView extends JPanel {
 	}
     
     private void handleRegistration() {
-    		new FormularioRegistro();
+    		new RegistrationWindow();
     		
     		window.dispose();
     }
