@@ -30,6 +30,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 //import javax.swing.border.Border;
 //import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class RegistrationWindow extends JFrame{
 
@@ -184,6 +186,170 @@ public class RegistrationWindow extends JFrame{
 		exitAndRegisterButtons.add(btnRegistrate);
 		componentsPanel.add(exitAndRegisterButtons);
 	
+		//nombre
+		txtFieldName.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				// Validar nombre
+			    if (txtFieldName.getText().trim().isEmpty()) {
+			        lblEmptyFieldName.setVisible(true);
+			    } else {
+			        lblEmptyFieldName.setVisible(false);
+			    }
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			    if (txtFieldName.getText().trim().isEmpty()) {
+			        lblEmptyFieldName.setVisible(true);
+
+			    } else {
+			        lblEmptyFieldName.setVisible(false);
+			    }
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// Validar nombre
+			    if (txtFieldName.getText().trim().isEmpty()) {
+			        lblEmptyFieldName.setVisible(true);
+
+			    } else {
+			        lblEmptyFieldName.setVisible(false);
+			    }
+			}
+		}
+		);;
+		
+		
+		//correo
+		txtFieldEmail.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if (txtFieldEmail.getText().trim().isEmpty()) {
+				    	lblEmptyFieldEmail.setVisible(true);
+			        
+			    } else if (!txtFieldEmail.getText().contains("@")) {
+			    		lblEmptyFieldEmail.setVisible(false);
+				    	lblUnvalidEmail.setVisible(true);
+			    		
+			    } else {
+			    		lblEmptyFieldEmail.setVisible(false);
+				    	lblUnvalidEmail.setVisible(false);
+	
+			    }
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				if (txtFieldEmail.getText().trim().isEmpty()) {
+			    	lblEmptyFieldEmail.setVisible(true);
+		        
+		    } else if (!txtFieldEmail.getText().contains("@")) {
+		    		lblEmptyFieldEmail.setVisible(false);
+			    	lblUnvalidEmail.setVisible(true);
+		    		
+		    } else {
+		    		lblEmptyFieldEmail.setVisible(false);
+			    	lblUnvalidEmail.setVisible(false);
+		    }
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				if (txtFieldEmail.getText().trim().isEmpty()) {
+					lblEmptyFieldEmail.setVisible(true);
+		        
+				} else if (!txtFieldEmail.getText().contains("@")) {
+					lblEmptyFieldEmail.setVisible(false);
+					lblUnvalidEmail.setVisible(true);
+		    		
+				} else {
+		    			lblEmptyFieldEmail.setVisible(false);
+		    			lblUnvalidEmail.setVisible(false);
+				}
+		    }
+		}
+		);;
+		
+		//contraseña y confirmar contraseña (por mejorar)
+		pwdPassword.getDocument().addDocumentListener(new DocumentListener() {
+			
+			String pass = new String(pwdPassword.getPassword());
+			String confirmPass = new String(pwdConfirmPassword.getPassword());
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+			    if (pass.isEmpty()) {
+			    		lblEmptyFieldPassword.setVisible(true);
+			    } else {
+			    		lblEmptyFieldPassword.setVisible(false);
+			    }
+
+			    if (confirmPass.isEmpty()) {
+			        lblEmptyFieldConfirmPassword.setVisible(true);
+			    } else {
+			    		lblEmptyFieldConfirmPassword.setVisible(false);
+			    }
+
+			    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
+			    		lblErrorUnequalPasswords.setVisible(true);
+			    } else {
+			    		lblErrorUnequalPasswords.setVisible(false);
+			    }
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+			    if (pass.isEmpty()) {
+			    		lblEmptyFieldPassword.setVisible(true);
+			    } else {
+			    		lblEmptyFieldPassword.setVisible(false);
+			    }
+
+			    if (confirmPass.isEmpty()) {
+			        lblEmptyFieldConfirmPassword.setVisible(true);
+			    } else {
+			    		lblEmptyFieldConfirmPassword.setVisible(false);
+			    }
+
+			    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
+			    		lblErrorUnequalPasswords.setVisible(true);
+			    } else {
+			    		lblErrorUnequalPasswords.setVisible(false);
+			    }
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+			    if (pass.isEmpty()) {
+			    		lblEmptyFieldPassword.setVisible(true);
+			    } else {
+			    		lblEmptyFieldPassword.setVisible(false);
+			    }
+
+			    if (confirmPass.isEmpty()) {
+			        lblEmptyFieldConfirmPassword.setVisible(true);
+			    } else {
+			    		lblEmptyFieldConfirmPassword.setVisible(false);
+			    }
+
+			    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
+			    		lblErrorUnequalPasswords.setVisible(true);
+			    } else {
+			    		lblErrorUnequalPasswords.setVisible(false);
+			    }
+				
+			}
+		});
+		
 		btnRegistrate.addActionListener(e -> {
 
 		    boolean errorFound = false;
