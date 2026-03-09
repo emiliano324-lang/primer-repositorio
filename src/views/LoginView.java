@@ -33,9 +33,9 @@ public class LoginView extends JPanel {
         c.insets = new Insets(5, 5, 5, 5);
 
         // Bienvenida
-        JLabel saludo = new JLabel("BIENVENIDO");
-        saludo.setForeground(new Color(254, 252, 251));
-        saludo.setFont(new Font("Verdana", Font.BOLD, 45));
+        JLabel welcome = new JLabel("BIENVENIDO");
+        welcome.setForeground(new Color(254, 252, 251));
+        welcome.setFont(new Font("Verdana", Font.BOLD, 45));
 
         c.gridx = 0;
         c.gridy = 0;
@@ -43,12 +43,12 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.CENTER;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
-        add(saludo, c);
+        add(welcome, c);
 
         // Usuario
-        JLabel etiquetaUsuario = new JLabel("Usuario");
-        etiquetaUsuario.setForeground(new Color(254, 252, 251));
-        etiquetaUsuario.setFont(font);
+        JLabel lblUser = new JLabel("Usuario");
+        lblUser.setForeground(new Color(254, 252, 251));
+        lblUser.setFont(font);
 
         c.gridx = 0;
         c.gridy = 1;
@@ -56,63 +56,63 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.EAST;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
-        add(etiquetaUsuario, c);
+        add(lblUser, c);
 
         // Campo usuario
-        JTextField usuario = new JTextField(15);
-        usuario.setFont(font);
-        usuario.setBackground(Color.WHITE);
+        JTextField txtFieldUser = new JTextField(15);
+        txtFieldUser.setFont(font);
+        txtFieldUser.setBackground(Color.WHITE);
 
         c.gridx = 1;
         c.weightx = 1.0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        add(usuario, c);
+        add(txtFieldUser, c);
 
         // Error usuario
-        JLabel errorCampoUsuario = new JLabel("Error: este campo es obligatorio");
-        errorCampoUsuario.setFont(new Font("Verdana", Font.PLAIN, 15));
-        errorCampoUsuario.setForeground(Color.red);
-        errorCampoUsuario.setVisible(false);
+        JLabel lblErrorUser = new JLabel("Error: este campo es obligatorio");
+        lblErrorUser.setFont(new Font("Verdana", Font.PLAIN, 15));
+        lblErrorUser.setForeground(Color.red);
+        lblErrorUser.setVisible(false);
 
         c.gridy = 2;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
-        add(errorCampoUsuario, c);
+        add(lblErrorUser, c);
 
         // Contraseña
-        JLabel etiquetaContrasena = new JLabel("Contraseña");
-        etiquetaContrasena.setForeground(new Color(254, 252, 251));
-        etiquetaContrasena.setFont(font);
+        JLabel lblPassword = new JLabel("Contraseña");
+        lblPassword.setForeground(new Color(254, 252, 251));
+        lblPassword.setFont(font);
 
         c.gridx = 0;
         c.gridy = 3;
         c.anchor = GridBagConstraints.EAST;
-        add(etiquetaContrasena, c);
+        add(lblPassword, c);
 
         // Campo contraseña
-        JPasswordField contrasena = new JPasswordField(15);
-        contrasena.setFont(new Font("Verdana", Font.PLAIN, 15));
-        contrasena.setBackground(Color.WHITE);
+        JPasswordField pwdFieldPassword = new JPasswordField(15);
+        pwdFieldPassword.setFont(new Font("Verdana", Font.PLAIN, 15));
+        pwdFieldPassword.setBackground(Color.WHITE);
 
         c.gridx = 1;
         c.weightx = 1.0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        add(contrasena, c);
+        add(pwdFieldPassword, c);
 
         // Error contraseña
-        JLabel errorCampoContrasena = new JLabel("Error: este campo es obligatorio");
-        errorCampoContrasena.setFont(new Font("Verdana", Font.PLAIN, 15));
-        errorCampoContrasena.setForeground(Color.red);
-        errorCampoContrasena.setVisible(false);
+        JLabel lblErrorPassword = new JLabel("Error: este campo es obligatorio");
+        lblErrorPassword.setFont(new Font("Verdana", Font.PLAIN, 15));
+        lblErrorPassword.setForeground(Color.red);
+        lblErrorPassword.setVisible(false);
         
         c.gridy = 4;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
-        add(errorCampoContrasena, c);
+        add(lblErrorPassword, c);
 
         // Boton
-        JButton iniciarSesion = new JButton("Iniciar Sesión");
-        iniciarSesion.setFont(new Font("Arial", Font.PLAIN, 15));
+        JButton login = new JButton("Iniciar Sesión");
+        login.setFont(new Font("Arial", Font.PLAIN, 15));
         
         c.gridx = 0;
         c.gridy = 5;
@@ -120,30 +120,30 @@ public class LoginView extends JPanel {
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;
-        add(iniciarSesion, c);
+        add(login, c);
         
-        iniciarSesion.addActionListener(e -> {
+        login.addActionListener(e -> {
 
-            boolean hayError = false;
+            boolean errorFound = false;
 
             // Validar usuario
-            if (usuario.getText().trim().isEmpty()) {
-                errorCampoUsuario.setVisible(true);
-                hayError = true;
+            if (txtFieldUser.getText().trim().isEmpty()) {
+                lblErrorUser.setVisible(true);
+                errorFound = true;
             } else {
-                errorCampoUsuario.setVisible(false);
+                lblErrorUser.setVisible(false);
             }
 
             // Validar contraseña
-            if (new String(contrasena.getPassword()).trim().isEmpty()) {
-                errorCampoContrasena.setVisible(true);
-                hayError = true;
+            if (new String(pwdFieldPassword.getPassword()).trim().isEmpty()) {
+                lblErrorPassword.setVisible(true);
+                errorFound = true;
             } else {
-                errorCampoContrasena.setVisible(false);
+                lblErrorPassword.setVisible(false);
             }
 
             // Si no hay errores
-            if (!hayError) {
+            if (!errorFound) {
                 JOptionPane.showMessageDialog(
                         null,
                         "Sesión iniciada correctamente",
