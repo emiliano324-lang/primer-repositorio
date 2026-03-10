@@ -13,11 +13,14 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.util.concurrent.Flow;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -62,6 +65,7 @@ public class RegistrationWindow extends JFrame{
 		Font subtitleFont = new Font("Verdana", Font.BOLD, 16);
 		Font textFont = new Font("Verdana", Font.BOLD, 12);
 		FlowLayout alignToCenter = new FlowLayout(FlowLayout.CENTER);
+		Color defaultButtonColor;
 		
 		// CREAR TITULO "FORMULARIO DE REGISTRO"
 		JPanel superiorBar = new JPanel(alignToCenter);
@@ -160,10 +164,37 @@ public class RegistrationWindow extends JFrame{
 		exitAndRegisterButtons.setBackground(customBlue);
 		
 		JButton btnExit = new JButton("Salir");
+		
+		defaultButtonColor = btnExit.getBackground();
+		
 		btnExit.setFont(textFont);
+		
+		btnExit.addMouseListener(new MouseAdapter() {
+			
+			public void mouseEntered (MouseEvent e) {
+				changeBackground(btnExit);
+			}
+		
+			public void mouseExited(MouseEvent e) {
+				resetBackground(btnExit, defaultButtonColor);
+			}
+			
+		});
 		
 		JButton btnRegistrate = new JButton("Registrarme");
 		btnRegistrate.setFont(textFont);
+		
+		btnRegistrate.addMouseListener(new MouseAdapter() {
+			
+			public void mouseEntered (MouseEvent e) {
+				changeBackground(btnRegistrate);
+			}
+		
+			public void mouseExited(MouseEvent e) {
+				resetBackground(btnRegistrate, defaultButtonColor);
+			}
+			
+		});
 		
 		// AÑADIR TITULO
 		superiorBar.add(title);
@@ -427,6 +458,17 @@ public class RegistrationWindow extends JFrame{
 		scroll.setHorizontalScrollBar(null);
 		
 		add(scroll);
+	}
+	
+	private void changeBackground(JComponent c) {
+		c.setBackground(Color.BLACK);
+		c.setForeground(Color.WHITE);
+		
+	}
+	
+	private void resetBackground(JComponent c, Color defaultButtonColor) {
+		c.setBackground(defaultButtonColor);
+		c.setForeground(Color.BLACK);
 	}
 	
 	private JLabel createLabel(String lblText, Font font, JPanel panel) {
