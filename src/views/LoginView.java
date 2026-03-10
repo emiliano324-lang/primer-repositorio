@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class LoginView extends JPanel {
 
@@ -122,6 +124,40 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.CENTER;
         add(login, c);
         
+        
+        
+        
+        
+        txtFieldUser.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				warningUserLavel(txtFieldUser, lblErrorUser);
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				warningUserLavel(txtFieldUser, lblErrorUser);
+				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				warningUserLavel(txtFieldUser, lblErrorUser);
+				
+			}
+		});
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         login.addActionListener(e -> {
 
             boolean errorFound = false;
@@ -154,6 +190,15 @@ public class LoginView extends JPanel {
                 handleRegistration();
             }
         });
+    }
+    
+    
+    private void warningUserLavel(JTextField txtUser, JLabel lblErrorUser) {
+    	if (txtUser.getText().trim().isEmpty()) {
+            lblErrorUser.setVisible(true);
+        } else {
+            lblErrorUser.setVisible(false);
+        }
     }
     
     private void handleLogin() {

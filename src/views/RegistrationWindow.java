@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.LayoutManager;
+import java.awt.TextField;
 import java.awt.Toolkit;
 
 //import java.util.concurrent.Flow;
@@ -222,38 +223,21 @@ public class RegistrationWindow extends JFrame{
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				
-				// Validar nombre
-			    if (txtFieldName.getText().trim().isEmpty()) {
-			        lblEmptyFieldName.setVisible(true);
-			    } else {
-			        lblEmptyFieldName.setVisible(false);
-			    }
+			
+			    warningLavel(lblEmptyFieldName, txtFieldName);
 				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-			    if (txtFieldName.getText().trim().isEmpty()) {
-			        lblEmptyFieldName.setVisible(true);
-
-			    } else {
-			        lblEmptyFieldName.setVisible(false);
-			    }
+				 warningLavel(lblEmptyFieldName, txtFieldName);
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				// Validar nombre
-			    if (txtFieldName.getText().trim().isEmpty()) {
-			        lblEmptyFieldName.setVisible(true);
-
-			    } else {
-			        lblEmptyFieldName.setVisible(false);
-			    }
+				 warningLavel(lblEmptyFieldName, txtFieldName);
 			}
-		}
-		);;
+		});;
 		
 		
 		//correo
@@ -261,48 +245,19 @@ public class RegistrationWindow extends JFrame{
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				if (txtFieldEmail.getText().trim().isEmpty()) {
-				    	lblEmptyFieldEmail.setVisible(true);
-			        
-			    } else if (!txtFieldEmail.getText().contains("@")) {
-			    		lblEmptyFieldEmail.setVisible(false);
-				    	lblUnvalidEmail.setVisible(true);
-			    		
-			    } else {
-			    		lblEmptyFieldEmail.setVisible(false);
-				    	lblUnvalidEmail.setVisible(false);
-	
-			    }
+				
+				warningEmailLavel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
+				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				if (txtFieldEmail.getText().trim().isEmpty()) {
-			    	lblEmptyFieldEmail.setVisible(true);
-		        
-		    } else if (!txtFieldEmail.getText().contains("@")) {
-		    		lblEmptyFieldEmail.setVisible(false);
-			    	lblUnvalidEmail.setVisible(true);
-		    		
-		    } else {
-		    		lblEmptyFieldEmail.setVisible(false);
-			    	lblUnvalidEmail.setVisible(false);
-		    }
+				warningEmailLavel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				if (txtFieldEmail.getText().trim().isEmpty()) {
-					lblEmptyFieldEmail.setVisible(true);
-		        
-				} else if (!txtFieldEmail.getText().contains("@")) {
-					lblEmptyFieldEmail.setVisible(false);
-					lblUnvalidEmail.setVisible(true);
-		    		
-				} else {
-		    			lblEmptyFieldEmail.setVisible(false);
-		    			lblUnvalidEmail.setVisible(false);
-				}
+				warningEmailLavel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
 		    }
 		}
 		);;
@@ -315,69 +270,23 @@ public class RegistrationWindow extends JFrame{
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-			    if (pass.isEmpty()) {
-			    		lblEmptyFieldPassword.setVisible(true);
-			    } else {
-			    		lblEmptyFieldPassword.setVisible(false);
-			    }
-
-			    if (confirmPass.isEmpty()) {
-			        lblEmptyFieldConfirmPassword.setVisible(true);
-			    } else {
-			    		lblEmptyFieldConfirmPassword.setVisible(false);
-			    }
-
-			    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
-			    		lblErrorUnequalPasswords.setVisible(true);
-			    } else {
-			    		lblErrorUnequalPasswords.setVisible(false);
-			    }
+				warningPassLavel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+				
+				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-			    if (pass.isEmpty()) {
-			    		lblEmptyFieldPassword.setVisible(true);
-			    } else {
-			    		lblEmptyFieldPassword.setVisible(false);
-			    }
-
-			    if (confirmPass.isEmpty()) {
-			        lblEmptyFieldConfirmPassword.setVisible(true);
-			    } else {
-			    		lblEmptyFieldConfirmPassword.setVisible(false);
-			    }
-
-			    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
-			    		lblErrorUnequalPasswords.setVisible(true);
-			    } else {
-			    		lblErrorUnequalPasswords.setVisible(false);
-			    }
+				warningPassLavel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+				
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-			    if (pass.isEmpty()) {
-			    		lblEmptyFieldPassword.setVisible(true);
-			    } else {
-			    		lblEmptyFieldPassword.setVisible(false);
-			    }
-
-			    if (confirmPass.isEmpty()) {
-			        lblEmptyFieldConfirmPassword.setVisible(true);
-			    } else {
-			    		lblEmptyFieldConfirmPassword.setVisible(false);
-			    }
-
-			    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
-			    		lblErrorUnequalPasswords.setVisible(true);
-			    } else {
-			    		lblErrorUnequalPasswords.setVisible(false);
-			    }
-				
+				warningPassLavel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+					
 			}
 		});
 		
@@ -386,53 +295,17 @@ public class RegistrationWindow extends JFrame{
 		    boolean errorFound = false;
 
 		    // Validar nombre
-		    if (txtFieldName.getText().trim().isEmpty()) {
-		        lblEmptyFieldName.setVisible(true);
-		        errorFound = true;
-
-		    } else {
-		        lblEmptyFieldName.setVisible(false);
-		    }
+		    warningLavel(lblEmptyFieldName, txtFieldName);
 
 		    // Validar correo
-		    if (txtFieldEmail.getText().trim().isEmpty()) {
-			    	lblEmptyFieldEmail.setVisible(true);
-		        errorFound = true;
-		        
-		    } else if (!txtFieldEmail.getText().contains("@")) {
-		    		lblEmptyFieldEmail.setVisible(false);
-			    	lblUnvalidEmail.setVisible(true);
-		    		
-		    } else {
-		    		lblEmptyFieldEmail.setVisible(false);
-			    	lblUnvalidEmail.setVisible(false);
-
-		    }
+		    warningEmailLavel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
 
 		    // Validar contraseña
 		    String pass = new String(pwdPassword.getPassword());
 		    String confirmPass = new String(pwdConfirmPassword.getPassword());
 
-		    if (pass.isEmpty()) {
-		    		lblEmptyFieldPassword.setVisible(true);
-		        errorFound = true;
-		    } else {
-		    		lblEmptyFieldPassword.setVisible(false);
-		    }
-
-		    if (confirmPass.isEmpty()) {
-		        lblEmptyFieldConfirmPassword.setVisible(true);
-		        errorFound = true;
-		    } else {
-		    		lblEmptyFieldConfirmPassword.setVisible(false);
-		    }
-
-		    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
-		    		lblErrorUnequalPasswords.setVisible(true);
-		        errorFound = true;
-		    } else {
-		    		lblErrorUnequalPasswords.setVisible(false);
-		    }
+		    warningPassLavel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+			
 
 		    // Validar términos
 		    if (!rbTermsAndConditions.isSelected()) {
@@ -485,6 +358,52 @@ public class RegistrationWindow extends JFrame{
 		return label;
 	}
 	
+	private void warningLavel(JLabel lavel,JTextField txtField) {
+		
+		if (txtField.getText().trim().isEmpty()) {
+	        lavel.setVisible(true);
+	    } else {
+	        lavel.setVisible(false);
+	    }
+		
+	}
+
+	private void warningEmailLavel(JLabel emtyLavel , JTextField txtFieldEmail,JLabel unvalidEmail) {
+		if (txtFieldEmail.getText().trim().isEmpty()) {
+	    	emtyLavel.setVisible(true);
+        
+	    } else if (!txtFieldEmail.getText().contains("@")) {
+	    		emtyLavel.setVisible(false);
+		    	unvalidEmail.setVisible(true);
+	    		
+	    } else {
+	    		emtyLavel.setVisible(false);
+		    	unvalidEmail.setVisible(false);
+	
+	    }
+		
+	}
+	private void warningPassLavel(String confirmPass, String pass, JLabel lblEmptyPass, JLabel lblEmtyConfirmPass,JLabel lblErrorUniquePass) {
+		if (pass.isEmpty()) {
+	    		lblEmptyPass.setVisible(true);
+	    } else {
+	    		lblEmptyPass.setVisible(false);
+	    }
+
+	    if (confirmPass.isEmpty()) {
+	        lblEmtyConfirmPass.setVisible(true);
+	    } else {
+	    		lblEmtyConfirmPass.setVisible(false);
+	    }
+
+	    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
+	    		lblErrorUniquePass.setVisible(true);
+	    } else {
+	    		lblErrorUniquePass.setVisible(false);
+	    }
+	}
+	
+	
 	private JTextField createTextField(JPanel panel) {
 		
 		JTextField textField = new JTextField();
@@ -525,6 +444,10 @@ public class RegistrationWindow extends JFrame{
 		
 		return button;
 	}
+	
+	
+	
+	
 	
 	private JLabel createErrorLabel(String lblText, JPanel panel) {
 		
