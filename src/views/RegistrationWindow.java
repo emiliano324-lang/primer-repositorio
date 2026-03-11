@@ -107,9 +107,16 @@ public class RegistrationWindow extends JFrame{
 		
 		// ETIQUETAS
 		JLabel lblName = createLabel("Nombre de Usuario", textFont, labelsColumn);
+		lblName.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		
 		JLabel lblEmail = createLabel("Email", textFont, labelsColumn);
+		lblEmail.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		
 		JLabel lblPassword = createLabel("Contraseña", textFont, labelsColumn);
+		lblPassword.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		
 		JLabel lblConfirmPassword = createLabel("Confirmar contraseña", textFont, labelsColumn);
+		lblConfirmPassword.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
 		
 		// CAMPOS Y SU ETIQUETA DE ERROR
 		JTextField txtFieldName = createTextField(fieldsColumn);
@@ -164,38 +171,14 @@ public class RegistrationWindow extends JFrame{
 		JPanel exitAndRegisterButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		exitAndRegisterButtons.setBackground(customBlue);
 		
-		JButton btnExit = new JButton("Salir");
+		JButton btnExit = createJButton("Salir", textFont, exitAndRegisterButtons);
+		JButton btnRegistrate = createJButton("Registrarme", textFont, exitAndRegisterButtons);
 		
-		defaultButtonColor = btnExit.getBackground();
+		// BARRA VERTICAL DE SCROLL
+		JScrollPane scroll = new JScrollPane(componentsPanel);
+		scroll.setHorizontalScrollBar(null);
 		
-		btnExit.setFont(textFont);
-		
-		btnExit.addMouseListener(new MouseAdapter() {
-			
-			public void mouseEntered (MouseEvent e) {
-				changeBackground(btnExit);
-			}
-		
-			public void mouseExited(MouseEvent e) {
-				resetBackground(btnExit, defaultButtonColor);
-			}
-			
-		});
-		
-		JButton btnRegistrate = new JButton("Registrarme");
-		btnRegistrate.setFont(textFont);
-		
-		btnRegistrate.addMouseListener(new MouseAdapter() {
-			
-			public void mouseEntered (MouseEvent e) {
-				changeBackground(btnRegistrate);
-			}
-		
-			public void mouseExited(MouseEvent e) {
-				resetBackground(btnRegistrate, defaultButtonColor);
-			}
-			
-		});
+		add(scroll);
 		
 		// AÑADIR TITULO
 		superiorBar.add(title);
@@ -218,51 +201,51 @@ public class RegistrationWindow extends JFrame{
 		exitAndRegisterButtons.add(btnRegistrate);
 		componentsPanel.add(exitAndRegisterButtons);
 	
-		//nombre
+		// VALIDACIONES EN TIEMPO REAL
+		
+		// NOMBRE
 		txtFieldName.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 			
-			    warningLavel(lblEmptyFieldName, txtFieldName);
+			    warningLabel(lblEmptyFieldName, txtFieldName);
 				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				 warningLavel(lblEmptyFieldName, txtFieldName);
+				 warningLabel(lblEmptyFieldName, txtFieldName);
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				 warningLavel(lblEmptyFieldName, txtFieldName);
+				 warningLabel(lblEmptyFieldName, txtFieldName);
 			}
 		});;
 		
-		
-		//correo
+		// CORREO
 		txtFieldEmail.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				
-				warningEmailLavel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
+				warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
 				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				warningEmailLavel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
+				warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				warningEmailLavel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
+				warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
 		    }
-		}
-		);;
+		});;
 		
-		//contraseña y confirmar contraseña (por mejorar)
+		// CONTRASEÑA Y CONFIRMAR CONTRASEÑA
 		pwdPassword.getDocument().addDocumentListener(new DocumentListener() {
 			
 			String pass = new String(pwdPassword.getPassword());
@@ -270,7 +253,7 @@ public class RegistrationWindow extends JFrame{
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				warningPassLavel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+				warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
 				
 				
 			}
@@ -278,36 +261,36 @@ public class RegistrationWindow extends JFrame{
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-				warningPassLavel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+				warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
 				
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-				warningPassLavel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+				warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
 					
 			}
 		});
 		
+		// VALIDACIONES DE BOTON REGISTRAR
 		btnRegistrate.addActionListener(e -> {
 
 		    boolean errorFound = false;
 
 		    // Validar nombre
-		    warningLavel(lblEmptyFieldName, txtFieldName);
+		    warningLabel(lblEmptyFieldName, txtFieldName);
 
 		    // Validar correo
-		    warningEmailLavel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
+		    warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
 
 		    // Validar contraseña
 		    String pass = new String(pwdPassword.getPassword());
 		    String confirmPass = new String(pwdConfirmPassword.getPassword());
 
-		    warningPassLavel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+		    warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
 			
-
-		    // Validar términos
+		    // Validar términos y condiciones
 		    if (!rbTermsAndConditions.isSelected()) {
 		        JOptionPane.showMessageDialog(null,
 		                "Debes aceptar los términos y condiciones",
@@ -326,24 +309,10 @@ public class RegistrationWindow extends JFrame{
 		    }
 
 		});
-		
-		JScrollPane scroll = new JScrollPane(componentsPanel);
-		scroll.setHorizontalScrollBar(null);
-		
-		add(scroll);
 	}
 	
-	private void changeBackground(JComponent c) {
-		c.setBackground(Color.BLACK);
-		c.setForeground(Color.WHITE);
-		
-	}
 	
-	private void resetBackground(JComponent c, Color defaultButtonColor) {
-		c.setBackground(defaultButtonColor);
-		c.setForeground(Color.BLACK);
-	}
-	
+	// CREAR COMPONENTES
 	private JLabel createLabel(String lblText, Font font, JPanel panel) {
 		
 		JLabel label = new JLabel(lblText);
@@ -351,58 +320,11 @@ public class RegistrationWindow extends JFrame{
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
 		label.setVisible(true);
-		label.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-
+		
 		panel.add(label);
 		
 		return label;
 	}
-	
-	private void warningLavel(JLabel lavel,JTextField txtField) {
-		
-		if (txtField.getText().trim().isEmpty()) {
-	        lavel.setVisible(true);
-	    } else {
-	        lavel.setVisible(false);
-	    }
-		
-	}
-
-	private void warningEmailLavel(JLabel emtyLavel , JTextField txtFieldEmail,JLabel unvalidEmail) {
-		if (txtFieldEmail.getText().trim().isEmpty()) {
-	    	emtyLavel.setVisible(true);
-        
-	    } else if (!txtFieldEmail.getText().contains("@")) {
-	    		emtyLavel.setVisible(false);
-		    	unvalidEmail.setVisible(true);
-	    		
-	    } else {
-	    		emtyLavel.setVisible(false);
-		    	unvalidEmail.setVisible(false);
-	
-	    }
-		
-	}
-	private void warningPassLavel(String confirmPass, String pass, JLabel lblEmptyPass, JLabel lblEmtyConfirmPass,JLabel lblErrorUniquePass) {
-		if (pass.isEmpty()) {
-	    		lblEmptyPass.setVisible(true);
-	    } else {
-	    		lblEmptyPass.setVisible(false);
-	    }
-
-	    if (confirmPass.isEmpty()) {
-	        lblEmtyConfirmPass.setVisible(true);
-	    } else {
-	    		lblEmtyConfirmPass.setVisible(false);
-	    }
-
-	    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
-	    		lblErrorUniquePass.setVisible(true);
-	    } else {
-	    		lblErrorUniquePass.setVisible(false);
-	    }
-	}
-	
 	
 	private JTextField createTextField(JPanel panel) {
 		
@@ -426,6 +348,31 @@ public class RegistrationWindow extends JFrame{
 		return passwordField;
 	}
 	
+	private JButton createJButton(String lblText, Font font, JPanel panel) {
+		
+		JButton button = new JButton(lblText);
+		
+		Color defaultButtonColor = button.getBackground();
+		
+		button.setFont(font);
+		
+		panel.add(button);
+		
+		button.addMouseListener(new MouseAdapter() {
+			
+			public void mouseEntered (MouseEvent e) {
+				changeBackground(button);
+			}
+		
+			public void mouseExited(MouseEvent e) {
+				resetBackground(button, defaultButtonColor);
+			}
+			
+		});
+		
+		return button;
+	}
+
 	private JRadioButton createJRadioButton(String lblText, ButtonGroup grpButtons, JPanel panel) {
 		
 		JRadioButton button = new JRadioButton(lblText);
@@ -445,10 +392,6 @@ public class RegistrationWindow extends JFrame{
 		return button;
 	}
 	
-	
-	
-	
-	
 	private JLabel createErrorLabel(String lblText, JPanel panel) {
 		
 		JLabel errorLabel = new JLabel(lblText);
@@ -463,9 +406,75 @@ public class RegistrationWindow extends JFrame{
 		return errorLabel;
 	}
 	
+	// CAMBIO DE FONDO
+	private void changeBackground(JComponent c) {
+		c.setBackground(Color.BLACK);
+		c.setForeground(Color.WHITE);
+		
+	}
+	
+	private void resetBackground(JComponent c, Color defaultButtonColor) {
+		c.setBackground(defaultButtonColor);
+		c.setForeground(Color.BLACK);
+	}
+	
+	// 
+	private void warningLabel(JLabel label, JTextField txtField) {
+		
+		if (txtField.getText().trim().isEmpty()) {
+	        label.setVisible(true);
+	    } else {
+	        label.setVisible(false);
+	    }
+		
+	}
+
+	private void warningEmailLabel(JLabel emptyLabel , JTextField txtFieldEmail, JLabel unvalidEmail) {
+		
+		if (txtFieldEmail.getText().trim().isEmpty()) {
+	    	emptyLabel.setVisible(true);
+        
+	    } else if (!txtFieldEmail.getText().contains("@")) {
+	    		emptyLabel.setVisible(false);
+		    	unvalidEmail.setVisible(true);
+	    		
+	    } else {
+	    		emptyLabel.setVisible(false);
+		    	unvalidEmail.setVisible(false);
+	    }
+	}
+	
+	private void warningPassLabel(String confirmPass, String pass, JLabel lblEmptyPass, JLabel lblEmptyConfirmPass,JLabel lblErrorUniquePass) {
+		if (pass.isEmpty()) {
+	    		lblEmptyPass.setVisible(true);
+	    } else {
+	    		lblEmptyPass.setVisible(false);
+	    }
+
+	    if (confirmPass.isEmpty()) {
+	        lblEmptyConfirmPass.setVisible(true);
+	    } else {
+	    		lblEmptyConfirmPass.setVisible(false);
+	    }
+
+	    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
+	    		lblErrorUniquePass.setVisible(true);
+	    } else {
+	    		lblErrorUniquePass.setVisible(false);
+	    }
+	}
+	
 	 private void handleLogin() {
 		new MainWindow();
 		
 		window.dispose();
 	}
+	 
+	 private void handleClose() {
+		 int option = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?");
+		 
+		 if(option == JOptionPane.YES_OPTION) {
+			 System.exit(0);
+		 }
+	 }
 }
