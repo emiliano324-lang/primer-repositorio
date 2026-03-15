@@ -41,6 +41,7 @@ public class RegistrationWindow extends JFrame{
 
 	LoginWindow window;
 	
+	
 	public RegistrationWindow() {
 		
 		setSize(450, 450);
@@ -171,7 +172,7 @@ public class RegistrationWindow extends JFrame{
 		JPanel exitAndRegisterButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		exitAndRegisterButtons.setBackground(customBlue);
 		
-		JButton btnExit = createJButton("Salir", textFont, exitAndRegisterButtons);
+		JButton btnExit = createJButton("Atras", textFont, exitAndRegisterButtons);
 		JButton btnRegistrate = createJButton("Registrarme", textFont, exitAndRegisterButtons);
 		
 		// BARRA VERTICAL DE SCROLL
@@ -209,18 +210,18 @@ public class RegistrationWindow extends JFrame{
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 			
-			    warningLabel(lblEmptyFieldName, txtFieldName);
+			    warningNameLabel(lblEmptyFieldName, txtFieldName);
 				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				 warningLabel(lblEmptyFieldName, txtFieldName);
+				 warningNameLabel(lblEmptyFieldName, txtFieldName);
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				 warningLabel(lblEmptyFieldName, txtFieldName);
+				 warningNameLabel(lblEmptyFieldName, txtFieldName);
 			}
 		});;
 		
@@ -245,6 +246,7 @@ public class RegistrationWindow extends JFrame{
 		    }
 		});;
 		
+		
 		// CONTRASEÑA Y CONFIRMAR CONTRASEÑA
 		pwdPassword.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -254,7 +256,6 @@ public class RegistrationWindow extends JFrame{
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
-				
 				
 			}
 			
@@ -279,7 +280,7 @@ public class RegistrationWindow extends JFrame{
 		    boolean errorFound = false;
 
 		    // Validar nombre
-		    warningLabel(lblEmptyFieldName, txtFieldName);
+		    warningNameLabel(lblEmptyFieldName, txtFieldName);
 
 		    // Validar correo
 		    warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
@@ -305,9 +306,13 @@ public class RegistrationWindow extends JFrame{
 		                "Registro exitoso",
 		                "Éxito",
 		                JOptionPane.INFORMATION_MESSAGE);
-		        handleLogin();
+		        handleBack();
 		    }
 
+		});
+		
+		btnExit.addActionListener(e -> {
+			handleBack();
 		});
 	}
 	
@@ -419,7 +424,7 @@ public class RegistrationWindow extends JFrame{
 	}
 	
 	// 
-	private void warningLabel(JLabel label, JTextField txtField) {
+	private void warningNameLabel(JLabel label, JTextField txtField) {
 		
 		if (txtField.getText().trim().isEmpty()) {
 	        label.setVisible(true);
@@ -445,6 +450,7 @@ public class RegistrationWindow extends JFrame{
 	}
 	
 	private void warningPassLabel(String confirmPass, String pass, JLabel lblEmptyPass, JLabel lblEmptyConfirmPass,JLabel lblErrorUniquePass) {
+	
 		if (pass.isEmpty()) {
 	    		lblEmptyPass.setVisible(true);
 	    } else {
@@ -464,17 +470,23 @@ public class RegistrationWindow extends JFrame{
 	    }
 	}
 	
-	 private void handleLogin() {
+	private void handleLogin() {
 		new MainWindow();
 		
 		window.dispose();
 	}
+	
+	private void handleBack() {
+		new LoginWindow();
+		
+		this.dispose();
+	}
 	 
-	 private void handleClose() {
-		 int option = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?");
+	private void handleClose() {
+		int option = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?");
 		 
-		 if(option == JOptionPane.YES_OPTION) {
+		if(option == JOptionPane.YES_OPTION) {
 			 System.exit(0);
-		 }
+		}
 	 }
 }
