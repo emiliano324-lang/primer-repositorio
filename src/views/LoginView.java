@@ -23,10 +23,8 @@ public class LoginView extends JPanel {
 	Font font;
 	
     public LoginView() {
-    	
-		this.window = window;
-		
-		font = new Font("Verdana", Font.BOLD, 18);
+    		
+    		font = new Font("Verdana", Font.BOLD, 18);
     		
         setBackground(new Color(0, 31, 84));
         setLayout(new GridBagLayout());
@@ -113,8 +111,8 @@ public class LoginView extends JPanel {
         add(lblErrorPassword, c);
 
         // Boton
-        JButton login = new JButton("Iniciar Sesión");
-        login.setFont(new Font("Arial", Font.PLAIN, 15));
+        JButton btnlogin = new JButton("Iniciar Sesión");
+        btnlogin.setFont(new Font("Arial", Font.PLAIN, 15));
         
         c.gridx = 0;
         c.gridy = 5;
@@ -122,27 +120,53 @@ public class LoginView extends JPanel {
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;
-        add(login, c);
+        add(btnlogin, c);
+        
+        JButton btnSingIn = new JButton("Registrarme");
+        btnSingIn.setFont(new Font("Arial", Font.PLAIN, 15));
+        c.gridx = 0;
+        c.gridy = 5;
+        c.gridwidth = 3;
+        c.weightx = 0;
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.WEST;
+        
+        add(btnSingIn, c);
+        
         
         txtFieldUser.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				warningUserLavel(txtFieldUser, lblErrorUser);
+				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				warningUserLavel(txtFieldUser, lblErrorUser);
+				
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				warningUserLavel(txtFieldUser, lblErrorUser);
+				
 			}
 		});
         
-        login.addActionListener(e -> {
+        
+        
+        
+        
+        
+        
+        btnSingIn.addActionListener(e ->{
+        	handleRegistration();
+        });
+        
+        
+        btnlogin.addActionListener(e -> {
 
             boolean errorFound = false;
 
@@ -170,10 +194,12 @@ public class LoginView extends JPanel {
                         "Iniciado",
                         JOptionPane.INFORMATION_MESSAGE
                 );
-                handleMain();
+                //handleLogin();
+                handleLogin();
             }
         });
     }
+    
     
     private void warningUserLavel(JTextField txtUser, JLabel lblErrorUser) {
     	if (txtUser.getText().trim().isEmpty()) {
@@ -183,15 +209,15 @@ public class LoginView extends JPanel {
         }
     }
     
-    private void handleMain() {
+    private void handleLogin() {
 		new MainWindow();
 		
 		window.dispose();
 	}
     
-    /*private void handleRegistration() {
-        new RegistrationWindow();
-
-        window.dispose();
-    }*/
+    private void handleRegistration() {
+    		new RegistrationWindow();
+    		
+    		window.dispose();
+    }
 }
