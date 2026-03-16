@@ -24,9 +24,9 @@ public class LoginView extends JPanel {
 	
     public LoginView() {
     	
-    		this.window = window;
-    		
-    		font = new Font("Verdana", Font.BOLD, 18);
+		this.window = window;
+		
+		font = new Font("Verdana", Font.BOLD, 18);
     		
         setBackground(new Color(0, 31, 84));
         setLayout(new GridBagLayout());
@@ -124,39 +124,23 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.CENTER;
         add(login, c);
         
-        
-        
-        
-        
         txtFieldUser.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				warningUserLavel(txtFieldUser, lblErrorUser);
-				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				warningUserLavel(txtFieldUser, lblErrorUser);
-				
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				warningUserLavel(txtFieldUser, lblErrorUser);
-				
 			}
 		});
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         login.addActionListener(e -> {
 
@@ -186,12 +170,10 @@ public class LoginView extends JPanel {
                         "Iniciado",
                         JOptionPane.INFORMATION_MESSAGE
                 );
-                //handleLogin();
-                handleRegistration();
+                handleMain();
             }
         });
     }
-    
     
     private void warningUserLavel(JTextField txtUser, JLabel lblErrorUser) {
     	if (txtUser.getText().trim().isEmpty()) {
@@ -201,15 +183,15 @@ public class LoginView extends JPanel {
         }
     }
     
-    private void handleLogin() {
+    private void handleMain() {
 		new MainWindow();
 		
 		window.dispose();
 	}
     
-    private void handleRegistration() {
-    		new RegistrationWindow();
-    		
-    		window.dispose();
-    }
+    /*private void handleRegistration() {
+        new RegistrationWindow();
+
+        window.dispose();
+    }*/
 }
