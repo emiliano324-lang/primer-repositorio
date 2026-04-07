@@ -17,6 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import exceptions.InvalidPasswordException;
+import exceptions.InvalidUserException;
+
 public class LoginView extends JPanel {
 
 	LoginWindow window;
@@ -24,7 +27,7 @@ public class LoginView extends JPanel {
 	
     public LoginView() {
     		
-    		font = new Font("Verdana", Font.BOLD, 18);
+    	font = new Font("Verdana", Font.BOLD, 18);
     		
         setBackground(new Color(0, 31, 84));
         setLayout(new GridBagLayout());
@@ -122,8 +125,8 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.CENTER;
         add(btnlogin, c);
         
-        JButton btnSingIn = new JButton("Registrarme");
-        btnSingIn.setFont(new Font("Arial", Font.PLAIN, 15));
+        JButton btnSignIn = new JButton("Registrarme");
+        btnSignIn.setFont(new Font("Arial", Font.PLAIN, 15));
         c.gridx = 0;
         c.gridy = 5;
         c.gridwidth = 3;
@@ -131,7 +134,7 @@ public class LoginView extends JPanel {
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.WEST;
         
-        add(btnSingIn, c);
+        add(btnSignIn, c);
         
         
         txtFieldUser.getDocument().addDocumentListener(new DocumentListener() {
@@ -158,48 +161,50 @@ public class LoginView extends JPanel {
         
         
         
-        
-        
-        
-        btnSingIn.addActionListener(e ->{
+        btnSignIn.addActionListener(e ->{
         	handleRegistration();
         });
         
         
         btnlogin.addActionListener(e -> {
 
-            boolean errorFound = false;
-
-            // Validar usuario
-            if (txtFieldUser.getText().trim().isEmpty()) {
-                lblErrorUser.setVisible(true);
-                errorFound = true;
-            } else {
-                lblErrorUser.setVisible(false);
-            }
-
-            // Validar contraseña
-            if (new String(pwdFieldPassword.getPassword()).trim().isEmpty()) {
-                lblErrorPassword.setVisible(true);
-                errorFound = true;
-            } else {
-                lblErrorPassword.setVisible(false);
-            }
-
-            // Si no hay errores
-            if (!errorFound) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Sesión iniciada correctamente",
-                        "Iniciado",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-                //handleLogin();
-                handleLogin();
-            }
+        	try {
+        		validateLogin(txtFieldUser, pwdFieldPassword, lblErrorUser, lblErrorPassword);
+        	}catch (InvalidUserException ex){
+        		System.out.println(ex.getMessage());
+        		
+        	}catch (InvalidPasswordException ex) {
+        		System.out.println(ex.getMessage());
+        	}
         });
     }
     
+        private boolean validateLogin (JTextField txtFieldUser, JPasswordField pwdFieldPassword,
+                JLabel lblErrorUser, JLabel lblErrorPassword) throws InvalidUserException, InvalidPasswordException{
+        	
+    		boolean errorFound = false;
+    		
+    		// Validar usuario
+    		if (txtFieldUser.getText().trim().isEmpty()) {
+    			errorFound = true;
+    			lblErrorUser.setVisible(true);
+    			
+    			throw new InvalidUserException();
+    		} else {
+    			lblErrorUser.setVisible(false);
+    		}
+    		
+    		// Validar contraseña
+    		if (new String(pwdFieldPassword.getPassword()).trim().isEmpty()) {
+    			errorFound = true;
+    			lblErrorPassword.setVisible(true);
+    			throw new InvalidPasswordException();
+    		} else {
+    			lblErrorPassword.setVisible(false);
+    		}
+    		
+    		return !errorFound;
+		}
     
     private void warningUserLavel(JTextField txtUser, JLabel lblErrorUser) {
     	if (txtUser.getText().trim().isEmpty()) {
@@ -208,6 +213,8 @@ public class LoginView extends JPanel {
             lblErrorUser.setVisible(false);
         }
     }
+    
+    
     
     private void handleLogin() {
 		new MainWindow();

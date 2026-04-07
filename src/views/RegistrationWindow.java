@@ -43,6 +43,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import exceptions.InvalidPasswordException;
+import exceptions.InvalidUserException;
+
 
 public class RegistrationWindow extends JFrame{
 
@@ -262,7 +265,6 @@ public class RegistrationWindow extends JFrame{
 		    }
 		});;
 		
-		
 		// CONTRASEÑA Y CONFIRMAR CONTRASEÑA
 		pwdPassword.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -298,49 +300,57 @@ public class RegistrationWindow extends JFrame{
 		
 		// Boton Registrarse
 		btnRegistrate.addActionListener(e -> {
+			
+			try {
+				
+				boolean errorFound = false;
+	
+			    // Validar nombre
+			    warningNameLabel(lblEmptyFieldName, txtFieldName);
+	
+			    // Validar correo
+			    warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail, lblUnvalidEmail);
+			    
+			    // Validar contraseña
+			    String pass = new String(pwdPassword.getPassword());
+			    String confirmPass = new String(pwdConfirmPassword.getPassword());
+	
+			    warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
+			   
+			    // Validar términos y condiciones
+			    if (!rbTermsAndConditions.isSelected()) {
+			        JOptionPane.showMessageDialog(null,
+			                "Debes aceptar los términos y condiciones",
+			                "Error",
+			                JOptionPane.WARNING_MESSAGE);
+			        errorFound = true;
+			    }
+			    
+			    // Verificar si no hay error usando la visibilidad de las etiquetas de error
+			    if (lblEmptyFieldName.isVisible() ||
+			    		lblEmptyFieldEmail.isVisible() ||
+			    		lblUnvalidEmail.isVisible() ||
+			    		lblEmptyFieldPassword.isVisible() ||
+			    		lblEmptyFieldConfirmPassword.isVisible() ||
+			    		lblErrorUnequalPasswords.isVisible()) {
+			    		errorFound = true;
+			    }
+			    
+			    // Si todo está correcto
+			    if (!errorFound) {
+			        JOptionPane.showMessageDialog(null,
+			                "Registro exitoso",
+			                "Éxito",
+			                JOptionPane.INFORMATION_MESSAGE);
+			        handleBack();
+			    }
 
-		    boolean errorFound = false;
-
-		    // Validar nombre
-		    warningNameLabel(lblEmptyFieldName, txtFieldName);
-
-		    // Validar correo
-		    warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail, lblUnvalidEmail);
+			}catch(InvalidUserException ex) {
+				
+			}catch(InvalidPasswordException ex) {
+				
+			}
 		    
-		    // Validar contraseña
-		    String pass = new String(pwdPassword.getPassword());
-		    String confirmPass = new String(pwdConfirmPassword.getPassword());
-
-		    warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
-		   
-		    // Validar términos y condiciones
-		    if (!rbTermsAndConditions.isSelected()) {
-		        JOptionPane.showMessageDialog(null,
-		                "Debes aceptar los términos y condiciones",
-		                "Error",
-		                JOptionPane.WARNING_MESSAGE);
-		        errorFound = true;
-		    }
-		    
-		    // Verificar si no hay error usando la visibilidad de las etiquetas de error
-		    if (lblEmptyFieldName.isVisible() ||
-		    		lblEmptyFieldEmail.isVisible() ||
-		    		lblUnvalidEmail.isVisible() ||
-		    		lblEmptyFieldPassword.isVisible() ||
-		    		lblEmptyFieldConfirmPassword.isVisible() ||
-		    		lblErrorUnequalPasswords.isVisible()) {
-		    		errorFound = true;
-		    }
-		    
-		    // Si todo está correcto
-		    if (!errorFound) {
-		        JOptionPane.showMessageDialog(null,
-		                "Registro exitoso",
-		                "Éxito",
-		                JOptionPane.INFORMATION_MESSAGE);
-		        handleBack();
-		    }
-
 		});
 		
 		// Boton Salir
