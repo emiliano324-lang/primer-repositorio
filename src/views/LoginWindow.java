@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 
 public class LoginWindow extends JFrame { 
 	
+	private LoginView view;
+	
 	public LoginWindow() {
 		
 		setSize(400, 400);
@@ -26,11 +28,14 @@ public class LoginWindow extends JFrame {
 		new Point(0,0), "Mi Cursor");
 		setCursor(miCursor);
 		
-		LoginView view = new LoginView();
+		view = new LoginView();
 		
 		add(view);
 		
 		setVisible(true);
 	}
 	
+	public LoginView getView() {
+		return view;
+	}
 }

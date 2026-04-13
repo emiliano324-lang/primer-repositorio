@@ -61,7 +61,15 @@ public class LoginView extends JPanel {
 	public JButton getBtnSignIn() {
 		return btnSignIn;
 	}
-
+	
+	public String getUsername() {
+		return txtFieldUser.getText();
+	}
+	
+	public String getPassword() {
+		return String.valueOf(pwdFieldPassword.getPassword());
+	}
+	
 	public LoginView() {
 
 		initializeComponents();
@@ -115,7 +123,7 @@ public class LoginView extends JPanel {
         add(txtFieldUser, c);
 
         // Error usuario
-        lblErrorUser = new JLabel("Error: este campo es obligatorio");
+        lblErrorUser = new JLabel("Error: Este campo es obligatorio");
         lblErrorUser.setFont(new Font("Verdana", Font.PLAIN, 15));
         lblErrorUser.setForeground(Color.red);
         lblErrorUser.setVisible(false);
@@ -146,7 +154,7 @@ public class LoginView extends JPanel {
         add(pwdFieldPassword, c);
 
         // Error contraseña
-        lblErrorPassword = new JLabel("Error: este campo es obligatorio");
+        lblErrorPassword = new JLabel("");
         lblErrorPassword.setFont(new Font("Verdana", Font.PLAIN, 15));
         lblErrorPassword.setForeground(Color.red);
         lblErrorPassword.setVisible(false);
@@ -178,5 +186,19 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.WEST;
         
         add(btnSignIn, c);
+	}
+	
+	public void resetErrorLabels() {
+		lblErrorUser.setVisible(false);
+		lblErrorPassword.setVisible(false);
+	}
+	
+	public void showLblErrorUser() {
+		lblErrorUser.setVisible(true);
+	}
+	
+	public void showLblErrorPassword(String message) {
+		lblErrorPassword.setText(message);
+		lblErrorPassword.setVisible(true);
 	}
 }
