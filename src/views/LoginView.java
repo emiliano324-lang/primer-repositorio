@@ -5,30 +5,73 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import exceptions.InvalidPasswordException;
-import exceptions.InvalidUserException;
 
 public class LoginView extends JPanel {
 
 	LoginWindow window;
+	
 	Font font;
 	
-    public LoginView() {
+	private JLabel lblWelcome;
+	private JLabel lblUser;
+	
+	private JTextField txtFieldUser;
+	private JLabel lblErrorUser;
+	private JLabel lblPassword;
+	private JPasswordField pwdFieldPassword;
+	private JLabel lblErrorPassword;
+	private JButton btnLogin;
+	private JButton btnSignIn;
+	
+	
+	public LoginWindow getWindow() {
+		return window;
+	}
+	
+	public JTextField getTxtFieldUser() {
+		return txtFieldUser;
+	}
+
+	public JLabel getLblErrorUser() {
+		return lblErrorUser;
+	}
+
+	public JLabel getLblPassword() {
+		return lblPassword;
+	}
+
+	public JPasswordField getPwdFieldPassword() {
+		return pwdFieldPassword;
+	}
+
+	public JLabel getLblErrorPassword() {
+		return lblErrorPassword;
+	}
+
+	public JButton getBtnLogin() {
+		return btnLogin;
+	}
+
+	public JButton getBtnSignIn() {
+		return btnSignIn;
+	}
+
+	public LoginView() {
+
+		initializeComponents();
     		
-    	font = new Font("Verdana", Font.BOLD, 18);
-    		
+    }
+    
+	private void initializeComponents() {
+		
+		font = new Font("Verdana", Font.BOLD, 18);
+		
         setBackground(new Color(0, 31, 84));
         setLayout(new GridBagLayout());
 
@@ -36,9 +79,9 @@ public class LoginView extends JPanel {
         c.insets = new Insets(5, 5, 5, 5);
 
         // Bienvenida
-        JLabel welcome = new JLabel("BIENVENIDO");
-        welcome.setForeground(new Color(254, 252, 251));
-        welcome.setFont(new Font("Verdana", Font.BOLD, 45));
+        lblWelcome = new JLabel("BIENVENIDO");
+        lblWelcome.setForeground(new Color(254, 252, 251));
+        lblWelcome.setFont(new Font("Verdana", Font.BOLD, 45));
 
         c.gridx = 0;
         c.gridy = 0;
@@ -46,10 +89,10 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.CENTER;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
-        add(welcome, c);
+        add(lblWelcome, c);
 
         // Usuario
-        JLabel lblUser = new JLabel("Usuario");
+        lblUser = new JLabel("Usuario");
         lblUser.setForeground(new Color(254, 252, 251));
         lblUser.setFont(font);
 
@@ -62,7 +105,7 @@ public class LoginView extends JPanel {
         add(lblUser, c);
 
         // Campo usuario
-        JTextField txtFieldUser = new JTextField(15);
+        txtFieldUser = new JTextField(15);
         txtFieldUser.setFont(font);
         txtFieldUser.setBackground(Color.WHITE);
 
@@ -72,7 +115,7 @@ public class LoginView extends JPanel {
         add(txtFieldUser, c);
 
         // Error usuario
-        JLabel lblErrorUser = new JLabel("Error: este campo es obligatorio");
+        lblErrorUser = new JLabel("Error: este campo es obligatorio");
         lblErrorUser.setFont(new Font("Verdana", Font.PLAIN, 15));
         lblErrorUser.setForeground(Color.red);
         lblErrorUser.setVisible(false);
@@ -83,7 +126,7 @@ public class LoginView extends JPanel {
         add(lblErrorUser, c);
 
         // Contraseña
-        JLabel lblPassword = new JLabel("Contraseña");
+        lblPassword = new JLabel("Contraseña");
         lblPassword.setForeground(new Color(254, 252, 251));
         lblPassword.setFont(font);
 
@@ -93,7 +136,7 @@ public class LoginView extends JPanel {
         add(lblPassword, c);
 
         // Campo contraseña
-        JPasswordField pwdFieldPassword = new JPasswordField(15);
+        pwdFieldPassword = new JPasswordField(15);
         pwdFieldPassword.setFont(new Font("Verdana", Font.PLAIN, 15));
         pwdFieldPassword.setBackground(Color.WHITE);
 
@@ -103,7 +146,7 @@ public class LoginView extends JPanel {
         add(pwdFieldPassword, c);
 
         // Error contraseña
-        JLabel lblErrorPassword = new JLabel("Error: este campo es obligatorio");
+        lblErrorPassword = new JLabel("Error: este campo es obligatorio");
         lblErrorPassword.setFont(new Font("Verdana", Font.PLAIN, 15));
         lblErrorPassword.setForeground(Color.red);
         lblErrorPassword.setVisible(false);
@@ -114,8 +157,8 @@ public class LoginView extends JPanel {
         add(lblErrorPassword, c);
 
         // Boton
-        JButton btnlogin = new JButton("Iniciar Sesión");
-        btnlogin.setFont(new Font("Arial", Font.PLAIN, 15));
+        btnLogin = new JButton("Iniciar Sesión");
+        btnLogin.setFont(new Font("Arial", Font.PLAIN, 15));
         
         c.gridx = 0;
         c.gridy = 5;
@@ -123,9 +166,9 @@ public class LoginView extends JPanel {
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;
-        add(btnlogin, c);
+        add(btnLogin, c);
         
-        JButton btnSignIn = new JButton("Registrarme");
+        btnSignIn = new JButton("Registrarme");
         btnSignIn.setFont(new Font("Arial", Font.PLAIN, 15));
         c.gridx = 0;
         c.gridy = 5;
@@ -135,96 +178,5 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.WEST;
         
         add(btnSignIn, c);
-        
-        
-        txtFieldUser.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				warningUserLavel(txtFieldUser, lblErrorUser);
-				
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				warningUserLavel(txtFieldUser, lblErrorUser);
-				
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				warningUserLavel(txtFieldUser, lblErrorUser);
-				
-			}
-		});
-        
-        
-        
-        
-        btnSignIn.addActionListener(e ->{
-        	handleRegistration();
-        });
-        
-        
-        btnlogin.addActionListener(e -> {
-
-        	try {
-        		validateLogin(txtFieldUser, pwdFieldPassword, lblErrorUser, lblErrorPassword);
-        	}catch (InvalidUserException ex){
-        		System.out.println(ex.getMessage());
-        		
-        	}catch (InvalidPasswordException ex) {
-        		System.out.println(ex.getMessage());
-        	}
-        });
-    }
-    
-        private boolean validateLogin (JTextField txtFieldUser, JPasswordField pwdFieldPassword,
-                JLabel lblErrorUser, JLabel lblErrorPassword) throws InvalidUserException, InvalidPasswordException{
-        	
-    		boolean errorFound = false;
-    		
-    		// Validar usuario
-    		if (txtFieldUser.getText().trim().isEmpty()) {
-    			errorFound = true;
-    			lblErrorUser.setVisible(true);
-    			
-    			throw new InvalidUserException();
-    		} else {
-    			lblErrorUser.setVisible(false);
-    		}
-    		
-    		// Validar contraseña
-    		if (new String(pwdFieldPassword.getPassword()).trim().isEmpty()) {
-    			errorFound = true;
-    			lblErrorPassword.setVisible(true);
-    			throw new InvalidPasswordException();
-    		} else {
-    			lblErrorPassword.setVisible(false);
-    		}
-    		
-    		return !errorFound;
-		}
-    
-    private void warningUserLavel(JTextField txtUser, JLabel lblErrorUser) {
-    	if (txtUser.getText().trim().isEmpty()) {
-            lblErrorUser.setVisible(true);
-        } else {
-            lblErrorUser.setVisible(false);
-        }
-    }
-    
-    
-    
-    private void handleLogin() {
-		new MainWindow();
-		
-		window.dispose();
 	}
-    
-    private void handleRegistration() {
-    		new RegistrationWindow();
-    		
-    		window.dispose();
-    }
 }
