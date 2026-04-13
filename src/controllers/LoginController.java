@@ -1,14 +1,10 @@
 package controllers;
 
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.JOptionPane;
 
 import exceptions.InvalidPasswordException;
 import exceptions.InvalidUserException;
-
+import models.User;
 import views.LoginView;
 import views.MainWindow;
 import views.RegistrationWindow;
@@ -25,22 +21,11 @@ public class LoginController {
 	
 	public void registerListeners() {
 		
-		view.getBtnLogin().addActionListener(e -> {
+		view.getBtnLogin().addActionListener(e -> handleLogin() );
 
-        	try {
-        		if(validateLogin(view.getTxtFieldUser(),view.getPwdFieldPassword(), view.getLblErrorUser(), view.getLblErrorPassword())) {
-        			handleLogin();
-        		}
-        	}catch (InvalidUserException | InvalidPasswordException ex){
-        		
-        	}
-        });
+		view.getBtnSignIn().addActionListener(e ->{ handleRegistration(); });
 		
-		view.getBtnSignIn().addActionListener(e ->{ 
-			handleRegistration();
-		});
-		
-		view.getTxtFieldUser().getDocument().addDocumentListener(new DocumentListener() {
+		/*view.getTxtFieldUser().getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
@@ -63,44 +48,63 @@ public class LoginController {
 	}
 		
 	private void warningUserLabel(JTextField txtUser, JLabel lblErrorUser) {
+		
 		if (txtUser.getText().trim().isEmpty()) {
 			lblErrorUser.setVisible(true);
 		} else {
 			lblErrorUser.setVisible(false);
-		}
+		}*/
 	}
 
-	private boolean validateLogin(JTextField txtFieldUser, JPasswordField pwdFieldPassword, JLabel lblErrorUser,
-			JLabel lblErrorPassword) throws InvalidUserException, InvalidPasswordException {
+	private boolean validateLogin(User user) throws InvalidUserException, InvalidPasswordException {
 
+		view.resetErrorLabels();
+		
 		boolean errorFound = false;
 
 		// Validar usuario
-		if (txtFieldUser.getText().trim().isEmpty()) {
+		if (user.getName().trim().isEmpty()) {
 			errorFound = true;
-			lblErrorUser.setVisible(true);
+			
+			view.showLblErrorUser();
 
 			throw new InvalidUserException("El usuario no coincide");
+			
 		} else {
-			lblErrorUser.setVisible(false);
+			view.getLblErrorUser().setVisible(false);
 		}
 
 		// Validar contraseña
-		if (new String(pwdFieldPassword.getPassword()).trim().isEmpty()) {
+		if (user.getPassword().trim().isEmpty()) {
 			errorFound = true;
-			lblErrorPassword.setVisible(true);
-			throw new InvalidPasswordException("El usuario o la contraseña no coincide");
+			
+			view.showLblErrorPassword("Error: Este campo es obligatorio");
+			
+			throw new InvalidPasswordException("La contraseña no coincide");
+			
 		} else {
-			lblErrorPassword.setVisible(false);
+			view.getLblErrorPassword().setVisible(false);
 		}
 
 		return !errorFound;
 	}
 
 	private void handleLogin() {
-		new MainWindow();
-
-		view.getWindow().dispose();
+		User user = new User(view.getUsername(), view.getPassword());
+		
+		try {
+			if(validateLogin(user)) {
+				JOptionPane.showMessageDialog(view.getWindow(), "Se inició la sesión", "Sesión Iniciada",
+						JOptionPane.INFORMATION_MESSAGE);
+				
+				new MainWindow();
+				
+				view.getWindow().dispose();
+			}
+		} catch (InvalidUserException | InvalidPasswordException ex) {
+			view.showLblErrorPassword("Error: Datos Incorrectos");
+		}
+		
 	}
 
 	private void handleRegistration() {
