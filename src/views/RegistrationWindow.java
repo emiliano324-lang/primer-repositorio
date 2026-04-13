@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.TextField;
 import java.awt.Toolkit;
 
 //import java.util.concurrent.Flow;
@@ -45,6 +46,49 @@ import exceptions.InvalidUserException;
 
 public class RegistrationWindow extends JFrame{
 
+	
+	
+	LoginWindow window;
+	private JButton btnRegistrate;
+	private JLabel lblEmptyFieldName;
+	private JTextField txtFieldName;
+	private JLabel lblEmptyFieldEmail;
+	private JTextField txtFieldEmail;
+	private JLabel lblUnvalidEmail;
+	
+	public LoginWindow getWindow() {
+		return window;
+	}
+
+	public void setWindow(LoginWindow window) {
+		this.window = window;
+	}
+
+	public JButton getBtnRegistrate() {
+		return btnRegistrate;
+	}
+
+	public JLabel getLblEmptyFieldName() {
+		return lblEmptyFieldName;
+	}
+
+	public JTextField getTxtFieldName() {
+		return txtFieldName;
+	}
+
+	public JLabel getLblEmptyFieldEmail() {
+		return lblEmptyFieldEmail;
+	}
+
+	public JTextField getTxtFieldEmail() {
+		return txtFieldEmail;
+	}
+
+	public JLabel getLblUnvalidEmail() {
+		return lblUnvalidEmail;
+	}
+	
+
 	public RegistrationWindow() {
 		
 		setSize(450, 450);
@@ -64,10 +108,8 @@ public class RegistrationWindow extends JFrame{
 		// VALIDACIONES DE CERRAR VENTANA
 		addWindowListener(new WindowAdapter() {
 
-		    @Override
-		    public void windowClosing(WindowEvent e) {
-		        handleClose();
-		    }
+		
+		  
 
 		});
 		
@@ -214,206 +256,11 @@ public class RegistrationWindow extends JFrame{
 		exitAndRegisterButtons.add(btnExit);
 		exitAndRegisterButtons.add(btnRegistrate);
 		componentsPanel.add(exitAndRegisterButtons);
-	
+	}
 		// VALIDACIONES EN TIEMPO REAL
 		
 		// NOMBRE
-		txtFieldName.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-			    warningNameLabel(lblEmptyFieldName, txtFieldName);
-				
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				 warningNameLabel(lblEmptyFieldName, txtFieldName);
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				 warningNameLabel(lblEmptyFieldName, txtFieldName);
-			}
-		});;
 		
-		// CORREO
-		txtFieldEmail.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				
-				warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail, lblUnvalidEmail);
-				
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail,lblUnvalidEmail);
-		    }
-		});;
-		
-		// CONTRASEÑA Y CONFIRMAR CONTRASEÑA
-		pwdPassword.getDocument().addDocumentListener(new DocumentListener() {
-			
-			String pass;
-			String confirmPass;
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				pass = new String(pwdPassword.getPassword());
-				confirmPass = new String(pwdConfirmPassword.getPassword());
-				
-				warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				pass = new String(pwdPassword.getPassword());
-				confirmPass = new String(pwdConfirmPassword.getPassword());
-
-				warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				pass = new String(pwdPassword.getPassword());
-				confirmPass = new String(pwdConfirmPassword.getPassword());
-				
-				warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
-			}
-		});
-		
-		// VALIDACIONES DE BOTONES
-		
-		// Boton Registrarse
-		btnRegistrate.addActionListener(e -> {
-				/*boolean errorFound = false;
-	
-			    // Validar nombre
-			    warningNameLabel(lblEmptyFieldName, txtFieldName);
-	
-			    // Validar correo
-			    warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail, lblUnvalidEmail);
-			    
-			    // Validar contraseña
-			    String pass = new String(pwdPassword.getPassword());
-			    String confirmPass = new String(pwdConfirmPassword.getPassword());
-	
-			    warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
-			   
-			    // Validar términos y condiciones
-			    if (!rbTermsAndConditions.isSelected()) {
-			        JOptionPane.showMessageDialog(null,
-			                "Debes aceptar los términos y condiciones",
-			                "Error",
-			                JOptionPane.WARNING_MESSAGE);
-			        errorFound = true;
-			    }
-			    
-			    // Verificar si no hay error usando la visibilidad de las etiquetas de error
-			    if (lblEmptyFieldName.isVisible() ||
-			    		lblEmptyFieldEmail.isVisible() ||
-			    		lblUnvalidEmail.isVisible() ||
-			    		lblEmptyFieldPassword.isVisible() ||
-			    		lblEmptyFieldConfirmPassword.isVisible() ||
-			    		lblErrorUnequalPasswords.isVisible()) {
-			    		errorFound = true;
-			    }
-			    
-			    // Si todo está correcto
-			    if (!errorFound) {
-			        JOptionPane.showMessageDialog(null,
-			                "Registro exitoso",
-			                "Éxito",
-			                JOptionPane.INFORMATION_MESSAGE);
-			        handleBack();
-			    }*/
-		});
-		
-		// Boton Salir
-		btnExit.addActionListener(e -> handleClose());
-
-		// VALIDACIONES DE TECLAS
-		txtFieldName.addKeyListener(new KeyAdapter() {
-
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					txtFieldEmail.requestFocus();
-				}
-			}
-			
-		});
-		
-		txtFieldEmail.addKeyListener(new KeyAdapter() {
-
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					pwdPassword.requestFocus();
-				}
-			}
-			
-		});
-		
-		pwdPassword.addKeyListener(new KeyAdapter() {
-
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					pwdConfirmPassword.requestFocus();
-				}
-			}
-			
-		});
-		
-		pwdConfirmPassword.addKeyListener(new KeyAdapter() {
-
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					txtFieldName.requestFocus();
-				}
-			}
-			
-		});
-		
-		// VALIDACIONES FOCUS
-		txtFieldName.addFocusListener(new FocusAdapter() {
-			
-			public void focusGained(FocusEvent e) {
-				txtFieldName.selectAll();
-			}
-		});
-		
-		txtFieldEmail.addFocusListener(new FocusAdapter() {
-			
-			public void focusGained(FocusEvent e) {
-				txtFieldEmail.selectAll();
-			}
-		});
-
-		pwdPassword.addFocusListener(new FocusAdapter() {
-	
-			public void focusGained(FocusEvent e) {
-				pwdPassword.selectAll();
-			}
-		});
-		
-		pwdConfirmPassword.addFocusListener(new FocusAdapter() {
-			
-			public void focusGained(FocusEvent e) {
-				pwdConfirmPassword.selectAll();
-			}
-		});
-	
-	}
 	// CREAR COMPONENTES
 	private JLabel createLabel(String lblText, Font font, JPanel panel) {
 		
@@ -518,121 +365,6 @@ public class RegistrationWindow extends JFrame{
 		c.setForeground(Color.BLACK);
 	}
 	
-	// 
-	private void warningNameLabel(JLabel label, JTextField txtField) {
-		
-		if (txtField.getText().trim().isEmpty()) {
-	        label.setVisible(true);
-	    } else {
-	        label.setVisible(false);
-	    }
-		
-	}
 
-	private void warningEmailLabel(JLabel emptyLabel, JTextField txtFieldEmail, JLabel unvalidEmail) {
-		
-		if (txtFieldEmail.getText().trim().isEmpty()) {
-	    	emptyLabel.setVisible(true);
-        
-	    } else if (!txtFieldEmail.getText().contains("@")) {
-	    		emptyLabel.setVisible(false);
-		    	unvalidEmail.setVisible(true);
-	    		
-	    } else {
-	    		emptyLabel.setVisible(false);
-		    	unvalidEmail.setVisible(false);
-	    }
-	}
 	
-	private void warningPassLabel(String confirmPass, String pass, JLabel lblEmptyPass, 
-			JLabel lblEmptyConfirmPass, JLabel lblErrorUniquePass) {
-	
-		if (pass.isEmpty()) {
-	    		lblEmptyPass.setVisible(true);
-	    } else {
-	    		lblEmptyPass.setVisible(false);
-	    }
-
-	    if (confirmPass.isEmpty()) {
-	        lblEmptyConfirmPass.setVisible(true);
-	    } else {
-	    		lblEmptyConfirmPass.setVisible(false);
-	    }
-
-	    if (!confirmPass.isEmpty() && !pass.equals(confirmPass)) {
-	    		lblErrorUniquePass.setVisible(true);
-	    } else {
-	    		lblErrorUniquePass.setVisible(false);
-	    }
-	}
-	
-	private void handleLogin() {
-		new MainWindow();
-		
-		this.dispose();
-	}
-	
-	private void handleBack() {
-		new LoginView();
-		
-		this.dispose();
-	}
-	 
-	private void handleClose() {
-		int option = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?");
-		 
-		if(option == JOptionPane.YES_OPTION) {
-			 System.exit(0);
-		}
-	 }
-	
-	private boolean validateRegistration(JLabel lblEmptyFieldName, JTextField txtFieldName, JLabel lblEmptyFieldEmail, 
-			JTextField txtFieldEmail, JLabel lblUnvalidEmail, JPasswordField pwdPassword, JPasswordField pwdConfirmPassword, 
-			JLabel lblEmptyFieldPassword, JLabel lblEmptyFieldConfirmPassword, JLabel lblErrorUnequalPasswords,
-			JRadioButton rbTermsAndConditions) throws InvalidUserException, InvalidPasswordException {
-		
-		boolean errorFound = false;
-		
-	    // Validar nombre
-	    warningNameLabel(lblEmptyFieldName, txtFieldName);
-
-	    // Validar correo
-	    warningEmailLabel(lblEmptyFieldEmail, txtFieldEmail, lblUnvalidEmail);
-	    
-	    // Validar contraseña
-	    String pass = new String(pwdPassword.getPassword());
-	    String confirmPass = new String(pwdConfirmPassword.getPassword());
-
-	    warningPassLabel(confirmPass, pass, lblEmptyFieldPassword, lblEmptyFieldConfirmPassword, lblErrorUnequalPasswords);
-	   
-	    // Validar términos y condiciones
-	    if (!rbTermsAndConditions.isSelected()) {
-	        JOptionPane.showMessageDialog(null,
-	                "Debes aceptar los términos y condiciones",
-	                "Error",
-	                JOptionPane.WARNING_MESSAGE);
-	        errorFound = true;
-	    }
-	    
-	    // Verificar si no hay error usando la visibilidad de las etiquetas de error
-	    if (lblEmptyFieldName.isVisible() ||
-	    		lblEmptyFieldEmail.isVisible() ||
-	    		lblUnvalidEmail.isVisible() ||
-	    		lblEmptyFieldPassword.isVisible() ||
-	    		lblEmptyFieldConfirmPassword.isVisible() ||
-	    		lblErrorUnequalPasswords.isVisible()) {
-	    		errorFound = true;
-	    }
-	    
-	    // Si todo está correcto
-	    if (!errorFound) {
-	        JOptionPane.showMessageDialog(null,
-	                "Registro exitoso",
-	                "Éxito",
-	                JOptionPane.INFORMATION_MESSAGE);
-	        handleBack();
-	    }
-		
-	    return !errorFound;
-	}
 }
