@@ -5,6 +5,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,6 +18,8 @@ import javax.swing.event.DocumentListener;
 
 import exceptions.InvalidPasswordException;
 import exceptions.InvalidUserException;
+import models.User;
+import repository.UserRepository;
 import views.LoginView;
 import views.LoginWindow;
 import views.MainWindow;
@@ -24,11 +27,13 @@ import views.RegistrationWindow;
 
 public class RegistrationController {
 
-    private RegistrationWindow registration;
+    private RegistrationWindow view;
+    private UserRepository repository;
 
     // ✅ CONSTRUCTOR CORRECTO
-    public RegistrationController(RegistrationWindow registration) {
-        this.registration = registration;
+    public RegistrationController(RegistrationWindow view) {
+        this.view = view;
+        this.repository = new UserRepository();
         initController();
     }
 
@@ -40,21 +45,21 @@ public class RegistrationController {
     private void registrationListener() {
 
         // NOMBRE
-        registration.getTxtFieldName().getDocument().addDocumentListener(new DocumentListener() {
+        view.getTxtFieldName().getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) { validateName(); }
             public void removeUpdate(DocumentEvent e) { validateName(); }
             public void changedUpdate(DocumentEvent e) { validateName(); }
         });
 
         // EMAIL
-        registration.getTxtFieldEmail().getDocument().addDocumentListener(new DocumentListener() {
+        view.getTxtFieldEmail().getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) { validateEmail(); }
             public void removeUpdate(DocumentEvent e) { validateEmail(); }
             public void changedUpdate(DocumentEvent e) { validateEmail(); }
         });
-
+        
         // BOTÓN REGISTRARSE
-        registration.getBtnRegistrate().addActionListener(e -> register());
+        view.getBtnRegistrate().addActionListener(e -> register());
 
         // BOTÓN SALIR
         // necesitas getter en la vista si quieres usarlo aquí
@@ -62,18 +67,60 @@ public class RegistrationController {
 
     // ================= VALIDACIONES =================
 
+    private boolean validateRegistration(User user) {
+    	
+    	boolean errorFound = false;
+    	
+    	// Validar nombre
+    	if(user.getName().trim().isEmpty()) {
+
+    		errorFound = true;
+    		
+    		view.getLblEmptyFieldName().setVisible(true);
+    	}
+    	
+    	// Validar correo (campo vacío)
+    	if(user.getEmail().trim().isEmpty()) {
+    		
+    		errorFound = true;
+    		
+    		view.getLblEmptyFieldEmail().setVisible(true);
+    	
+    	// Validar correo (si no contiene @)
+    	}else if(!user.getEmail().contains("@")) {
+    		
+    		errorFound = true;
+    		
+    		view.getLblUnvalidEmail().setVisible(true);
+    	}
+    	
+    	// Validar contraseña
+    	if(user.getPassword().trim().isEmpty()) {
+    		errorFound = true;
+    		
+    		view.getLblEmptyFieldPassword().setVisible(true);
+    		
+    	}else if(!user.getPassword().isEmpty() && !user.getPassword().equals(user.getConfirmPassword())) {
+    		errorFound = true;
+    		
+    		view.getLblErrorUnequalPasswords().setVisible(true);
+    	}
+    	
+    	return !errorFound;
+    }
+    
     private void validateName() {
-        JTextField txt = registration.getTxtFieldName();
-        JLabel lbl = registration.getLblEmptyFieldName();
+        JTextField txt = view.getTxtFieldName();
+        JLabel lbl = view.getLblEmptyFieldName();
 
         lbl.setVisible(txt.getText().trim().isEmpty());
     }
 
     private void validateEmail() {
-        JTextField txt = registration.getTxtFieldEmail();
+        JTextField txt = view.getTxtFieldEmail();
 
-        JLabel empty = registration.getLblEmptyFieldEmail();
-        JLabel invalid = registration.getLblUnvalidEmail();
+        JLabel empty = view.getLblEmptyFieldEmail();
+        JLabel invalid = view.getLblUnvalidEmail();
 
         if (txt.getText().trim().isEmpty()) {
             empty.setVisible(true);
@@ -86,34 +133,56 @@ public class RegistrationController {
             invalid.setVisible(false);
         }
     }
+    
+    /*private void validatePassword() {
+    	
+    	JTextField pwd = view.getPwdPassword();
+    	JTextField confirmPwd = view.getPwdConfirmPassword();
+    	
+    	if(pwd.getText().trim().isEmpty()) {
+    		view.getLblEmptyFieldPassword().setVisible(true);
+    		
+    	}else if(!pwd.getText().equals(confirmPwd.getText())) {
+    		view.getLblErrorUnequalPasswords().setVisible(true);;
+    	}
+    	
+    	if (confirmPwd.getText().trim().isEmpty()) {
+    		view.getLblEmptyFieldConfirmPassword().setVisible(true);
+    	}
+    	
+    }*/
 
     // ================= REGISTRO =================
 
     private void register() {
 
-        validateName();
-        validateEmail();
-
-        boolean error =
-                registration.getLblEmptyFieldName().isVisible() ||
-                registration.getLblEmptyFieldEmail().isVisible() ||
-                registration.getLblUnvalidEmail().isVisible();
-
-        if (!error) {
-            JOptionPane.showMessageDialog(registration, "Registro exitoso");
-            handleBack();
-        }
+    	view.resetErrorLabels();
+    	
+    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getConfirmPassword(), view.getSexo());
+    	
+    	if(validateRegistration(user)) {
+    		
+    		try {
+    			repository.save(user);
+    			JOptionPane.showMessageDialog(view, "Registro exitoso");
+    			
+    			new HomeController(new MainWindow());
+    			view.dispose();
+    			
+    		}catch(IOException e) {
+    			JOptionPane.showMessageDialog(view, e.getMessage());;
+    		}
+    	}
     }
-
     // ================= NAVEGACIÓN =================
 
     private void handleBack() {
         new LoginView();
-        registration.dispose();
+        view.dispose();
     }
 
     public void handleClose() {
-        int option = JOptionPane.showConfirmDialog(registration, "Seguro que quieres salir?");
+        int option = JOptionPane.showConfirmDialog(view, "Seguro que quieres salir?");
         if (option == JOptionPane.YES_OPTION) {
             System.exit(0);
         }

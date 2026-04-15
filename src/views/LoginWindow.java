@@ -11,6 +11,9 @@ public class LoginWindow extends JFrame {
 	
 	private LoginView view;
 	
+	public LoginView getView() {
+		return view;
+	}
 	public LoginWindow() {
 		
 		setSize(400, 400);
@@ -35,7 +38,4 @@ public class LoginWindow extends JFrame {
 		setVisible(true);
 	}
 	
-	public LoginView getView() {
-		return view;
-	}
 }

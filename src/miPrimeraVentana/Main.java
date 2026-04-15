@@ -1,23 +1,24 @@
 package miPrimeraVentana;
 
-import views.RegistrationWindow;
+import controllers.HomeController;
 import controllers.LoginController;
+import controllers.RegistrationController;
 import views.LoginWindow;
+import views.MainWindow;
+import views.RegistrationWindow;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		//new HomeController(new MainWindow());
 
 		//LoginWindow login = new LoginWindow();
-		
-		//RegistrationWindow form = new RegistrationWindow();
+		//new LoginController(login.getView());
 
-		LoginWindow login = new LoginWindow();
-		
-		new LoginController(login.getView());
-		//RegistrationWindow form = new RegistrationWindow();
+		RegistrationWindow form = new RegistrationWindow();
+		RegistrationController formController = new RegistrationController(form);
 
 	}
 	

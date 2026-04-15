@@ -22,38 +22,7 @@ public class LoginController {
 	public void registerListeners() {
 		
 		view.getBtnLogin().addActionListener(e -> handleLogin() );
-
 		view.getBtnSignIn().addActionListener(e ->{ handleRegistration(); });
-		
-		/*view.getTxtFieldUser().getDocument().addDocumentListener(new DocumentListener() {
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				warningUserLabel(view.getTxtFieldUser(), view.getLblErrorUser());
-
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				warningUserLabel(view.getTxtFieldUser(), view.getLblErrorUser());
-
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				warningUserLabel(view.getTxtFieldUser(), view.getLblErrorUser());
-
-			}
-		});
-	}
-		
-	private void warningUserLabel(JTextField txtUser, JLabel lblErrorUser) {
-		
-		if (txtUser.getText().trim().isEmpty()) {
-			lblErrorUser.setVisible(true);
-		} else {
-			lblErrorUser.setVisible(false);
-		}*/
 	}
 
 	private boolean validateLogin(User user) throws InvalidUserException, InvalidPasswordException {

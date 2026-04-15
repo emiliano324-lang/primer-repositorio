@@ -4,13 +4,27 @@ public class User {
 	
 	private String name;
 	private String password;
-	
-	public User() {
-	}
+	private String confirmPassword;
+	private String email;
+	private String sexo;
 	
 	public User(String name, String password) {
 		this.name = name;
 		this.password = password;
+	}
+	
+	public User(String name, String email, String password, String confirmPassword, String sexo) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+		this.sexo = sexo;
+	}
+	
+	public User(String name, String email, String sexo) {
+		this.name = name;
+		this.email = email;
+		this.sexo = sexo;
 	}
 	
 	public String getName() {
@@ -19,5 +33,32 @@ public class User {
 	
 	public String getPassword() {
 		return password;
+	}
+	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+	
+	public String toCsv() {
+		return name + "," + email + "," + sexo;
+	}
+	
+	public static User fromCsv(String userData) {
+		
+		String data[] = userData.split(",");
+		
+		String name = data[0];
+		String email = data[1];
+		String sexo = data[2];
+		
+		return new User(name, email, sexo);
 	}
 }

@@ -45,8 +45,6 @@ import exceptions.InvalidUserException;
 
 
 public class RegistrationWindow extends JFrame{
-
-	
 	
 	LoginWindow window;
 	private JButton btnRegistrate;
@@ -55,6 +53,14 @@ public class RegistrationWindow extends JFrame{
 	private JLabel lblEmptyFieldEmail;
 	private JTextField txtFieldEmail;
 	private JLabel lblUnvalidEmail;
+	private JPasswordField pwdPassword;
+	private JPasswordField pwdConfirmPassword;
+	private JLabel lblEmptyFieldPassword;
+	private JLabel lblEmptyFieldConfirmPassword;
+	private JLabel lblErrorUnequalPasswords;
+	private JRadioButton rbMan;
+	private JRadioButton rbWoman;
+	private JRadioButton rbDoNotSay;
 	
 	public LoginWindow getWindow() {
 		return window;
@@ -88,7 +94,54 @@ public class RegistrationWindow extends JFrame{
 		return lblUnvalidEmail;
 	}
 	
+	public JPasswordField getPwdPassword() {
+		return pwdPassword;
+	}
 
+	public JPasswordField getPwdConfirmPassword() {
+		return pwdConfirmPassword;
+	}
+
+	public JLabel getLblEmptyFieldPassword() {
+		return lblEmptyFieldPassword;
+	}
+
+	public JLabel getLblEmptyFieldConfirmPassword() {
+		return lblEmptyFieldConfirmPassword;
+	}
+
+	public JLabel getLblErrorUnequalPasswords() {
+		return lblErrorUnequalPasswords;
+	}
+
+	public String getName() {
+		return txtFieldName.getText();
+	}
+	
+	public String getEmail() {
+		return txtFieldEmail.getText();
+	}
+	
+	public String getPassword() {
+		return String.valueOf(pwdPassword.getPassword());
+	}
+	
+	public String getConfirmPassword() {
+		return String.valueOf(pwdConfirmPassword.getPassword());
+	}
+	
+	public String getSexo() {
+		
+		if(rbMan.isSelected()) {
+			return "Masculino";
+			
+		}else if(rbWoman.isSelected()) {
+			return "Femenino";
+		}
+
+		return "No definido";
+	}
+	
 	public RegistrationWindow() {
 		
 		setSize(450, 450);
@@ -107,9 +160,6 @@ public class RegistrationWindow extends JFrame{
 		
 		// VALIDACIONES DE CERRAR VENTANA
 		addWindowListener(new WindowAdapter() {
-
-		
-		  
 
 		});
 		
@@ -175,19 +225,19 @@ public class RegistrationWindow extends JFrame{
 		lblConfirmPassword.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
 		
 		// CAMPOS Y SU ETIQUETA DE ERROR
-		JTextField txtFieldName = createTextField(fieldsColumn);
-		JLabel lblEmptyFieldName = createErrorLabel("El nombre es obligatorio", fieldsColumn);
+		txtFieldName = createTextField(fieldsColumn);
+		lblEmptyFieldName = createErrorLabel("El nombre es obligatorio", fieldsColumn);
 		
-		JTextField txtFieldEmail = createTextField(fieldsColumn);
-		JLabel lblEmptyFieldEmail = createErrorLabel("El correo es obligatorio", fieldsColumn);
-		JLabel lblUnvalidEmail = createErrorLabel("Correo no válido", fieldsColumn);
+		txtFieldEmail = createTextField(fieldsColumn);
+		lblEmptyFieldEmail = createErrorLabel("El correo es obligatorio", fieldsColumn);
+		lblUnvalidEmail = createErrorLabel("Correo no válido", fieldsColumn);
 		
-		JPasswordField pwdPassword = createPasswordField(fieldsColumn);
-		JLabel lblEmptyFieldPassword = createErrorLabel("La contraseña es obligatoria", fieldsColumn);
+		pwdPassword = createPasswordField(fieldsColumn);
+		lblEmptyFieldPassword = createErrorLabel("La contraseña es obligatoria", fieldsColumn);
 
-		JPasswordField pwdConfirmPassword = createPasswordField(fieldsColumn);
-		JLabel lblEmptyFieldConfirmPassword = createErrorLabel("Debes confirmar la contraseña", fieldsColumn);
-		JLabel lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", fieldsColumn);
+		pwdConfirmPassword = createPasswordField(fieldsColumn);
+	    lblEmptyFieldConfirmPassword = createErrorLabel("Debes confirmar la contraseña", fieldsColumn);
+		lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", fieldsColumn);
 		
 		// AÑADIR AMBAS COLUMNAS EN EL PANEL
 		importantDataGrid.add(labelsColumn);
@@ -207,9 +257,9 @@ public class RegistrationWindow extends JFrame{
 		
 		ButtonGroup grpSexes = new ButtonGroup();
 		
-		JRadioButton rbMan = createJRadioButton("Hombre", grpSexes, sexFlowPanel);
-		JRadioButton rbWoman = createJRadioButton("Mujer", grpSexes, sexFlowPanel);
-		JRadioButton rbDoNotSay = createJRadioButton("Prefiero no decir", grpSexes, sexFlowPanel);
+		rbMan = createJRadioButton("Hombre", grpSexes, sexFlowPanel);
+		rbWoman = createJRadioButton("Mujer", grpSexes, sexFlowPanel);
+		rbDoNotSay = createJRadioButton("Prefiero no decir", grpSexes, sexFlowPanel);
 		
 		// APARTADO DE PRIVACIDAD
 		JPanel privacySection = new JPanel(alignToCenter);
@@ -228,7 +278,7 @@ public class RegistrationWindow extends JFrame{
 		exitAndRegisterButtons.setBackground(customBlue);
 		
 		JButton btnExit = createJButton("Atras", textFont, exitAndRegisterButtons);
-		JButton btnRegistrate = createJButton("Registrarme", textFont, exitAndRegisterButtons);
+		btnRegistrate = createJButton("Registrarme", textFont, exitAndRegisterButtons);
 		
 		// BARRA VERTICAL DE SCROLL
 		JScrollPane scroll = new JScrollPane(componentsPanel);
@@ -365,6 +415,11 @@ public class RegistrationWindow extends JFrame{
 		c.setForeground(Color.BLACK);
 	}
 	
-
-	
+	public void resetErrorLabels() {
+	    lblEmptyFieldName.setVisible(false);
+	    lblEmptyFieldEmail.setVisible(false);
+	    lblUnvalidEmail.setVisible(false);
+	    lblEmptyFieldPassword.setVisible(false);
+	    lblErrorUnequalPasswords.setVisible(false);
+	}
 }
