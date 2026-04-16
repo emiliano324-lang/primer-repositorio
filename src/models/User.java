@@ -6,25 +6,25 @@ public class User {
 	private String password;
 	private String confirmPassword;
 	private String email;
-	private String sexo;
+	private String sex;
 	
 	public User(String name, String password) {
 		this.name = name;
 		this.password = password;
 	}
 	
-	public User(String name, String email, String password, String confirmPassword, String sexo) {
+	public User(String name, String email, String password, String confirmPassword, String sex) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
-		this.sexo = sexo;
+		this.sex = sex;
 	}
 	
 	public User(String name, String email, String sexo) {
 		this.name = name;
 		this.email = email;
-		this.sexo = sexo;
+		this.sex = sexo;
 	}
 	
 	public String getName() {
@@ -43,12 +43,12 @@ public class User {
 		return email;
 	}
 	
-	public String getSexo() {
-		return sexo;
+	public String getSex() {
+		return sex;
 	}
 	
 	public String toCsv() {
-		return name + "," + email + "," + sexo;
+		return name + "," + email + "," + sex;
 	}
 	
 	public static User fromCsv(String userData) {
