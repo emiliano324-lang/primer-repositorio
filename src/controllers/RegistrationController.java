@@ -1,27 +1,16 @@
 package controllers;
 
-import java.awt.TextField;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import exceptions.InvalidPasswordException;
-import exceptions.InvalidUserException;
 import models.User;
 import repository.UserRepository;
 import views.LoginView;
-import views.LoginWindow;
 import views.MainWindow;
 import views.RegistrationWindow;				
 
@@ -76,7 +65,8 @@ public class RegistrationController {
 
     		errorFound = true;
     		
-    		view.getLblEmptyFieldName().setVisible(true);
+    		view.getLblErrorFieldName().setText("El nombre es obligatorio");
+    		view.getLblErrorFieldName().setVisible(true);
     	}
     	
     	// Validar correo (campo vacío)
@@ -84,26 +74,30 @@ public class RegistrationController {
     		
     		errorFound = true;
     		
-    		view.getLblEmptyFieldEmail().setVisible(true);
+    		view.getLblErrorFieldEmail().setText("El correo es obligatorio");
+    		view.getLblErrorFieldEmail().setVisible(true);
     	
     	// Validar correo (si no contiene @)
     	}else if(!user.getEmail().contains("@")) {
     		
     		errorFound = true;
     		
-    		view.getLblUnvalidEmail().setVisible(true);
+       		view.getLblErrorFieldEmail().setText("El correo no es válido");
+    		view.getLblErrorFieldEmail().setVisible(true);
     	}
     	
     	// Validar contraseña
     	if(user.getPassword().trim().isEmpty()) {
     		errorFound = true;
     		
-    		view.getLblEmptyFieldPassword().setVisible(true);
+    		view.getLblErrorFieldPassword().setText("La contraseña es obligatoria");
+    		view.getLblErrorFieldPassword().setVisible(true);
     		
     	}else if(!user.getPassword().isEmpty() && !user.getPassword().equals(user.getConfirmPassword())) {
     		errorFound = true;
     		
-    		view.getLblErrorUnequalPasswords().setVisible(true);
+    		view.getLblErrorFieldConfirmPassword().setText("Las contraseñas no coinciden");
+    		view.getLblErrorFieldConfirmPassword().setVisible(true);
     	}
     	
     	return !errorFound;
@@ -111,46 +105,30 @@ public class RegistrationController {
     
     private void validateName() {
         JTextField txt = view.getTxtFieldName();
-        JLabel lbl = view.getLblEmptyFieldName();
-
-        lbl.setVisible(txt.getText().trim().isEmpty());
+        JLabel error = view.getLblErrorFieldName();
+        
+        if(txt.getText().trim().isEmpty()) {
+        	error.setText("El nombre es obligatorio");
+        	error.setVisible(true);
+        }else {
+        	error.setVisible(false);
+        }
     }
 
     private void validateEmail() {
         JTextField txt = view.getTxtFieldEmail();
-
-        JLabel empty = view.getLblEmptyFieldEmail();
-        JLabel invalid = view.getLblUnvalidEmail();
+        JLabel error = view.getLblErrorFieldEmail();
 
         if (txt.getText().trim().isEmpty()) {
-            empty.setVisible(true);
-            invalid.setVisible(false);
+        	error.setText("El correo es obligatorio");
+            error.setVisible(true);
         } else if (!txt.getText().contains("@")) {
-            empty.setVisible(false);
-            invalid.setVisible(true);
+        	error.setText("El correo no es válido");
+            error.setVisible(false);
         } else {
-            empty.setVisible(false);
-            invalid.setVisible(false);
+            error.setVisible(false);
         }
     }
-    
-    /*private void validatePassword() {
-    	
-    	JTextField pwd = view.getPwdPassword();
-    	JTextField confirmPwd = view.getPwdConfirmPassword();
-    	
-    	if(pwd.getText().trim().isEmpty()) {
-    		view.getLblEmptyFieldPassword().setVisible(true);
-    		
-    	}else if(!pwd.getText().equals(confirmPwd.getText())) {
-    		view.getLblErrorUnequalPasswords().setVisible(true);;
-    	}
-    	
-    	if (confirmPwd.getText().trim().isEmpty()) {
-    		view.getLblEmptyFieldConfirmPassword().setVisible(true);
-    	}
-    	
-    }*/
 
     // ================= REGISTRO =================
 
@@ -158,7 +136,7 @@ public class RegistrationController {
 
     	view.resetErrorLabels();
     	
-    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getConfirmPassword(), view.getSexo());
+    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getConfirmPassword(), view.getSex());
     	
     	if(validateRegistration(user)) {
     		

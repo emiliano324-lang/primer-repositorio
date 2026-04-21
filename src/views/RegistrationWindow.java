@@ -48,16 +48,17 @@ public class RegistrationWindow extends JFrame{
 	
 	LoginWindow window;
 	private JButton btnRegistrate;
-	private JLabel lblEmptyFieldName;
 	private JTextField txtFieldName;
-	private JLabel lblEmptyFieldEmail;
 	private JTextField txtFieldEmail;
-	private JLabel lblUnvalidEmail;
 	private JPasswordField pwdPassword;
 	private JPasswordField pwdConfirmPassword;
-	private JLabel lblEmptyFieldPassword;
-	private JLabel lblEmptyFieldConfirmPassword;
-	private JLabel lblErrorUnequalPasswords;
+	private JLabel lblErrorFieldName;
+	private JLabel lblErrorFieldEmail;
+	private JLabel lblErrorFieldPassword;
+	private JLabel lblErrorFieldConfirmPassword;
+	//private JLabel lblUnvalidEmail;
+	//private JLabel lblErrorUnequalPasswords;
+	private ButtonGroup grpSexes;
 	private JRadioButton rbMan;
 	private JRadioButton rbWoman;
 	private JRadioButton rbDoNotSay;
@@ -74,25 +75,25 @@ public class RegistrationWindow extends JFrame{
 		return btnRegistrate;
 	}
 
-	public JLabel getLblEmptyFieldName() {
-		return lblEmptyFieldName;
+	public JLabel getLblErrorFieldName() {
+		return lblErrorFieldName;
 	}
 
 	public JTextField getTxtFieldName() {
 		return txtFieldName;
 	}
 
-	public JLabel getLblEmptyFieldEmail() {
-		return lblEmptyFieldEmail;
+	public JLabel getLblErrorFieldEmail() {
+		return lblErrorFieldEmail;
 	}
 
 	public JTextField getTxtFieldEmail() {
 		return txtFieldEmail;
 	}
 
-	public JLabel getLblUnvalidEmail() {
+	/*public JLabel getLblUnvalidEmail() {
 		return lblUnvalidEmail;
-	}
+	}*/
 	
 	public JPasswordField getPwdPassword() {
 		return pwdPassword;
@@ -102,17 +103,17 @@ public class RegistrationWindow extends JFrame{
 		return pwdConfirmPassword;
 	}
 
-	public JLabel getLblEmptyFieldPassword() {
-		return lblEmptyFieldPassword;
+	public JLabel getLblErrorFieldPassword() {
+		return lblErrorFieldPassword;
 	}
 
-	public JLabel getLblEmptyFieldConfirmPassword() {
-		return lblEmptyFieldConfirmPassword;
+	public JLabel getLblErrorFieldConfirmPassword() {
+		return lblErrorFieldConfirmPassword;
 	}
 
-	public JLabel getLblErrorUnequalPasswords() {
+	/*public JLabel getLblErrorUnequalPasswords() {
 		return lblErrorUnequalPasswords;
-	}
+	}*/
 
 	public String getName() {
 		return txtFieldName.getText();
@@ -130,7 +131,7 @@ public class RegistrationWindow extends JFrame{
 		return String.valueOf(pwdConfirmPassword.getPassword());
 	}
 	
-	public String getSexo() {
+	public String getSex() {
 		
 		if(rbMan.isSelected()) {
 			return "Masculino";
@@ -226,18 +227,18 @@ public class RegistrationWindow extends JFrame{
 		
 		// CAMPOS Y SU ETIQUETA DE ERROR
 		txtFieldName = createTextField(fieldsColumn);
-		lblEmptyFieldName = createErrorLabel("El nombre es obligatorio", fieldsColumn);
+		lblErrorFieldName = createErrorLabel(fieldsColumn);
 		
 		txtFieldEmail = createTextField(fieldsColumn);
-		lblEmptyFieldEmail = createErrorLabel("El correo es obligatorio", fieldsColumn);
-		lblUnvalidEmail = createErrorLabel("Correo no válido", fieldsColumn);
+		lblErrorFieldEmail = createErrorLabel(fieldsColumn);
+		//lblUnvalidEmail = createErrorLabel("Correo no válido", fieldsColumn);
 		
 		pwdPassword = createPasswordField(fieldsColumn);
-		lblEmptyFieldPassword = createErrorLabel("La contraseña es obligatoria", fieldsColumn);
+		lblErrorFieldPassword = createErrorLabel(fieldsColumn);
 
 		pwdConfirmPassword = createPasswordField(fieldsColumn);
-	    lblEmptyFieldConfirmPassword = createErrorLabel("Debes confirmar la contraseña", fieldsColumn);
-		lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", fieldsColumn);
+	    lblErrorFieldConfirmPassword = createErrorLabel(fieldsColumn);
+		//lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", fieldsColumn);
 		
 		// AÑADIR AMBAS COLUMNAS EN EL PANEL
 		importantDataGrid.add(labelsColumn);
@@ -255,7 +256,7 @@ public class RegistrationWindow extends JFrame{
 		
 		sexFlowPanel.setOpaque(false);
 		
-		ButtonGroup grpSexes = new ButtonGroup();
+		grpSexes = new ButtonGroup();
 		
 		rbMan = createJRadioButton("Hombre", grpSexes, sexFlowPanel);
 		rbWoman = createJRadioButton("Mujer", grpSexes, sexFlowPanel);
@@ -391,9 +392,9 @@ public class RegistrationWindow extends JFrame{
 		return button;
 	}
 	
-	private JLabel createErrorLabel(String lblText, JPanel panel) {
+	private JLabel createErrorLabel(JPanel panel) {
 		
-		JLabel errorLabel = new JLabel(lblText);
+		JLabel errorLabel = new JLabel();
 		
 		errorLabel.setFont(new Font("Verdana", Font.BOLD, 11));
 		errorLabel.setForeground(Color.RED);
@@ -416,10 +417,9 @@ public class RegistrationWindow extends JFrame{
 	}
 	
 	public void resetErrorLabels() {
-	    lblEmptyFieldName.setVisible(false);
-	    lblEmptyFieldEmail.setVisible(false);
-	    lblUnvalidEmail.setVisible(false);
-	    lblEmptyFieldPassword.setVisible(false);
-	    lblErrorUnequalPasswords.setVisible(false);
+		lblErrorFieldName.setVisible(false);
+	    lblErrorFieldEmail.setVisible(false);
+	    lblErrorFieldPassword.setVisible(false);
+	    lblErrorFieldConfirmPassword.setVisible(false);
 	}
 }

@@ -43,6 +43,9 @@ public class HomeController {
 	}
 	
 	private void showUsers() {
+		
+		UserController controller = new UserController(view.usersPanel);
+		
 		UserRepository repository = new UserRepository();
 		
 		try {
