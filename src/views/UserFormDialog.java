@@ -135,9 +135,13 @@ public class UserFormDialog extends JDialog{
 
         // CAMPOS
         txtFieldName = createTextField(fields);
+        fields.add(createErrorLabel("El nombre es obligatorio", textFont));
         txtFieldEmail = createTextField(fields);
+        fields.add(createErrorLabel("El correo es obligatorio", textFont));
         pwdPassword = createPasswordField(fields);
+        fields.add(createErrorLabel("La contraseña es obligatoria", textFont));
         pwdConfirmPassword = createPasswordField(fields);
+        fields.add(createErrorLabel("Debe confirmar su contraseña", textFont));
 
         grid.add(labels);
         grid.add(fields);
@@ -184,6 +188,16 @@ public class UserFormDialog extends JDialog{
 		
 		return label;
 	}
+    private JLabel createErrorLabel(String lblText, Font font) {
+    	
+    	JLabel label = new JLabel(lblText);
+    	
+    	label.setFont(font);
+    	label.setForeground(Color.RED);
+    	label.setVisible(false);
+    	
+    	return label;
+    }
 
     private JTextField createTextField(JPanel panel) {
         JTextField field = new JTextField();
