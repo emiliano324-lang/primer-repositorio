@@ -7,6 +7,8 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import controllers.LoginController;
+
 public class LoginWindow extends JFrame { 
 	
 	private LoginView view;
@@ -31,9 +33,10 @@ public class LoginWindow extends JFrame {
 		new Point(0,0), "Mi Cursor");
 		setCursor(miCursor);
 		
-		view = new LoginView();
-		
-		add(view);
+		 view = new LoginView();
+		 add(view);
+
+	  new LoginController(view);
 		
 		setVisible(true);
 	}

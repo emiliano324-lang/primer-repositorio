@@ -48,6 +48,7 @@ public class RegistrationWindow extends JFrame{
 	
 	LoginWindow window;
 	private JButton btnRegistrate;
+	private JButton btnExit;
 	private JTextField txtFieldName;
 	private JTextField txtFieldEmail;
 	private JPasswordField pwdPassword;
@@ -63,6 +64,9 @@ public class RegistrationWindow extends JFrame{
 	private JRadioButton rbWoman;
 	private JRadioButton rbDoNotSay;
 	
+	public JButton getBtnExit() {
+		return btnExit;
+	}
 	public LoginWindow getWindow() {
 		return window;
 	}
@@ -278,7 +282,7 @@ public class RegistrationWindow extends JFrame{
 		JPanel exitAndRegisterButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		exitAndRegisterButtons.setBackground(customBlue);
 		
-		JButton btnExit = createJButton("Atras", textFont, exitAndRegisterButtons);
+		btnExit = createJButton("Atras", textFont, exitAndRegisterButtons);
 		btnRegistrate = createJButton("Registrarme", textFont, exitAndRegisterButtons);
 		
 		// BARRA VERTICAL DE SCROLL

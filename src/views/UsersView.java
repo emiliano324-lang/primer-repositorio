@@ -54,4 +54,12 @@ public class UsersView extends JPanel {
 	public JTable getTable() {
 		return table;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

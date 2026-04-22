@@ -8,15 +8,16 @@ import views.MainWindow;
 import views.RegistrationWindow;
 
 public class Main {
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		new HomeController(new MainWindow());
+		//new HomeController(new MainWindow());
 
-		//LoginWindow login = new LoginWindow();
+		LoginWindow login = new LoginWindow();
 		//new LoginController(login.getView());
-
+		//new RegistrationController(new RegistrationWindow());
 		//RegistrationWindow form = new RegistrationWindow();
 		//RegistrationController formController = new RegistrationController(form);
 

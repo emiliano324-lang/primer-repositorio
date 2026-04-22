@@ -19,6 +19,15 @@ public class UserController {
 			UserFormDialog form = new UserFormDialog(null, null);
 			form.setVisible(true);
 		});
+		
+		view.getBtnDelete().addActionListener(e ->{
+			
+			
+		});
+		
 	}
+	
+	
+	
 	
 }

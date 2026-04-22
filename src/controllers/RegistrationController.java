@@ -11,6 +11,7 @@ import javax.swing.event.DocumentListener;
 import models.User;
 import repository.UserRepository;
 import views.LoginView;
+import views.LoginWindow;
 import views.MainWindow;
 import views.RegistrationWindow;				
 
@@ -35,23 +36,35 @@ public class RegistrationController {
 
         // NOMBRE
         view.getTxtFieldName().getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { validateName(); }
-            public void removeUpdate(DocumentEvent e) { validateName(); }
-            public void changedUpdate(DocumentEvent e) { validateName(); }
+            public void insertUpdate(DocumentEvent e) {
+            	validateName(); 
+            }
+            public void removeUpdate(DocumentEvent e) {
+            	validateName(); 
+            }
+            public void changedUpdate(DocumentEvent e) {
+            	validateName(); 
+            }
         });
 
         // EMAIL
         view.getTxtFieldEmail().getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { validateEmail(); }
-            public void removeUpdate(DocumentEvent e) { validateEmail(); }
-            public void changedUpdate(DocumentEvent e) { validateEmail(); }
+            public void insertUpdate(DocumentEvent e) { 
+            validateEmail(); 
+            }
+            public void removeUpdate(DocumentEvent e) { 
+            	validateEmail(); 
+            }
+            public void changedUpdate(DocumentEvent e) { 
+            	validateEmail(); 
+           }
         });
         
-        // BOTÓN REGISTRARSE
+      
         view.getBtnRegistrate().addActionListener(e -> register());
 
-        // BOTÓN SALIR
-        // necesitas getter en la vista si quieres usarlo aquí
+        view.getBtnExit().addActionListener(e -> handleBack());
+        
     }
 
     // ================= VALIDACIONES =================
@@ -152,10 +165,10 @@ public class RegistrationController {
     		}
     	}
     }
-    // ================= NAVEGACIÓN =================
+  
 
     private void handleBack() {
-        new LoginView();
+        new LoginWindow();
         view.dispose();
     }
 

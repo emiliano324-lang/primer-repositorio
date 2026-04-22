@@ -1,6 +1,7 @@
 package controllers;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import exceptions.InvalidPasswordException;
 import exceptions.InvalidUserException;
@@ -14,9 +15,8 @@ public class LoginController {
 	private LoginView view;
 	
 	public LoginController(LoginView view) {
-		this.view = view;
-		
-		registerListeners();
+	    this.view = view;
+	    registerListeners();
 	}
 	
 	public void registerListeners() {
@@ -25,60 +25,46 @@ public class LoginController {
 		view.getBtnSignIn().addActionListener(e ->{ handleRegistration(); });
 	}
 
-	private boolean validateLogin(User user) throws InvalidUserException, InvalidPasswordException {
+	private boolean validateLogin(User user) {
 
-		view.resetErrorLabels();
-		
-		boolean errorFound = false;
+	    view.resetErrorLabels();
+	    boolean valid = true;
 
-		// Validar usuario
-		if (user.getName().trim().isEmpty()) {
-			errorFound = true;
-			
-			view.showLblErrorUser();
+	    if (user.getName().trim().isEmpty()) {
+	        view.showLblErrorUser();
+	        valid = false;
+	    }
 
-			throw new InvalidUserException("El usuario no coincide");
-			
-		} else {
-			view.getLblErrorUser().setVisible(false);
-		}
+	    if (user.getPassword().trim().isEmpty()) {
+	        view.showLblErrorPassword("Error: Este campo es obligatorio");
+	        valid = false;
+	    }
 
-		// Validar contraseña
-		if (user.getPassword().trim().isEmpty()) {
-			errorFound = true;
-			
-			view.showLblErrorPassword("Error: Este campo es obligatorio");
-			
-			throw new InvalidPasswordException("La contraseña no coincide");
-			
-		} else {
-			view.getLblErrorPassword().setVisible(false);
-		}
-
-		return !errorFound;
+	    return valid;
 	}
-
+	
 	private void handleLogin() {
-		User user = new User(view.getUsername(), view.getPassword());
-		
-		try {
-			if(validateLogin(user)) {
-				JOptionPane.showMessageDialog(view.getWindow(), "Se inició la sesión", "Sesión Iniciada",
-						JOptionPane.INFORMATION_MESSAGE);
-				
-				new MainWindow();
-				
-				view.getWindow().dispose();
-			}
-		} catch (InvalidUserException | InvalidPasswordException ex) {
-			view.showLblErrorPassword("Error: Datos Incorrectos");
-		}
-		
-	}
+	    User user = new User(view.getUsername(), view.getPassword());
 
+	    if (validateLogin(user)) {
+
+	        // Aquí deberías validar contra base de datos o lista
+	        if(user.getName().equals("admin") && user.getPassword().equals("1234")) {
+
+	            JOptionPane.showMessageDialog(view.getWindow(),
+	                "Se inició la sesión", "Sesión Iniciada",
+	                JOptionPane.INFORMATION_MESSAGE);
+
+	            new MainWindow();
+	        	SwingUtilities.getWindowAncestor(view).dispose();
+
+	        } else {
+	            view.showLblErrorPassword("Error: Datos Incorrectos");
+	        }
+	    }
+	}
+ 
 	private void handleRegistration() {
-		new RegistrationWindow();
-
-		view.getWindow().dispose();
-	}
+		new RegistrationController(new RegistrationWindow());
+		SwingUtilities.getWindowAncestor(view).dispose();	}
 }
