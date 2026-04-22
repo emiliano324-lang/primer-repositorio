@@ -407,7 +407,7 @@ public class RegistrationWindow extends JFrame{
 		panel.add(errorLabel);
 		
 		return errorLabel;
-	}
+	} 
 	
 	// CAMBIO DE FONDO
 	private void changeBackground(JComponent c) {

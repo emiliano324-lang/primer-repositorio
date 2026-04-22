@@ -18,11 +18,11 @@ public class LoginController {
 	    this.view = view;
 	    registerListeners();
 	}
-	
+	 
 	public void registerListeners() {
 		
 		view.getBtnLogin().addActionListener(e -> handleLogin() );
-		view.getBtnSignIn().addActionListener(e -> handleRegistration() );
+		view.getBtnSignIn().addActionListener(e -> handleRegistration());
 	}
 
 	private boolean validateLogin(User user) {
@@ -48,7 +48,7 @@ public class LoginController {
 
 	    if (validateLogin(user)) {
 
-	    	if(user.getName().equals("admin") && user.getPassword().equals("1234")) {
+	        if(user.getName().equals("admin") && user.getPassword().equals("1234")) {
 
 	            JOptionPane.showMessageDialog(view.getWindow(),
 	                "Se inició la sesión", "Sesión Iniciada",
@@ -65,5 +65,6 @@ public class LoginController {
  
 	private void handleRegistration() {
 		new RegistrationController(new RegistrationWindow());
+			
 		SwingUtilities.getWindowAncestor(view).dispose();	}
 }

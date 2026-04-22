@@ -61,6 +61,7 @@ public class UserFormDialog extends JDialog{
         add(createTitlePanel(), BorderLayout.NORTH);
         add(initializeComponents(), BorderLayout.CENTER);
         
+        loadData();
     }
     
     private JPanel createTitlePanel() {
@@ -163,6 +164,9 @@ public class UserFormDialog extends JDialog{
         btnSave = createButton("Guardar", textFont, buttons);
         btnCancel = createButton("Cancelar", textFont, buttons);
 
+        btnSave.addActionListener(e -> save());
+        btnCancel.addActionListener(e -> dispose());
+        
         // SCROLL
         JScrollPane scroll = new JScrollPane(componentsPanel);
         scroll.setHorizontalScrollBar(null);
@@ -174,7 +178,7 @@ public class UserFormDialog extends JDialog{
         componentsPanel.add(sexPanel);
         componentsPanel.add(buttons);
         
-        return scroll;
+        return scroll; 
     }
     		
     private JLabel createLabel(String lblText, Font font) {
@@ -230,5 +234,72 @@ public class UserFormDialog extends JDialog{
         btn.setFont(font);
         panel.add(btn);
         return btn;
+    }
+    
+    /*private void deleteUser() {
+    	
+    	if(user != null) {
+    		txtFieldName.setText(null);
+    		txtFieldEmail.setText(null);
+    		pwdPassword.setText(null);
+    		pwdConfirmPassword.setText(null);
+    		
+    		rbMan.setSelected(false);
+			rbWoman.setSelected(false);
+			rbDoNotSay.setSelected(false);
+    	}
+    	
+    }*/
+    
+    private void loadData() {
+    	
+    	if(user != null) {
+    		txtFieldName.setText(user.getName());
+    		txtFieldEmail.setText(user.getEmail());
+    		pwdPassword.setText(user.getPassword());
+    		pwdConfirmPassword.setText(user.getConfirmPassword());
+    		
+    		if(user.getSex().equals("Masculino")){
+    			rbMan.setSelected(true);
+    		} else if (user.getSex().equals("Femenino")) {
+    			rbWoman.setSelected(true);
+    		}else {
+    			rbDoNotSay.setSelected(true);
+    		}
+    	}
+    }
+    
+    private void save() {
+    	String name = txtFieldName.getText();
+    	String email = txtFieldEmail.getText();
+    	
+    	String sex;
+    	if(rbMan.isSelected()) {
+    		sex = "Masculino";
+    	}else if (rbWoman.isSelected()) {
+    		sex = "Femenino";
+    	}else {
+    		sex = "No Definido";
+    	}
+    	
+    	if(user == null) {
+    		user = new User(name, email, sex);
+    	}else {
+    		user.setName(name);
+    		user.setEmail(email);
+    		user.setSex(sex);
+    	}
+    	
+    	saved = true;
+    	
+    	dispose();
+    }
+    
+    public boolean isSaved() {
+    	return saved;
+    }
+    
+    public User getUser() {
+    	return user;
     }
 }

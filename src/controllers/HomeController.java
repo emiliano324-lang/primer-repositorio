@@ -16,6 +16,7 @@ import views.MainWindow;
 public class HomeController {
 
 	private MainWindow view;
+	private UserController userController;
 	
 	public HomeController(MainWindow view) {
 		
@@ -35,15 +36,18 @@ public class HomeController {
 			}
 		});
 		
-		view.btnHome.addActionListener(e -> view.showView(MainWindow.HOME));
-		
+		view.btnHome.addActionListener(e -> {
+			view.showView(MainWindow.HOME);
+			updateMenuState(MainWindow.HOME);
+		});
+		 
 		view.btnUsers.addActionListener(e -> { 
 			showUsers(); 
 		});
 	}
 	
 	private void showUsers() {
-		
+		/*
 		UserController controller = new UserController(view.usersPanel);
 		UserRepository repository = new UserRepository();
 		
@@ -60,6 +64,20 @@ public class HomeController {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(view, ex.getMessage());
 		}
+		*/
+		if(userController == null) {
+			userController = new UserController(view.usersPanel);
+		}
+			
+		userController.loadUsers();
+		
+		view.showView(MainWindow.USERS);
+		updateMenuState(MainWindow.USERS);
+	}
+	
+	private void updateMenuState(String viewName) {
+		view.btnUsers.setEnabled(!viewName.equals(MainWindow.USERS));
+		view.btnHome.setEnabled(!viewName.equals(MainWindow.HOME));
 	}
 	
 	private void handleClose() {

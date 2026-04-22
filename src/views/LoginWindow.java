@@ -36,6 +36,7 @@ public class LoginWindow extends JFrame {
 		add(view);
 
 		new LoginController(view);
+		
 		setVisible(true);
 	}
 	

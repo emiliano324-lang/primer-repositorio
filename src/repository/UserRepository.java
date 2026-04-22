@@ -51,7 +51,7 @@ public class UserRepository {
 	        }
 	    }
 	}
-	
+	 
 	public void delete(int index) throws IOException {
 		List<User> users = getUsers();
 		users.remove(index);
