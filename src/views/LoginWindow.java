@@ -33,10 +33,10 @@ public class LoginWindow extends JFrame {
 		new Point(0,0), "Mi Cursor");
 		setCursor(miCursor);
 		
-		 view = new LoginView();
-		 add(view);
-
-	  new LoginController(view);
+		view = new LoginView();
+		add(view);
+ 
+		new LoginController(view);
 		
 		setVisible(true);
 	}

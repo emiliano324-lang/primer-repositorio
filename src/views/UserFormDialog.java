@@ -170,7 +170,7 @@ public class UserFormDialog extends JDialog{
         componentsPanel.add(sexPanel);
         componentsPanel.add(buttons);
         
-        return scroll;
+        return scroll; 
     }
     		
     private JLabel createLabel(String lblText, Font font) {

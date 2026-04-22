@@ -36,7 +36,7 @@ public class HomeController {
 		});
 		
 		view.btnHome.addActionListener(e -> view.showView(MainWindow.HOME));
-		
+		 
 		view.btnUsers.addActionListener(e -> { 
 			showUsers(); 
 		});
@@ -63,17 +63,13 @@ public class HomeController {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	private void handleClose() {
+	 
+		private void handleClose() {
 		int option = view.confirmExit();
 		System.out.println(option);
 
 		if (option == JOptionPane.YES_OPTION) {
-			new LoginController(new LoginWindow().getView());
+			new LoginWindow();
 			view.dispose();
 		}
 	}
