@@ -37,16 +37,16 @@ public class UserController {
 		});
 		
 		view.getBtnDelete().addActionListener(e ->{
+			
 			int row = view.getSelectedRow();
 			if(row == -1) {
 				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
 				return;
 			}
-			
-			view.remove(row);
-			
+			System.out.println("...");
 			
 			try {
+				System.out.println("se removio");
 				repo.delete(row);
 				loadUsers();
 			}catch(Exception ex) {
