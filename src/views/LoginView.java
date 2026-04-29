@@ -12,8 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controllers.LoginController;
-
 public class LoginView extends JPanel {
 
 	LoginWindow window;

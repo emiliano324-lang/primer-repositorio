@@ -54,7 +54,8 @@ public class UserController {
 			}
 		});
 		
-		 
+		 view.getBtnPdf().addActionListener(e -> generatePdf());
+		
 	}
 	
 	public void loadUsers() {	
@@ -102,5 +103,14 @@ public class UserController {
 		
 	}
 	
+	public void generatePdf() {
+		
+		File file = view.selectPdfFile();
+		
+		if(file == null) {
+			return;
+		}
+		
+	}
 	
 }
