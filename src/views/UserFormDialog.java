@@ -2,8 +2,6 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -12,18 +10,14 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import models.User;
 
@@ -78,22 +72,6 @@ public class UserFormDialog extends JDialog{
         return panel;
     }
     
-    /*private JPanel createButtonPanel() {
-
-        JPanel panel = new JPanel();
-
-        btnSave = new JButton("Guardar");
-        btnCancel = new JButton("Cancelar");
-
-        panel.add(btnSave);
-        panel.add(btnCancel);
-        
-        //btnSave.addActionListener(e -> save());
-        btnCancel.addActionListener(e -> dispose());
-        
-        return panel;
-    }*/
-
     private JScrollPane initializeComponents() {
 
         Color customBlue = new Color(0, 31, 84);
@@ -117,6 +95,12 @@ public class UserFormDialog extends JDialog{
 
         titlePanel.add(title);
 
+        // APARTADO DE DATOS
+        JPanel dataPanel = new JPanel(alignToCenter);
+		
+        dataPanel.setOpaque(false);
+        dataPanel.add(createLabel("Datos Importantes", subtitleFont));
+
         // GRID DE DATOS
         JPanel grid = new JPanel(new GridLayout(1,2,10,0));
         grid.setOpaque(false);
@@ -137,10 +121,13 @@ public class UserFormDialog extends JDialog{
         // CAMPOS
         txtFieldName = createTextField(fields);
         fields.add(createErrorLabel("El nombre es obligatorio", textFont));
+
         txtFieldEmail = createTextField(fields);
         fields.add(createErrorLabel("El correo es obligatorio", textFont));
+        
         pwdPassword = createPasswordField(fields);
         fields.add(createErrorLabel("La contraseña es obligatoria", textFont));
+        
         pwdConfirmPassword = createPasswordField(fields);
         fields.add(createErrorLabel("Debe confirmar su contraseña", textFont));
 
@@ -149,7 +136,9 @@ public class UserFormDialog extends JDialog{
 
         // SEXO
         JPanel sexPanel = new JPanel(alignToCenter);
+		
         sexPanel.setOpaque(false);
+        sexPanel.add(createLabel("Sexo", subtitleFont));
 
         grpSexes = new ButtonGroup();
 
@@ -235,21 +224,6 @@ public class UserFormDialog extends JDialog{
         panel.add(btn);
         return btn;
     }
-    
-    /*private void deleteUser() {
-    	
-    	if(user != null) {
-    		txtFieldName.setText(null);
-    		txtFieldEmail.setText(null);
-    		pwdPassword.setText(null);
-    		pwdConfirmPassword.setText(null);
-    		
-    		rbMan.setSelected(false);
-			rbWoman.setSelected(false);
-			rbDoNotSay.setSelected(false);
-    	}
-    	
-    }*/
     
     private void loadData() {
     	

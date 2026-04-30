@@ -10,7 +10,6 @@ import javax.swing.event.DocumentListener;
 
 import models.User;
 import repository.UserRepository;
-import views.LoginView;
 import views.LoginWindow;
 import views.MainWindow;
 import views.RegistrationWindow;				
@@ -20,14 +19,12 @@ public class RegistrationController {
     private RegistrationWindow view;
     private UserRepository repository;
 
-    // ✅ CONSTRUCTOR CORRECTO
     public RegistrationController(RegistrationWindow view) {
         this.view = view;
         this.repository = new UserRepository();
         initController();
     }
 
-    // ✅ INICIALIZAR LISTENERS
     private void initController() {
         registrationListener();
     }

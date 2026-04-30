@@ -6,19 +6,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.TextField;
 import java.awt.Toolkit;
 
 //import java.util.concurrent.Flow;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 //import java.util.concurrent.Flow;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -27,26 +21,16 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
-//import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-//import javax.swing.JSlider;
 import javax.swing.JTextField;
-//import javax.swing.border.Border;
-//import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import exceptions.InvalidPasswordException;
-import exceptions.InvalidUserException;
-
 
 public class RegistrationWindow extends JFrame{
 	
 	LoginWindow window;
+	
 	private JButton btnRegistrate;
 	private JButton btnExit;
 	private JTextField txtFieldName;
@@ -57,8 +41,6 @@ public class RegistrationWindow extends JFrame{
 	private JLabel lblErrorFieldEmail;
 	private JLabel lblErrorFieldPassword;
 	private JLabel lblErrorFieldConfirmPassword;
-	//private JLabel lblUnvalidEmail;
-	//private JLabel lblErrorUnequalPasswords;
 	private ButtonGroup grpSexes;
 	private JRadioButton rbMan;
 	private JRadioButton rbWoman;
@@ -95,10 +77,6 @@ public class RegistrationWindow extends JFrame{
 		return txtFieldEmail;
 	}
 
-	/*public JLabel getLblUnvalidEmail() {
-		return lblUnvalidEmail;
-	}*/
-	
 	public JPasswordField getPwdPassword() {
 		return pwdPassword;
 	}
@@ -114,10 +92,6 @@ public class RegistrationWindow extends JFrame{
 	public JLabel getLblErrorFieldConfirmPassword() {
 		return lblErrorFieldConfirmPassword;
 	}
-
-	/*public JLabel getLblErrorUnequalPasswords() {
-		return lblErrorUnequalPasswords;
-	}*/
 
 	public String getName() {
 		return txtFieldName.getText();
@@ -200,8 +174,7 @@ public class RegistrationWindow extends JFrame{
 		JPanel importantDataSection = new JPanel(alignToCenter);
 		
 		importantDataSection.setOpaque(false);
-		
-		JLabel lblImportantData = createLabel("Datos Importantes", subtitleFont, importantDataSection);
+		importantDataSection.add(createLabel("Datos Importantes", subtitleFont));
 
 		// CREAR PANEL GRID DE DOS COLUMNAS
 		JPanel importantDataGrid = new JPanel(new GridLayout(1,2,10,0));
@@ -217,17 +190,10 @@ public class RegistrationWindow extends JFrame{
 		fieldsColumn.setLayout(new BoxLayout(fieldsColumn,BoxLayout.Y_AXIS));
 		
 		// ETIQUETAS
-		JLabel lblName = createLabel("Nombre de Usuario", textFont, labelsColumn);
-		lblName.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-		
-		JLabel lblEmail = createLabel("Email", textFont, labelsColumn);
-		lblEmail.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-		
-		JLabel lblPassword = createLabel("Contraseña", textFont, labelsColumn);
-		lblPassword.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-		
-		JLabel lblConfirmPassword = createLabel("Confirmar contraseña", textFont, labelsColumn);
-		lblConfirmPassword.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		labelsColumn.add(createLabel("Nombre de Usuario", textFont));
+		labelsColumn.add(createLabel("Email", textFont));
+		labelsColumn.add(createLabel("Contraseña", textFont));
+		labelsColumn.add(createLabel("Confirmar contraseña", textFont));
 		
 		// CAMPOS Y SU ETIQUETA DE ERROR
 		txtFieldName = createTextField(fieldsColumn);
@@ -235,14 +201,12 @@ public class RegistrationWindow extends JFrame{
 		
 		txtFieldEmail = createTextField(fieldsColumn);
 		lblErrorFieldEmail = createErrorLabel(fieldsColumn);
-		//lblUnvalidEmail = createErrorLabel("Correo no válido", fieldsColumn);
 		
 		pwdPassword = createPasswordField(fieldsColumn);
 		lblErrorFieldPassword = createErrorLabel(fieldsColumn);
 
 		pwdConfirmPassword = createPasswordField(fieldsColumn);
 	    lblErrorFieldConfirmPassword = createErrorLabel(fieldsColumn);
-		//lblErrorUnequalPasswords = createErrorLabel("Las contraseñas no coinciden", fieldsColumn);
 		
 		// AÑADIR AMBAS COLUMNAS EN EL PANEL
 		importantDataGrid.add(labelsColumn);
@@ -252,8 +216,7 @@ public class RegistrationWindow extends JFrame{
 		JPanel sexSection = new JPanel(alignToCenter);
 
 		sexSection.setOpaque(false);
-		
-		JLabel lblSex = createLabel("Sexo", subtitleFont, sexSection);
+		sexSection.add(createLabel("Sexo", subtitleFont));
 		
 		// PANEL DE OPCIÓN DE SEXO
 		JPanel sexFlowPanel = new JPanel(alignToCenter);
@@ -270,8 +233,7 @@ public class RegistrationWindow extends JFrame{
 		JPanel privacySection = new JPanel(alignToCenter);
 		
 		privacySection.setOpaque(false);
-
-		JLabel lblPrivacy = createLabel("Privacidad", subtitleFont, privacySection);
+		privacySection.add(createLabel("Privacidad", subtitleFont));
 		
 		JPanel termsAndConditionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		termsAndConditionsPanel.setOpaque(false);
@@ -312,20 +274,16 @@ public class RegistrationWindow extends JFrame{
 		exitAndRegisterButtons.add(btnRegistrate);
 		componentsPanel.add(exitAndRegisterButtons);
 	}
-		// VALIDACIONES EN TIEMPO REAL
-		
-		// NOMBRE
 		
 	// CREAR COMPONENTES
-	private JLabel createLabel(String lblText, Font font, JPanel panel) {
+	private JLabel createLabel(String lblText, Font font /*JPanel panel*/) {
 		
 		JLabel label = new JLabel(lblText);
 		
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
 		label.setVisible(true);
-		
-		panel.add(label);
+		label.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
 		
 		return label;
 	}

@@ -67,7 +67,7 @@ public class UsersView extends JPanel {
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
 		
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Documentos PDF", null);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Documentos PDF", "pdf");
 		chooser.addChoosableFileFilter(filter);
 		chooser.setFileFilter(filter);
 		
