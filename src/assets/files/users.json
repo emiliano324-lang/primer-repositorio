@@ -1,0 +1,13 @@
+[ {
+  "name" : "Emiliano",
+  "password" : null,
+  "confirmPassword" : null,
+  "email" : "emi@gmail.com",
+  "sex" : "Masculino"
+}, {
+  "name" : "hugo",
+  "password" : null,
+  "confirmPassword" : null,
+  "email" : "hugo@correo.com",
+  "sex" : "Masculino"
+} ]

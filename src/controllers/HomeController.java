@@ -47,24 +47,6 @@ public class HomeController {
 	}
 	
 	private void showUsers() {
-		/*
-		UserController controller = new UserController(view.usersPanel);
-		UserRepository repository = new UserRepository();
-		
-		try {
-			List<User> users = repository.getUsers();
-			
-			UserTableModel model = new UserTableModel(users);
-			
-			view.usersPanel.setTableModel(model);
-			
-			view.showView(MainWindow.USERS);
-			
-		} catch (IOException ex) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(view, ex.getMessage());
-		}
-		*/
 		if(userController == null) {
 			userController = new UserController(view.usersPanel);
 		}
