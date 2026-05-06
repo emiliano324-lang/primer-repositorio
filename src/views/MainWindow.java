@@ -17,18 +17,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MainWindow extends JFrame {
-
+	
 	public static final String HOME = "HOME";
 	public static final String USERS = "USERS";
-	 
-	
 	
 	public JMenuItem mItemExit;
 	public JButton btnUsers;
 	public JButton btnHome;
 	public UsersView usersPanel;
 	public JButton btnPlay;
-	
 	
 	private CardLayout cardLayout;
 	private JPanel container;
@@ -47,6 +44,7 @@ public class MainWindow extends JFrame {
 		
 		createNavbar();
 		createViews();
+		
 		
 		setVisible(true);
 	}
@@ -102,9 +100,6 @@ public class MainWindow extends JFrame {
 	    menuFile.add(mItemSave);
 
 	    menuFile.addSeparator();
-	    
-	    
-	    
 	    
 	    mItemExit = new JMenuItem("Exit");
 	    mItemExit.setMnemonic(KeyEvent.VK_E);

@@ -4,40 +4,39 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import controllers.GameController;
 import controllers.LoginController;
 
-public class LoginWindow extends JFrame { 
+public class GameWindow extends JFrame{
+
+	GameView view;
 	
-	private LoginView view;
-	
-	public LoginView getView() {
-		return view;
-	}
-	public LoginWindow() {
+	public GameWindow() {
 		
-		setSize(500, 500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(true);
-		setTitle("Mi Aplicación");
-		setLocationRelativeTo(null);
-
 		Toolkit tk = Toolkit.getDefaultToolkit();
-		Image icono = tk.getImage("src/img/logo_uabcs.png");
-		setIconImage(icono);
-
+		
+		setSize(tk.getScreenSize().width, tk.getScreenSize().height);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Tekhnaryan");
+		setLocationRelativeTo(null);
+		
+		Image icon = tk.getImage("src/img/logo_uabcs.png");
+		setIconImage(icon);
+		
 		ImageIcon iconoCursor = new ImageIcon("src/img/cursor.png");
 		Cursor miCursor = tk.createCustomCursor(iconoCursor.getImage(), new Point(0, 0), "Mi Cursor");
 		setCursor(miCursor);
-
-		view = new LoginView();
+		
+		view = new GameView();
 		add(view);
-
-		new LoginController(view);
+		
+		new GameController(view);
 		
 		setVisible(true);
 	}
-	
 }

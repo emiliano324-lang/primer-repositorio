@@ -7,11 +7,11 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import gameUi.MainMenu;
 import models.User;
 import repository.UserRepository;
 import services.PDFExporter;
 import tablemodels.UserTableModel;
+import views.GameView;
 import views.UserFormDialog;
 import views.UsersView;
 

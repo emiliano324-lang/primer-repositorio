@@ -7,10 +7,10 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import gameUi.MainMenu;
 import models.User;
 import repository.UserRepository;
 import tablemodels.UserTableModel;
+import views.GameView;
 import views.LoginWindow;
 import views.MainWindow;
 
@@ -68,7 +68,7 @@ public class HomeController {
 		view.btnHome.setEnabled(!viewName.equals(MainWindow.HOME));
 	}
 	private void handlePlay() {
-		new MainMenu();
+		new GameView();
 		
 	}
 	private void handleClose() {

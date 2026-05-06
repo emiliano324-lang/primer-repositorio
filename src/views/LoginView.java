@@ -71,7 +71,6 @@ public class LoginView extends JPanel {
 	}
 	
 	public LoginView() {
-		
 		initializeComponents();
 		
     }
