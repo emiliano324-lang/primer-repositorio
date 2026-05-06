@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.swing.JOptionPane;
 import gameUi.MainMenu;
 import models.User;
 import repository.UserRepository;
+import services.PDFExporter;
 import tablemodels.UserTableModel;
 import views.UserFormDialog;
 import views.UsersView;
@@ -18,10 +20,13 @@ public class UserController {
 	private UsersView view;
 	private UserRepository repo;
 	private UserTableModel model;
+	private PDFExporter pdfExporter;
+	
 	
 	public UserController(UsersView view) {
 		this.view = view;
 		repo = new UserRepository();
+		pdfExporter = new PDFExporter();
 		
 		this.view.getBtnAdd().addActionListener(e -> {
 			openForm(null);
@@ -100,9 +105,7 @@ public class UserController {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(view, e.getMessage());
 			}
-			
 		}
-		
 	}
 	
 	
@@ -113,7 +116,14 @@ public class UserController {
 		if(file == null) {
 			return;
 		}
-		
+		try {
+			pdfExporter.exportUsers(repo.getUsers(), file);
+			if(Desktop.isDesktopSupported()) {
+				Desktop.getDesktop().open(file);
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(view, "Error al exportar");
+		}
 	}
-	
 }

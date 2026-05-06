@@ -1,13 +1,7 @@
 package repository;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +23,7 @@ public class UserRepository {
 		users.add(user);
 		updateAll(users);
 		
-		/*try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE, true)))){
-			writer.write(user.toCsv());
-			writer.newLine();
-		}*/
 	}
-
 
 	public List<User> getUsers() throws IOException{
 		
@@ -44,31 +33,11 @@ public class UserRepository {
 			return new ArrayList<>();
 		}
 				
-		return mapper.readValue(file, new TypeReference<List<User>>() {} );
-		
-		/*List<User> users = new ArrayList<User>();
-		
-		try(BufferedReader reader = new BufferedReader(new FileReader(FILE))){
-			String line;
-			
-			while((line = reader.readLine()) != null) {
-				User user = User.fromCsv(line);
-				users.add(user);
-			}
-		}
-		
-		return users;*/
+		return mapper.readValue(file, new TypeReference<List<User>>() {});
 	}
 	
 	public void updateAll(List<User> users) throws IOException {
-	    try (BufferedWriter writer = new BufferedWriter(
-	            new OutputStreamWriter(new FileOutputStream(FILE), StandardCharsets.UTF_8))) {
-
-	        for (User user : users) {
-	            writer.write(user.toCsv());
-	            writer.newLine();
-	        }
-	    }
+		mapper.writeValue(new File(FILE), users);
 	}
 	 
 	public void delete(int index) throws IOException {

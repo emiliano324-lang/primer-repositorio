@@ -1,1 +1,17 @@
+<<<<<<< HEAD
 Hugo,hugo_24@gmail.com,No Definido
+=======
+[ {
+  "name" : "Emiliano",
+  "password" : null,
+  "confirmPassword" : null,
+  "email" : "emi@gmail.com",
+  "sex" : "Masculino"
+}, {
+  "name" : "hugo",
+  "password" : null,
+  "confirmPassword" : null,
+  "email" : "hugo@correo.com",
+  "sex" : "Masculino"
+} ]
+>>>>>>> a03c8d073de1ffddd1673d2aa2ca9abffe82b6fb
