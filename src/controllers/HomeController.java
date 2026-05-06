@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import gameUi.MainMenu;
 import models.User;
 import repository.UserRepository;
 import tablemodels.UserTableModel;
@@ -44,7 +45,12 @@ public class HomeController {
 		view.btnUsers.addActionListener(e -> { 
 			showUsers(); 
 		});
+		
+		view.btnPlay.addActionListener(e -> handlePlay());
+		
 	}
+	
+
 	
 	private void showUsers() {
 		/*
@@ -79,7 +85,10 @@ public class HomeController {
 		view.btnUsers.setEnabled(!viewName.equals(MainWindow.USERS));
 		view.btnHome.setEnabled(!viewName.equals(MainWindow.HOME));
 	}
-	
+	private void handlePlay() {
+		new MainMenu();
+		
+	}
 	private void handleClose() {
 		int option = view.confirmExit();
 
@@ -88,5 +97,6 @@ public class HomeController {
 			view.dispose();
 		}
 	}
-	
+
+   
 }

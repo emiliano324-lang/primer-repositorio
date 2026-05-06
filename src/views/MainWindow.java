@@ -20,11 +20,15 @@ public class MainWindow extends JFrame {
 
 	public static final String HOME = "HOME";
 	public static final String USERS = "USERS";
+	 
+	
 	
 	public JMenuItem mItemExit;
 	public JButton btnUsers;
 	public JButton btnHome;
 	public UsersView usersPanel;
+	public JButton btnPlay;
+	
 	
 	private CardLayout cardLayout;
 	private JPanel container;
@@ -53,10 +57,10 @@ public class MainWindow extends JFrame {
 		
 		btnHome = new JButton("Inicio");
 		btnUsers = new JButton("Usuarios");
-		
+	
 		navbar.add(btnHome);
 		navbar.add(btnUsers);
-		
+	
 		add(navbar, BorderLayout.NORTH);
 	}
 	
@@ -98,7 +102,10 @@ public class MainWindow extends JFrame {
 	    menuFile.add(mItemSave);
 
 	    menuFile.addSeparator();
-
+	    
+	    
+	    
+	    
 	    mItemExit = new JMenuItem("Exit");
 	    mItemExit.setMnemonic(KeyEvent.VK_E);
 	    menuFile.add(mItemExit);
@@ -117,6 +124,10 @@ public class MainWindow extends JFrame {
 	    menuOtherOption.add(mItemOption2);
 
 	}
+	
+	
+	
+	
 	
 	public int confirmExit() {
 	    return JOptionPane.showConfirmDialog(
