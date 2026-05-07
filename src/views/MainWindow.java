@@ -55,10 +55,10 @@ public class MainWindow extends JFrame {
 		
 		btnHome = new JButton("Inicio");
 		btnUsers = new JButton("Usuarios");
-	
+		btnPlay = new JButton("Jugar");
 		navbar.add(btnHome);
 		navbar.add(btnUsers);
-	
+		navbar.add(btnPlay);
 		add(navbar, BorderLayout.NORTH);
 	}
 	

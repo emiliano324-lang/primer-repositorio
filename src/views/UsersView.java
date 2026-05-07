@@ -27,7 +27,7 @@ public class UsersView extends JPanel {
 	private JButton btnAdd;
 	private JButton btnDelete;
 	private JButton btnPdf;
-	public JButton btnPlay;
+	
 	
 	public JButton getBtnEdit() {
 		return btnEdit;
@@ -56,12 +56,11 @@ public class UsersView extends JPanel {
         btnEdit = new JButton("Editar");
         btnDelete = new JButton("Eliminar");
         btnPdf = new JButton("Exportar a PDF");
-    	btnPlay = new JButton("Play");	
+ 
         panelButtons.add(btnAdd);
         panelButtons.add(btnEdit);
         panelButtons.add(btnDelete);
         panelButtons.add(btnPdf);
-    	panelButtons.add(btnPlay);
         add(panelButtons, BorderLayout.NORTH);
 	}
 

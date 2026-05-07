@@ -3,7 +3,7 @@ package main;
 import controllers.HomeController;
 import controllers.LoginController;
 import controllers.RegistrationController;
-import views.GameView;
+import views.GameMenuView;
 import views.GameWindow;
 import views.LoginWindow;
 import views.MainWindow;
@@ -15,8 +15,8 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		GameWindow window = new GameWindow();
-		//new HomeController(new MainWindow());
+		//GameWindow window = new GameWindow();
+		new HomeController(new MainWindow());
 
 		//LoginWindow login = new LoginWindow();
 		//new LoginController(login.getView());

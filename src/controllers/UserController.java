@@ -11,7 +11,7 @@ import models.User;
 import repository.UserRepository;
 import services.PDFExporter;
 import tablemodels.UserTableModel;
-import views.GameView;
+import views.GameMenuView;
 import views.UserFormDialog;
 import views.UsersView;
 

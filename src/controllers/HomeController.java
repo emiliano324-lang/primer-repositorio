@@ -10,7 +10,8 @@ import javax.swing.JOptionPane;
 import models.User;
 import repository.UserRepository;
 import tablemodels.UserTableModel;
-import views.GameView;
+import views.GameMenuView;
+import views.GameWindow;
 import views.LoginWindow;
 import views.MainWindow;
 
@@ -68,8 +69,10 @@ public class HomeController {
 		view.btnHome.setEnabled(!viewName.equals(MainWindow.HOME));
 	}
 	private void handlePlay() {
-		new GameView();
-		
+		new GameWindow();
+		System.out.println("Se abrio la ventana");
+		view.dispose();
+		System.out.println("Se cerro esta ventana");
 	}
 	private void handleClose() {
 		int option = view.confirmExit();
