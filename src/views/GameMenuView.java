@@ -5,25 +5,30 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import utils.AppFont;
 
 public class GameMenuView extends JPanel{
 	
 	GameWindow window;
 	
+	private JLabel lblTitle;
 	private JButton btnPlay;
 	private JButton btnExit;
 	private JButton btnCredits;
-	private JButton btnOpcions;
-	
+	//private JButton btnSettings;
 	
 	Image mainMenuBackground;
 	
@@ -61,35 +66,59 @@ public class GameMenuView extends JPanel{
 	public void setBtnCredits(JButton btnCredits) {
 		this.btnCredits = btnCredits;
 	}
-	public JButton getBtnOpcions() {
-		return btnOpcions;
-	}
-	public void setBtnOpcions(JButton btnOpcions) {
-		this.btnOpcions = btnOpcions;
-	}
+	
 	private void initializeComponents() {
-		GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(5, 5, 5, 5);
+		setLayout(new GridBagLayout());
+		
+		createIcon();
+		createButtons();
+	}
 
+	private void createButtons() {
+		GridBagConstraints c = new GridBagConstraints();
 		
-		btnPlay = new JButton("PLAY");
-		btnPlay.setForeground(new Color(254, 252, 251));
-		btnPlay.setFont(new Font("Verdana", Font.BOLD, 45));
+		c.gridx = 0;
+		c.weightx = 1.0;
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 20, 10, 20);
+		c.fill = GridBagConstraints.NONE;
+
+		c.gridy = 1;
+		btnPlay = createButton("JUGAR");
+		add(btnPlay, c);
 		
-		add(btnPlay,c);
+		c.gridy = 2;
+		btnCredits = createButton("CREDITOS");
+		add(btnCredits, c);
+		
+		c.gridy = 3;
+		btnExit = createButton("SALIR");
+		add(btnExit, c);
 	}
 	
-	
-	
-	
-	
+	private void createIcon() {
+		GridBagConstraints c = new GridBagConstraints();
+
+	    c.gridx = 0;
+	    c.gridy = 0;
+
+	    c.weightx = 1;
+	    c.weighty = 1;
+	    
+	    c.anchor = GridBagConstraints.NORTHWEST;
+
+	    c.insets = new Insets(10, 20, 40, 0);
+
+	    ImageIcon icon = new ImageIcon("src/img/TECHNARYAN TITULO.png");
+
+	    Image img = icon.getImage().getScaledInstance(900, 193, Image.SCALE_SMOOTH);
+ 
+	    lblTitle = new JLabel(new ImageIcon(img));
+
+	    add(lblTitle, c);
+	}
 	
 	public void paintComponent(Graphics g) {
-		
-	
-		
-		
-		
 		super.paintComponents(g);
 		Graphics2D g2 = (Graphics2D) g;
 		
@@ -118,4 +147,18 @@ public class GameMenuView extends JPanel{
 		return null;
 	}
 	
+	
+	private JButton createButton(String text) {
+		
+		JButton button = new JButton(text);
+		
+		button.setForeground(new Color(254, 252, 251));
+		button.setFont(AppFont.normal());
+
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		button.setOpaque(false);
+		
+		return button;
+	}
 }

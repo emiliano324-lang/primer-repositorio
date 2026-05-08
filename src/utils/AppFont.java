@@ -10,7 +10,7 @@ public class AppFont {
 		try {
 			base = Font.createFont(
 					Font.TRUETYPE_FONT, 
-					AppFont.class.getResourceAsStream("/assets/fonts/arimo.ttf"));
+					AppFont.class.getResourceAsStream("/assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf"));
 
 		}catch(Exception e) {
 			base = new Font("Times New Roman", Font.PLAIN, 14);
@@ -18,7 +18,7 @@ public class AppFont {
 	}
 
 	public static Font normal() {
-		return base.deriveFont(14f);
+		return base.deriveFont(45f);
 	}
 
 	public static Font bold() {

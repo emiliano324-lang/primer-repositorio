@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controllers.GameManuController;
+import controllers.GameMenuController;
 import controllers.LoginController;
 
 public class GameWindow extends JFrame{
@@ -38,9 +38,9 @@ public class GameWindow extends JFrame{
 		Image icon = tk.getImage("src/img/logo_uabcs.png");
 		setIconImage(icon);
 		
-		ImageIcon iconoCursor = new ImageIcon("src/img/cursor.png");
-		Cursor miCursor = tk.createCustomCursor(iconoCursor.getImage(), new Point(0, 0), "Mi Cursor");
-		setCursor(miCursor);
+		ImageIcon iconCursor = new ImageIcon("src/img/cursor.png");
+		Cursor cursor = tk.createCustomCursor(iconCursor.getImage(), new Point(0, 0), "Mi Cursor");
+		setCursor(cursor);
 		
 		layout = new CardLayout();
 
@@ -54,13 +54,13 @@ public class GameWindow extends JFrame{
         container.add(gameLoopView, "GAME");
         
         
-        new GameManuController(menuView, this); 
+        new GameMenuController(menuView, this); 
         showPanel("MENU");
-        
         
         
 		setVisible(true);
 	}
+	
 	public void showPanel(String name) {
         layout.show(container, name);
     }
