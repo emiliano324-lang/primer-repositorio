@@ -83,29 +83,42 @@ public class UserController {
 		}
 	}
 	
-	
 	private void openForm(User user) {
-		
-		UserFormDialog dialog = new UserFormDialog(null, user);
-		dialog.setVisible(true);
-		
-		if(dialog.isSaved()) {
-			User savedUser = dialog.getUser();
-			
-			try {
-				if(user == null) {
-					repo.save(savedUser);
-				}else {
-					int row = view.getSelectedRow();
-					repo.update(row, savedUser);
-				}
-				
-				loadUsers();
-			}catch(Exception e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(view, e.getMessage());
-			}
-		}
+
+	    UserFormDialog dialog =
+	            new UserFormDialog(null);
+
+	    UserFormController controller =
+	            new UserFormController(dialog, user);
+
+	    dialog.setVisible(true);
+
+	    if(controller.isSaved()) {
+
+	        User savedUser = controller.getUser();
+
+	        try {
+
+	            if(user == null) {
+
+	                repo.save(savedUser);
+
+	            } else {
+
+	                int row = view.getSelectedRow();
+
+	                repo.update(row, savedUser);
+	            }
+
+	            loadUsers();
+
+	        } catch(Exception e) {
+
+	            e.printStackTrace();
+
+	            JOptionPane.showMessageDialog(view, e.getMessage());
+	        }
+	    }
 	}
 	
 	

@@ -1,5 +1,10 @@
  package controllers;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -21,12 +26,27 @@ public class LoginController {
 	 
 	public void registerListeners() {
 		
-		view.getBtnLogin().addActionListener(e -> handleLogin() );
+		view.getBtnLogin().addActionListener(e -> handleLogin());
 		view.getBtnSignIn().addActionListener(e -> handleRegistration());
+		
+		changeBackgroundListener(view.getBtnLogin());
+		changeBackgroundListener(view.getBtnSignIn());
 	}
 
-	private boolean validateLogin(User user) {
+	public void changeBackgroundListener(JComponent c) {
 
+		c.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				changeBackground(c);
+			}
+
+			public void mouseExited(MouseEvent e) {
+				resetBackground(c, Color.WHITE);
+			}
+		});
+	}
+	
+	private boolean validateLogin(User user) {
 		view.resetErrorLabels();
 	    boolean valid = true;
 
@@ -66,5 +86,17 @@ public class LoginController {
 	private void handleRegistration() {
 		new RegistrationController(new RegistrationWindow());
 			
-		SwingUtilities.getWindowAncestor(view).dispose();	}
+		SwingUtilities.getWindowAncestor(view).dispose();
+	}
+
+	private void resetBackground(JComponent c, Color defaultButtonColor) {
+		c.setBackground(defaultButtonColor);
+		c.setForeground(Color.BLACK);
+	}
+	
+	private void changeBackground(JComponent c) {
+		c.setBackground(new Color(3,64,120));
+		c.setForeground(Color.WHITE);
+	}
 }
+

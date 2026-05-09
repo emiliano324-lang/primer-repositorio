@@ -19,59 +19,154 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import models.User;
 
-public class UserFormDialog extends JDialog{
+public class UserFormDialog extends JDialog {
 
-	private JTextField txtFieldName;
-	private JTextField txtFieldEmail;
-	private JPasswordField pwdPassword;
-	private JPasswordField pwdConfirmPassword;
+    private JTextField txtFieldName;
+    private JTextField txtFieldEmail;
+    private JPasswordField pwdPassword;
+    private JPasswordField pwdConfirmPassword;
+    
+    private JLabel lblErrorFieldName;
+	private JLabel lblErrorFieldEmail;
+	private JLabel lblErrorFieldPassword;
+	private JLabel lblErrorFieldConfirmPassword;
 
-	private ButtonGroup grpSexes;
+    private ButtonGroup grpSexes;
 
-	private JRadioButton rbMan;
-	private JRadioButton rbWoman;
-	private JRadioButton rbDoNotSay;
-	
+    private JRadioButton rbMan;
+    private JRadioButton rbWoman;
+    private JRadioButton rbDoNotSay;
+
     private JButton btnSave;
     private JButton btnCancel;
 
-    private User user;
-    private boolean saved = false;
-    		
-    public UserFormDialog(JFrame parent, User user) {
-    	super(parent, true);
-    	
-    	this.user = user;
-    	
-    	setSize(450, 450);
+    // GETTERS
+	public String getSex() {
+
+        if(rbMan.isSelected()) {
+            return "Masculino";
+        }
+
+        if(rbWoman.isSelected()) {
+            return "Femenino";
+        }
+
+        return "No Definido";
+    }
+	
+	public JTextField getTxtFieldName() {
+		return txtFieldName;
+	}
+
+	public void setTxtFieldName(JTextField txtFieldName) {
+		this.txtFieldName = txtFieldName;
+	}
+
+	public JTextField getTxtFieldEmail() {
+		return txtFieldEmail;
+	}
+
+	public void setTxtFieldEmail(JTextField txtFieldEmail) {
+		this.txtFieldEmail = txtFieldEmail;
+	}
+
+	public JPasswordField getPwdPassword() {
+		return pwdPassword;
+	}
+
+	public void setPwdPassword(JPasswordField pwdPassword) {
+		this.pwdPassword = pwdPassword;
+	}
+
+	public JPasswordField getPwdConfirmPassword() {
+		return pwdConfirmPassword;
+	}
+
+	public void setPwdConfirmPassword(JPasswordField pwdConfirmPassword) {
+		this.pwdConfirmPassword = pwdConfirmPassword;
+	}
+
+	public JLabel getLblErrorFieldName() {
+		return lblErrorFieldName;
+	}
+
+	public void setLblErrorFieldName(JLabel lblErrorFieldName) {
+		this.lblErrorFieldName = lblErrorFieldName;
+	}
+
+	public JLabel getLblErrorFieldEmail() {
+		return lblErrorFieldEmail;
+	}
+
+	public void setLblErrorFieldEmail(JLabel lblErrorFieldEmail) {
+		this.lblErrorFieldEmail = lblErrorFieldEmail;
+	}
+
+	public JLabel getLblErrorFieldPassword() {
+		return lblErrorFieldPassword;
+	}
+
+	public void setLblErrorFieldPassword(JLabel lblErrorFieldPassword) {
+		this.lblErrorFieldPassword = lblErrorFieldPassword;
+	}
+
+	public JLabel getLblErrorFieldConfirmPassword() {
+		return lblErrorFieldConfirmPassword;
+	}
+
+	public void setLblErrorFieldConfirmPassword(JLabel lblErrorFieldConfirmPassword) {
+		this.lblErrorFieldConfirmPassword = lblErrorFieldConfirmPassword;
+	}
+
+	public JButton getBtnSave() {
+		return btnSave;
+	}
+
+	public void setBtnSave(JButton btnSave) {
+		this.btnSave = btnSave;
+	}
+
+	public JButton getBtnCancel() {
+		return btnCancel;
+	}
+
+	public void setBtnCancel(JButton btnCancel) {
+		this.btnCancel = btnCancel;
+	}
+
+	public void setGrpSexes(ButtonGroup grpSexes) {
+		this.grpSexes = grpSexes;
+	}
+
+	public void setRbMan(JRadioButton rbMan) {
+		this.rbMan = rbMan;
+	}
+
+	public void setRbWoman(JRadioButton rbWoman) {
+		this.rbWoman = rbWoman;
+	}
+
+	public void setRbDoNotSay(JRadioButton rbDoNotSay) {
+		this.rbDoNotSay = rbDoNotSay;
+	}
+
+	public ButtonGroup getGrpSexes() {
+		return grpSexes;
+	}
+
+	public UserFormDialog(JFrame parent) {
+        super(parent, true);
+
+        setTitle("Formulario Usuario");
+        setSize(450, 450);
         setLocationRelativeTo(parent);
-        setLayout(new BorderLayout());
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-        
-        
-        add(createTitlePanel(), BorderLayout.NORTH);
-        add(initializeComponents(), BorderLayout.CENTER);
-        
-        loadData();
+
+        add(initializeComponents());
     }
-    
-    private JPanel createTitlePanel() {
 
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panel.setBackground(new Color(0, 31, 84));
-
-        JLabel label = new JLabel("FORMULARIO DE USUARIO");
-        label.setForeground(Color.WHITE);
-        label.setFont(new Font("Verdana", Font.BOLD, 20));
-
-        panel.add(label);
-
-        return panel;
-    }
-    
     private JScrollPane initializeComponents() {
 
         Color customBlue = new Color(0, 31, 84);
@@ -120,16 +215,20 @@ public class UserFormDialog extends JDialog{
 
         // CAMPOS
         txtFieldName = createTextField(fields);
-        fields.add(createErrorLabel("El nombre es obligatorio", textFont));
+        lblErrorFieldName = createErrorLabel("El nombre es obligatorio", textFont);
+        fields.add(lblErrorFieldName);
 
         txtFieldEmail = createTextField(fields);
-        fields.add(createErrorLabel("El correo es obligatorio", textFont));
+        lblErrorFieldEmail = createErrorLabel("El correo es obligatorio", textFont);
+        fields.add(lblErrorFieldEmail);
         
         pwdPassword = createPasswordField(fields);
-        fields.add(createErrorLabel("La contraseña es obligatoria", textFont));
+        lblErrorFieldPassword = createErrorLabel("La contraseña es obligatoria", textFont);
+        fields.add(lblErrorFieldPassword);
         
         pwdConfirmPassword = createPasswordField(fields);
-        fields.add(createErrorLabel("Debe confirmar su contraseña", textFont));
+        lblErrorFieldConfirmPassword = createErrorLabel("Debe confirmar su contraseña", textFont);
+        fields.add(lblErrorFieldConfirmPassword);
 
         grid.add(labels);
         grid.add(fields);
@@ -153,9 +252,6 @@ public class UserFormDialog extends JDialog{
         btnSave = createButton("Guardar", textFont, buttons);
         btnCancel = createButton("Cancelar", textFont, buttons);
 
-        btnSave.addActionListener(e -> save());
-        btnCancel.addActionListener(e -> dispose());
-        
         // SCROLL
         JScrollPane scroll = new JScrollPane(componentsPanel);
         scroll.setHorizontalScrollBar(null);
@@ -169,29 +265,33 @@ public class UserFormDialog extends JDialog{
         
         return scroll; 
     }
-    		
+
+    private JPanel createTitlePanel() {
+
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panel.setBackground(new Color(0, 31, 84));
+
+        JLabel label = new JLabel("FORMULARIO DE USUARIO");
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("Verdana", Font.BOLD, 20));
+
+        panel.add(label);
+
+        return panel;
+    }
+    
     private JLabel createLabel(String lblText, Font font) {
-		
+	
 		JLabel label = new JLabel(lblText);
 		
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
 		label.setVisible(true);
-    	label.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		label.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
 		
 		return label;
-	}
-    private JLabel createErrorLabel(String lblText, Font font) {
-    	
-    	JLabel label = new JLabel(lblText);
-    	
-    	label.setFont(font);
-    	label.setForeground(Color.RED);
-    	label.setVisible(false);
-    	
-    	return label;
     }
-
+    
     private JTextField createTextField(JPanel panel) {
         JTextField field = new JTextField();
         field.setFont(new Font("Verdana", Font.BOLD, 12));
@@ -225,55 +325,14 @@ public class UserFormDialog extends JDialog{
         return btn;
     }
     
-    private void loadData() {
+    private JLabel createErrorLabel(String lblText, Font font) {
     	
-    	if(user != null) {
-    		txtFieldName.setText(user.getName());
-    		txtFieldEmail.setText(user.getEmail());
-    		pwdPassword.setText(user.getPassword());
-    		pwdConfirmPassword.setText(user.getConfirmPassword());
-    		
-    		if(user.getSex().equals("Masculino")){
-    			rbMan.setSelected(true);
-    		} else if (user.getSex().equals("Femenino")) {
-    			rbWoman.setSelected(true);
-    		}else {
-    			rbDoNotSay.setSelected(true);
-    		}
-    	}
-    }
-    
-    private void save() {
-    	String name = txtFieldName.getText();
-    	String email = txtFieldEmail.getText();
+    	JLabel label = new JLabel(lblText);
     	
-    	String sex;
-    	if(rbMan.isSelected()) {
-    		sex = "Masculino";
-    	}else if (rbWoman.isSelected()) {
-    		sex = "Femenino";
-    	}else {
-    		sex = "No Definido";
-    	}
+    	label.setFont(font);
+    	label.setForeground(Color.RED);
+    	label.setVisible(false);
     	
-    	if(user == null) {
-    		user = new User(name, email, sex);
-    	}else {
-    		user.setName(name);
-    		user.setEmail(email);
-    		user.setSex(sex);
-    	}
-    	
-    	saved = true;
-    	
-    	dispose();
-    }
-    
-    public boolean isSaved() {
-    	return saved;
-    }
-    
-    public User getUser() {
-    	return user;
+    	return label;
     }
 }

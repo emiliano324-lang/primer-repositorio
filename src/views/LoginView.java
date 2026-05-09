@@ -29,7 +29,6 @@ public class LoginView extends JPanel {
 	private JButton btnLogin;
 	private JButton btnSignIn;
 	
-	
 	public LoginWindow getWindow() {
 		return window;
 	}
@@ -165,6 +164,7 @@ public class LoginView extends JPanel {
 
         // Boton
         btnLogin = new JButton("Iniciar Sesión");
+        btnLogin.setBackground(Color.WHITE);
         btnLogin.setFont(new Font("Arial", Font.PLAIN, 15));
         
         c.gridx = 0;
@@ -173,9 +173,11 @@ public class LoginView extends JPanel {
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;
+        
         add(btnLogin, c);
         
         btnSignIn = new JButton("Registrarme");
+        btnSignIn.setBackground(Color.WHITE);
         btnSignIn.setFont(new Font("Arial", Font.PLAIN, 15));
         c.gridx = 0;
         c.gridy = 5;

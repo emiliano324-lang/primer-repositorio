@@ -2,12 +2,18 @@
   "name" : "Emiliano",
   "password" : null,
   "confirmPassword" : null,
-  "email" : "emi@gmail.com",
+  "email" : "emias2106@gmail.com",
   "sex" : "Masculino"
 }, {
-  "name" : "hugo",
+  "name" : "HugoGomez",
   "password" : null,
   "confirmPassword" : null,
-  "email" : "hugo@correo.com",
+  "email" : "JefeDeGrupo@hotmail.com",
   "sex" : "Masculino"
+}, {
+  "name" : "MilenaQuiroga",
+  "password" : "asd",
+  "confirmPassword" : "asd",
+  "email" : "morena@gmail.com",
+  "sex" : "Femenino"
 } ]
