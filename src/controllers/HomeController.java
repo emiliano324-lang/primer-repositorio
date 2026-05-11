@@ -1,10 +1,14 @@
 package controllers;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import models.User;
@@ -49,9 +53,24 @@ public class HomeController {
 		
 		view.btnPlay.addActionListener(e -> handlePlay());
 		
+		changeBackgroundListener(view.btnHome);
+		changeBackgroundListener(view.btnUsers);
+		changeBackgroundListener(view.btnPlay);
+		
 	}
 	
+	public void changeBackgroundListener(JComponent c) {
 
+		c.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				changeBackground(c);
+			}
+
+			public void mouseExited(MouseEvent e) {
+				resetBackground(c, Color.WHITE);
+			}
+		});
+	}
 	
 	private void showUsers() {
 		if(userController == null) {
@@ -83,5 +102,13 @@ public class HomeController {
 		}
 	}
 
-   
+	private void resetBackground(JComponent c, Color defaultButtonColor) {
+		c.setBackground(defaultButtonColor);
+		c.setForeground(Color.BLACK);
+	}
+	
+	private void changeBackground(JComponent c) {
+		c.setBackground(new Color(3,64,120));
+		c.setForeground(Color.WHITE);
+	}
 }

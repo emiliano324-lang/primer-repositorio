@@ -7,6 +7,7 @@ public class User {
 	private String confirmPassword;
 	private String email;
 	private String sex;
+	private String imagePath;
 	
 	public User() {
 	}
@@ -16,18 +17,19 @@ public class User {
 		this.password = password;
 	}
 	
-	public User(String name, String email, String password, String confirmPassword, String sex) {
+	public User(String name, String email, String password, String sex, String imagePath) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.confirmPassword = confirmPassword;
 		this.sex = sex;
+		this.imagePath = imagePath;
 	}
 	
-	public User(String name, String email, String sexo) {
+	public User(String name, String email, String sexo, String imagePath) {
 		this.name = name;
 		this.email = email;
 		this.sex = sexo;
+		this.imagePath = imagePath;
 	}
 	
 	public void setName(String name) {
@@ -70,6 +72,14 @@ public class User {
 		return sex;
 	}
 	
+	public String getImagePath() {
+		return imagePath;
+	}
+	
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
 	public String toCsv() {
 		return name + "," + email + "," + sex;
 	}
@@ -82,6 +92,6 @@ public class User {
 		String email = data[1];
 		String sexo = data[2];
 		
-		return new User(name, email, sexo);
+		return new User(name, email, sexo, null);
 	}
 }

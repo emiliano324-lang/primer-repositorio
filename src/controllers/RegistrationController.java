@@ -1,6 +1,12 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -57,7 +63,8 @@ public class RegistrationController {
            }
         });
         
-      
+        view.getBtnSelectImage().addActionListener(e -> view.chooseImage());
+        
         view.getBtnRegistrate().addActionListener(e -> register());
 
         view.getBtnExit().addActionListener(e -> handleBack());
@@ -68,49 +75,49 @@ public class RegistrationController {
 
     private boolean validateRegistration(User user) {
     	
-    	boolean errorFound = false;
-    	
-    	// Validar nombre
-    	if(user.getName().trim().isEmpty()) {
+		boolean errorFound = false;
 
-    		errorFound = true;
-    		
-    		view.getLblErrorFieldName().setText("El nombre es obligatorio");
-    		view.getLblErrorFieldName().setVisible(true);
-    	}
-    	
-    	// Validar correo (campo vacío)
-    	if(user.getEmail().trim().isEmpty()) {
-    		
-    		errorFound = true;
-    		
-    		view.getLblErrorFieldEmail().setText("El correo es obligatorio");
-    		view.getLblErrorFieldEmail().setVisible(true);
-    	
-    	// Validar correo (si no contiene @)
-    	}else if(!user.getEmail().contains("@")) {
-    		
-    		errorFound = true;
-    		
-       		view.getLblErrorFieldEmail().setText("El correo no es válido");
-    		view.getLblErrorFieldEmail().setVisible(true);
-    	}
-    	
-    	// Validar contraseña
-    	if(user.getPassword().trim().isEmpty()) {
-    		errorFound = true;
-    		
-    		view.getLblErrorFieldPassword().setText("La contraseña es obligatoria");
-    		view.getLblErrorFieldPassword().setVisible(true);
-    		
-    	}else if(!user.getPassword().isEmpty() && !user.getPassword().equals(user.getConfirmPassword())) {
-    		errorFound = true;
-    		
-    		view.getLblErrorFieldConfirmPassword().setText("Las contraseñas no coinciden");
-    		view.getLblErrorFieldConfirmPassword().setVisible(true);
-    	}
-    	
-    	return !errorFound;
+		// Validar nombre
+		if (user.getName().trim().isEmpty()) {
+
+			errorFound = true;
+
+			view.getLblErrorFieldName().setText("El nombre es obligatorio");
+			view.getLblErrorFieldName().setVisible(true);
+		}
+
+		// Validar correo (campo vacío)
+		if (user.getEmail().trim().isEmpty()) {
+
+			errorFound = true;
+
+			view.getLblErrorFieldEmail().setText("El correo es obligatorio");
+			view.getLblErrorFieldEmail().setVisible(true);
+
+			// Validar correo (si no contiene @)
+		} else if (!user.getEmail().contains("@")) {
+
+			errorFound = true;
+
+			view.getLblErrorFieldEmail().setText("El correo no es válido");
+			view.getLblErrorFieldEmail().setVisible(true);
+		}
+
+		// Validar contraseña
+		if (user.getPassword().trim().isEmpty()) {
+			errorFound = true;
+
+			view.getLblErrorFieldPassword().setText("La contraseña es obligatoria");
+			view.getLblErrorFieldPassword().setVisible(true);
+
+		} else if (!user.getPassword().isEmpty() && !user.getPassword().equals(view.getConfirmPassword())) {
+			errorFound = true;
+
+			view.getLblErrorFieldConfirmPassword().setText("Las contraseñas no coinciden");
+			view.getLblErrorFieldConfirmPassword().setVisible(true);
+		}
+
+		return !errorFound;
     }
     
     private void validateName() {
@@ -144,26 +151,60 @@ public class RegistrationController {
 
     private void register() {
 
-    	view.resetErrorLabels();
-    	
-    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getConfirmPassword(), view.getSex());
-    	
-    	if(validateRegistration(user)) {
-    		
-    		try {
-    			repository.save(user);
-    			JOptionPane.showMessageDialog(view, "Registro exitoso");
-    			
-    			new HomeController(new MainWindow());
-    			view.dispose();
-    			
-    		}catch(IOException e) {
-    			JOptionPane.showMessageDialog(view, e.getMessage());;
-    		}
-    	}
+	    	view.resetErrorLabels();
+	    	
+	    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getSex(), view.getSelectedImagePath());
+	    	String imagePathString = saveImage();
+	    	
+	    	if(validateRegistration(user)) {
+	    		
+	    		try {
+	    			repository.save(user);
+	    			JOptionPane.showMessageDialog(view, "Registro exitoso");
+	    			
+	    			new HomeController(new MainWindow());
+	    			view.dispose();
+	    			
+	    		}catch(IOException e) {
+	    			JOptionPane.showMessageDialog(view, e.getMessage());;
+	    		}
+	    	}
     }
-  
 
+    private String saveImage() {
+    	
+	    	try {
+	    		String original = view.getSelectedImagePath();
+	    		
+	    		if(original == null)
+	    			return null;
+	    		
+	    		File source = new File(original);
+	    		
+	    		String extension = original.substring(original.lastIndexOf("."));
+	    		
+	    		String newName = UUID.randomUUID() + extension;
+	    		
+	    		String folder = "." + File.separator + "images";
+	    		
+	    		File directory = new File(folder);
+	    		
+	    		if(!directory.exists()) {
+	    			directory.mkdir();
+	    		}
+	    		
+	    		Path destination = Paths.get(folder, newName);
+	    		
+	    		Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+	    		
+	    		return destination.toString();
+	    		
+	    	}catch(Exception ex) {
+	    		ex.printStackTrace();
+	    		return null;
+	    	}
+    }
+    
     private void handleBack() {
         new LoginWindow();
         view.dispose();

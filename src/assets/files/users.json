@@ -1,17 +1,15 @@
-<<<<<<< HEAD
-Hugo,hugo_24@gmail.com,No Definido
-=======
 [ {
   "name" : "Emiliano",
-  "password" : null,
+  "password" : "asd",
   "confirmPassword" : null,
-  "email" : "emi@gmail.com",
-  "sex" : "Masculino"
+  "email" : "emias@",
+  "sex" : "Masculino",
+  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\wallpaper.jpeg"
 }, {
-  "name" : "hugo",
-  "password" : null,
+  "name" : "Hugo",
+  "password" : "asd",
   "confirmPassword" : null,
   "email" : "hugo@correo.com",
-  "sex" : "Masculino"
+  "sex" : "Masculino",
+  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf0.png"
 } ]
->>>>>>> a03c8d073de1ffddd1673d2aa2ca9abffe82b6fb

@@ -19,6 +19,7 @@ import javax.swing.table.JTableHeader;
 
 import tablemodels.UserTableModel;
 import utils.AppFont;
+import utils.Config;
 
 public class UsersView extends JPanel {
 	
@@ -27,7 +28,6 @@ public class UsersView extends JPanel {
 	private JButton btnAdd;
 	private JButton btnDelete;
 	private JButton btnPdf;
-	
 	
 	public JButton getBtnEdit() {
 		return btnEdit;
@@ -51,12 +51,18 @@ public class UsersView extends JPanel {
 		add(new JScrollPane(table), BorderLayout.CENTER);
 		
 		JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
+		panelButtons.setBackground(new Color(0, 31, 84));
+		
         btnAdd = new JButton("Agregar");
         btnEdit = new JButton("Editar");
         btnDelete = new JButton("Eliminar");
         btnPdf = new JButton("Exportar a PDF");
  
+        btnAdd.setBackground(Color.WHITE);
+        btnEdit.setBackground(Color.WHITE);
+        btnDelete.setBackground(Color.WHITE);
+        btnPdf.setBackground(Color.WHITE);
+        
         panelButtons.add(btnAdd);
         panelButtons.add(btnEdit);
         panelButtons.add(btnDelete);
@@ -66,7 +72,7 @@ public class UsersView extends JPanel {
 
 	public File selectPdfFile() {
 		
-		String path = System.getProperty("user.home");
+		String path = Config.get("users.export.pdf", System.getProperty("user.home"));
 		JFileChooser chooser =  new JFileChooser(path);
 		
 		chooser.setSelectedFile(new File("reporte-usuarios.pdf"));
@@ -85,6 +91,7 @@ public class UsersView extends JPanel {
 		}
 
 		File file = chooser.getSelectedFile();
+		Config.set("users.export.pdf", file.getParent());
 		
 		if(!file.getName().toLowerCase().endsWith(".pdf")) {
 			file = new File(file.getAbsolutePath() + ".pdf");
@@ -125,12 +132,12 @@ public class UsersView extends JPanel {
                     int column) {
 
                 Component c = super.getTableCellRendererComponent(
-                        table,
-                        value,
-                        isSelected,
-                        hasFocus,
-                        row,
-                        column);
+                    table,
+                    value,
+                    isSelected,
+                    hasFocus,
+                    row,
+                    column);
                 
                 if (!isSelected) {
                     if (row % 2 == 0) {
@@ -150,15 +157,10 @@ public class UsersView extends JPanel {
 				} else {
 					c.setFont(AppFont.normal());
 				}
-			
-				
 				return c;
-				
 			}
-			
 		});
 	}
-	
 	
 	public void setTableModel(UserTableModel model) {
 		table.setModel(model);
@@ -167,12 +169,5 @@ public class UsersView extends JPanel {
 	public JTable getTable() {
 		return table;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 }
