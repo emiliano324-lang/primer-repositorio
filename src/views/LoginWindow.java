@@ -21,7 +21,7 @@ public class LoginWindow extends JFrame {
 		setSize(400, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
-		setTitle("Mi Aplicación");
+		setTitle("Iniciar Sesión");
 		setLocationRelativeTo(null);
 
 		Toolkit tk = Toolkit.getDefaultToolkit();

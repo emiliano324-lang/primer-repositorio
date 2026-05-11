@@ -53,7 +53,8 @@ public class UserController {
 			System.out.println("...");
 			
 			try {
-				System.out.println("se removio");
+	            JOptionPane.showMessageDialog(view, "Se eliminó al usuario", "Usuario eliminado", JOptionPane.INFORMATION_MESSAGE);
+				//System.out.println("se removio");
 				repo.delete(row);
 				loadUsers();
 			}catch(Exception ex) {
@@ -67,7 +68,7 @@ public class UserController {
 	
 	public void loadUsers() {	
 		
-		System.out.println("Carga usuarios");
+		//System.out.println("Carga usuarios");
 		try {
 			List<User> users = repo.getUsers();
 			
