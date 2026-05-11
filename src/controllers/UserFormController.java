@@ -22,6 +22,7 @@ public class UserFormController {
 
     private void registerListeners() {
 
+    	view.getBtnSelectImage().addActionListener(e -> view.chooseImage());
         view.getBtnSave().addActionListener(e -> handleSave());
         view.getBtnCancel().addActionListener(e -> handleCancel());
     }
@@ -30,17 +31,9 @@ public class UserFormController {
 
         if(user != null) {
 
-            view.getTxtFieldName()
-                    .setText(user.getName());
+            view.getTxtFieldName().setText(user.getName());
+            view.getTxtFieldEmail().setText(user.getEmail());
 
-            view.getTxtFieldEmail()
-                    .setText(user.getEmail());
-
-            view.getPwdPassword()
-                    .setText(user.getPassword());
-
-            view.getPwdConfirmPassword()
-                    .setText(user.getConfirmPassword());
         }
     }
 
@@ -75,13 +68,13 @@ public class UserFormController {
             valid = false;
         }
 
-        if(user.getConfirmPassword().trim().isEmpty()) {
+        if(view.getPwdConfirmPassword().trim().isEmpty()) {
 
             view.getLblErrorFieldConfirmPassword().setVisible(true);
             valid = false;
         }
 
-        if(!user.getPassword().equals(user.getConfirmPassword())) {
+        if(!user.getPassword().equals(view.getPwdConfirmPassword())) {
 
             view.getLblErrorFieldConfirmPassword().setText("Las contraseñas no coinciden");
             view.getLblErrorFieldConfirmPassword().setVisible(true);
@@ -97,9 +90,9 @@ public class UserFormController {
         User formUser = new User(
                 view.getTxtFieldName().getText(),
                 view.getTxtFieldEmail().getText(),
-                String.valueOf(view.getPwdPassword().getPassword()),
-                String.valueOf(view.getPwdConfirmPassword().getPassword()),
-                view.getSex()
+                view.getPwdPassword(),
+                view.getSex(),
+                view.getSelectedImagePath()
         );
 
         if(validateForm(formUser)) {
@@ -109,12 +102,11 @@ public class UserFormController {
                 user = formUser;
 
             } else {
-
                 user.setName(formUser.getName());
                 user.setEmail(formUser.getEmail());
                 user.setPassword(formUser.getPassword());
-                user.setConfirmPassword(formUser.getConfirmPassword());
                 user.setSex(formUser.getSex());
+                user.setImagePath(formUser.getImagePath());
             }
 
             saved = true;
@@ -129,7 +121,6 @@ public class UserFormController {
     }
 
     private void resetErrorLabels() {
-
         view.getLblErrorFieldName().setVisible(false);
         view.getLblErrorFieldEmail().setVisible(false);
         view.getLblErrorFieldPassword().setVisible(false);

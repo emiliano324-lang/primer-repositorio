@@ -1,19 +1,15 @@
 [ {
   "name" : "Emiliano",
-  "password" : null,
-  "confirmPassword" : null,
-  "email" : "emias2106@gmail.com",
-  "sex" : "Masculino"
-}, {
-  "name" : "HugoGomez",
-  "password" : null,
-  "confirmPassword" : null,
-  "email" : "JefeDeGrupo@hotmail.com",
-  "sex" : "Masculino"
-}, {
-  "name" : "MilenaQuiroga",
   "password" : "asd",
-  "confirmPassword" : "asd",
-  "email" : "morena@gmail.com",
-  "sex" : "Femenino"
+  "confirmPassword" : null,
+  "email" : "emias@",
+  "sex" : "Masculino",
+  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\wallpaper.jpeg"
+}, {
+  "name" : "Hugo",
+  "password" : "asd",
+  "confirmPassword" : null,
+  "email" : "hugo@correo.com",
+  "sex" : "Masculino",
+  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf0.png"
 } ]

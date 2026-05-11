@@ -2,6 +2,8 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -13,12 +15,15 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +31,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import utils.Config;
 
 public class RegistrationWindow extends JFrame{
 	
@@ -45,7 +53,39 @@ public class RegistrationWindow extends JFrame{
 	private JRadioButton rbMan;
 	private JRadioButton rbWoman;
 	private JRadioButton rbDoNotSay;
+	private JButton btnSelectImage;
+	private JLabel lblImagePreview;
+	private JLabel lblImageName;
+	private String selectedImagePath;
+	private JLabel lblErrorImage;
 	
+	public ButtonGroup getGrpSexes() {
+		return grpSexes;
+	}
+	public JRadioButton getRbMan() {
+		return rbMan;
+	}
+	public JRadioButton getRbWoman() {
+		return rbWoman;
+	}
+	public JRadioButton getRbDoNotSay() {
+		return rbDoNotSay;
+	}
+	public JButton getBtnSelectImage() {
+		return btnSelectImage;
+	}
+	public JLabel getLblImagePreview() {
+		return lblImagePreview;
+	}
+	public JLabel getLblImageName() {
+		return lblImageName;
+	}
+	public String getSelectedImagePath() {
+		return selectedImagePath;
+	}
+	public JLabel getLblErrorImage() {
+		return lblErrorImage;
+	}
 	public JButton getBtnExit() {
 		return btnExit;
 	}
@@ -77,12 +117,12 @@ public class RegistrationWindow extends JFrame{
 		return txtFieldEmail;
 	}
 
-	public JPasswordField getPwdPassword() {
-		return pwdPassword;
+	public String getPwdPassword() {
+		return String.valueOf(pwdPassword.getPassword());
 	}
 
-	public JPasswordField getPwdConfirmPassword() {
-		return pwdConfirmPassword;
+	public String getPwdConfirmPassword() {
+		return String.valueOf(pwdConfirmPassword.getPassword());
 	}
 
 	public JLabel getLblErrorFieldPassword() {
@@ -229,6 +269,33 @@ public class RegistrationWindow extends JFrame{
 		rbWoman = createJRadioButton("Mujer", grpSexes, sexFlowPanel);
 		rbDoNotSay = createJRadioButton("Prefiero no decir", grpSexes, sexFlowPanel);
 		
+		// PANEL DE IMAGEN
+		JPanel imageSection = new JPanel(alignToCenter);
+		
+		imageSection.setOpaque(false);
+		imageSection.add(createLabel("Foto", subtitleFont));
+		
+		btnSelectImage = new JButton("Seleccionar imagen");
+
+		lblImageName = new JLabel("Ninguna imagen seleccionada");
+
+		lblImagePreview = new JLabel();
+		lblImagePreview.setPreferredSize(new Dimension(120,120));
+		lblImagePreview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+		lblErrorImage = createErrorLabel(componentsPanel);
+
+		JPanel imagePanel = new JPanel();
+		imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.Y_AXIS));
+
+		btnSelectImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblImagePreview.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblImageName.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		imagePanel.add(lblImagePreview);
+		imagePanel.add(btnSelectImage);
+		imagePanel.add(lblImageName);
+		
 		// APARTADO DE PRIVACIDAD
 		JPanel privacySection = new JPanel(alignToCenter);
 		
@@ -265,6 +332,10 @@ public class RegistrationWindow extends JFrame{
 		componentsPanel.add(sexSection);
 		componentsPanel.add(sexFlowPanel);
 		
+		// AÑADIR APARTADO FOTO
+		componentsPanel.add(imageSection);
+		componentsPanel.add(imagePanel);
+		
 		// AÑADIR APARTADO DE PRIVACIDAD
 		componentsPanel.add(privacySection);
 		componentsPanel.add(termsAndConditionsPanel);
@@ -273,6 +344,36 @@ public class RegistrationWindow extends JFrame{
 		exitAndRegisterButtons.add(btnExit);
 		exitAndRegisterButtons.add(btnRegistrate);
 		componentsPanel.add(exitAndRegisterButtons);
+	}
+	
+	// IMAGEN
+	public void chooseImage() {
+		String lastDirectory = Config.get("registration.image.last.directory", System.getProperty("user.home"));
+		
+		JFileChooser chooser = new JFileChooser(lastDirectory);
+		chooser.setDialogTitle("Seleccionar imagen");
+		
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png");
+		chooser.setFileFilter(filter);
+		
+		int option = chooser.showOpenDialog(this);
+		
+		if(option == JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			
+			selectedImagePath = file.getAbsolutePath();
+			lastDirectory = file.getParent();
+			
+			Config.set("registration.image.last.directory", lastDirectory);
+			
+			lblImageName.setText(file.getName());
+			
+			ImageIcon icon = new ImageIcon(selectedImagePath);
+			Image img = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+			
+			lblImagePreview.setIcon(new ImageIcon(img));
+		}
+		
 	}
 		
 	// CREAR COMPONENTES
@@ -384,4 +485,5 @@ public class RegistrationWindow extends JFrame{
 	    lblErrorFieldPassword.setVisible(false);
 	    lblErrorFieldConfirmPassword.setVisible(false);
 	}
+	
 }

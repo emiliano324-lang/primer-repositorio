@@ -16,9 +16,9 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		//GameWindow window = new GameWindow();
-		new HomeController(new MainWindow());
+		//new HomeController(new MainWindow());
 
-		//LoginWindow login = new LoginWindow();
+		LoginWindow login = new LoginWindow();
 		//new LoginController(login.getView());
 		//new RegistrationController(new RegistrationWindow());
 		//RegistrationWindow form = new RegistrationWindow();
