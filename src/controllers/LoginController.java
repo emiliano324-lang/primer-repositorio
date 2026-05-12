@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import exceptions.InvalidPasswordException;
 import exceptions.InvalidUserException;
 import models.User;
+import repository.LoginRepository;
 import views.LoginView;
 import views.MainWindow;
 import views.RegistrationWindow;
@@ -18,7 +19,7 @@ import views.RegistrationWindow;
 public class LoginController {
 
 	private LoginView view;
-	
+	private LoginRepository repository;
 	public LoginController(LoginView view) {
 	    this.view = view;
 	    registerListeners();
@@ -49,7 +50,7 @@ public class LoginController {
 	private boolean validateLogin(User user) {
 		view.resetErrorLabels();
 	    boolean valid = true;
-
+	  
 	    if (user.getName().trim().isEmpty()) {
 	        view.showLblErrorUser();
 	        valid = false;
@@ -58,29 +59,28 @@ public class LoginController {
 	    if (user.getPassword().trim().isEmpty()) {
 	        view.showLblErrorPassword("Error: Este campo es obligatorio");
 	        valid = false;
+	    
 	    }
 
 	    return valid;
 	}
 	
 	private void handleLogin() {
-	    User user = new User(view.getUsername(), view.getPassword());
-
-	    if (validateLogin(user)) {
-
-	        if(user.getName().equals("admin") && user.getPassword().equals("1234")) {
-
-	            JOptionPane.showMessageDialog(view.getWindow(),
-	                "Se inició la sesión", "Sesión Iniciada",
-	                JOptionPane.INFORMATION_MESSAGE);
-
-	            new HomeController(new MainWindow());
-	        	SwingUtilities.getWindowAncestor(view).dispose();
-
-	        } else {
-	            view.showLblErrorPassword("Error: Datos Incorrectos");
-	        }
-	    }
+		if(!validateLogin(new User(view.getName(), view.getPassword()))){
+			return;
+		}
+		User user = repository.login(view.getName(), view.getPassword());	
+		if(user == null) {
+			view.showLblErrorPassword("Credenciales incorrectas");
+			return;
+		}
+		
+		JOptionPane.showMessageDialog(view.getWindow(),  "Se inició la sesión", "Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
+		new HomeController(new MainWindow());
+		
+		view.getWindow().dispose();
+		
+	
 	}
  
 	private void handleRegistration() {

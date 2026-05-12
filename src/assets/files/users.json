@@ -1,4 +1,5 @@
 [ {
+  "id" : 0,
   "name" : "Emiliano",
   "password" : "asd",
   "confirmPassword" : null,
@@ -6,10 +7,19 @@
   "sex" : "Masculino",
   "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf0.png"
 }, {
+  "id" : 0,
   "name" : "Hugo",
   "password" : "asd",
   "confirmPassword" : null,
   "email" : "hugo@correo.com",
   "sex" : "Masculino",
   "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf2.png"
+}, {
+  "id" : 0,
+  "name" : "Hugo",
+  "password" : "1234",
+  "confirmPassword" : null,
+  "email" : "Hugo@gmail.com",
+  "sex" : "Masculino",
+  "imagePath" : null
 } ]

@@ -101,6 +101,15 @@ public class User {
 		return name + "," + email + "," + sex;
 	}
 	
+	
+	public User(int id, String email, String password) {
+		this.id = id;
+		this.email = email;
+		this.name = name;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+	}
+	
 	public static User fromCsv(String userData) {
 		
 		String data[] = userData.split(",");
