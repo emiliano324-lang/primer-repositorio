@@ -2,6 +2,7 @@ package models;
 
 public class User {
 	
+	private int id;
 	private String name;
 	private String password;
 	private String confirmPassword;
@@ -25,11 +26,23 @@ public class User {
 		this.imagePath = imagePath;
 	}
 	
+	public User(int id, String name, String email, String sexo, String imagePath) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.sex = sexo;
+		this.imagePath = imagePath;
+	}
+	
 	public User(String name, String email, String sexo, String imagePath) {
 		this.name = name;
 		this.email = email;
 		this.sex = sexo;
 		this.imagePath = imagePath;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public void setName(String name) {
@@ -50,6 +63,10 @@ public class User {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public String getName() {
