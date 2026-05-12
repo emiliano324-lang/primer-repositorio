@@ -2,14 +2,14 @@
   "name" : "Emiliano",
   "password" : "asd",
   "confirmPassword" : null,
-  "email" : "emias@",
+  "email" : "emias@gmail.com",
   "sex" : "Masculino",
-  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\wallpaper.jpeg"
+  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf0.png"
 }, {
   "name" : "Hugo",
   "password" : "asd",
   "confirmPassword" : null,
   "email" : "hugo@correo.com",
   "sex" : "Masculino",
-  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf0.png"
+  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf2.png"
 } ]

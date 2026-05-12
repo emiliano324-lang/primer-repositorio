@@ -110,7 +110,7 @@ public class UserFormController {
             }
 
             saved = true;
-
+            
             view.dispose();
         }
     }
