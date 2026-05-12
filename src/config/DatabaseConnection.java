@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-
-
 public class DatabaseConnection {
 
 	private static Connection connection;
@@ -22,13 +20,14 @@ public class DatabaseConnection {
 				props.load(input);
 				
 				String url = props.getProperty("db.url");
-				String user = props.getProperty("db.User");
-				String password = props.getProperty("db.Pass");
+				String user = props.getProperty("db.user");
+				String password = props.getProperty("db.password");
 				String driver = props.getProperty("db.driver");
+				
 				
 				Class.forName(driver);
 				
-				connection = DriverManager.getConnection(url);
+				connection = DriverManager.getConnection(url, user, password);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
