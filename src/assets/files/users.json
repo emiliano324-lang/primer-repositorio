@@ -22,4 +22,20 @@
   "email" : "Hugo@gmail.com",
   "sex" : "Masculino",
   "imagePath" : null
+}, {
+  "id" : 0,
+  "name" : "Emiliano",
+  "password" : "asd",
+  "confirmPassword" : null,
+  "email" : "emias@gmail.com",
+  "sex" : "Masculino",
+  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf0.png"
+}, {
+  "id" : 0,
+  "name" : "EMILIANO",
+  "password" : "ASD",
+  "confirmPassword" : null,
+  "email" : "EMI@GMAIL.COM",
+  "sex" : "Masculino",
+  "imagePath" : "C:\\Users\\beto_\\OneDrive\\Pictures\\proyecto programacion\\sprites\\AttackSelf\\AttackSelf3.png"
 } ]

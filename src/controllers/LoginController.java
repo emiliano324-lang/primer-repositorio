@@ -20,7 +20,9 @@ public class LoginController {
 
 	private LoginView view;
 	private LoginRepository repository;
+	
 	public LoginController(LoginView view) {
+		repository = new LoginRepository();
 	    this.view = view;
 	    registerListeners();
 	}
@@ -66,10 +68,10 @@ public class LoginController {
 	}
 	
 	private void handleLogin() {
-		if(!validateLogin(new User(view.getName(), view.getPassword()))){
+		if(!validateLogin(new User(view.getUsername(), view.getPassword()))){
 			return;
 		}
-		User user = repository.login(view.getName(), view.getPassword());	
+		User user = repository.login(view.getUsername(), view.getPassword());
 		if(user == null) {
 			view.showLblErrorPassword("Credenciales incorrectas");
 			return;
@@ -79,8 +81,6 @@ public class LoginController {
 		new HomeController(new MainWindow());
 		
 		view.getWindow().dispose();
-		
-	
 	}
  
 	private void handleRegistration() {
