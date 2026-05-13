@@ -22,8 +22,7 @@ import utils.AppFont;
 
 public class GameMenuView extends JPanel{
 	
-	GameWindow window;
-	
+	private GameWindow window;
 	private JLabel lblTitle;
 	private JButton btnPlay;
 	private JButton btnExit;
@@ -41,30 +40,16 @@ public class GameMenuView extends JPanel{
 		return window;
 	}
 
-	public void setWindow(GameWindow window) {
-		this.window = window;
-	}
-
 	public JButton getBtnPlay() {
 		return btnPlay;
-	}
-
-	public void setBtnPlay(JButton btnPlay) {
-		this.btnPlay = btnPlay;
 	}
 
 	public JButton getBtnExit() {
 		return btnExit;
 	}
 
-	public void setBtnExit(JButton btnExit) {
-		this.btnExit = btnExit;
-	}
 	public JButton getBtnCredits() {
 		return btnCredits;
-	}
-	public void setBtnCredits(JButton btnCredits) {
-		this.btnCredits = btnCredits;
 	}
 	
 	private void initializeComponents() {
@@ -153,7 +138,7 @@ public class GameMenuView extends JPanel{
 		JButton button = new JButton(text);
 		
 		button.setForeground(new Color(254, 252, 251));
-		button.setFont(AppFont.normal());
+		button.setFont(AppFont.title());
 
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);

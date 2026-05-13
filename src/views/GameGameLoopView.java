@@ -1,62 +1,104 @@
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import utils.AppFont;
 
 public class GameGameLoopView extends JPanel {
 	GameWindow window;
 	
 	private JButton attack;
-	private JButton defend;
-	private JButton healing;
-	private JButton analizing;
+	private JButton block;
+	private JButton heal;
+	private JButton analyze;
 	
+	Image combatBackground;
+	
+	// GETTERS Y SETTERS
 	public JButton getAttack() {
 		return attack;
 	}
 
-	public void setAttack(JButton attack) {
-		this.attack = attack;
-	}
-
-	public JButton getDefend() {
-		return defend;
+	public JButton getBlock() {
+		return block;
 	}
 	
-	public void setDefend(JButton defend) {
-		this.defend = defend;
+	public JButton getHeal() {
+		return heal;
 	}
 
-	public JButton getHealing() {
-		return healing;
+	public JButton getAnalyze() {
+		return analyze;
 	}
-
-	public void setHealing(JButton healing) {
-		this.healing = healing;
-	}
-
-	public JButton getAnalizing() {
-		return analizing;
-	}
-
-	Image combatBackground;
 	
-	
+	// CONSTRUCTOR
 	public GameGameLoopView() {
+		setLayout(new BorderLayout());
+		
 		loadImage();
 		initializeComponents();
 	}
-
+	
+	// MÉTODOS
 	private void initializeComponents() {
-		// TODO Auto-generated method stub
 		
+		JPanel actionBar = new JPanel();
+		actionBar.setOpaque(false);
+		//actionBar.setBackground(new Color(0, 0, 0, 100));
+		
+		attack = createButton("Atacar");
+		block = createButton("Bloquear");
+		heal = createButton("Curarse");
+		analyze = createButton("Analizar");
+		
+		actionBar.add(attack);
+		actionBar.add(block);
+		actionBar.add(heal);
+		actionBar.add(analyze);
+		
+		add(actionBar, BorderLayout.SOUTH);
 	}
 
-
 	private void loadImage() {
-		// TODO Auto-generated method stub
+		try {
+			combatBackground = ImageIO.read(getClass().getResource("/img/fondo pelea.jpg"));
+		} catch (IOException ex) {
+			System.out.println("La imagen no existe");
+		}
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
 		
+		g2.drawImage(combatBackground, 0, 0, getWidth(), getHeight(), null);
+	}
+	
+	private JButton createButton(String text) {
+		JButton button = new JButton(text);
+		
+		button.setFont(AppFont.normal());
+		button.setForeground(new Color(254, 252, 251));
+		
+		button.setFocusPainted(false);
+		button.setContentAreaFilled(false);
+		button.setOpaque(false);
+		button.setBorderPainted(false);
+		
+		button.setBorder(BorderFactory.createEmptyBorder(50,20,50,20));
+		
+		return button;
 	}
 }

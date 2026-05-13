@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controllers.GameMenuController;
+import controllers.GamePanelController;
 import controllers.LoginController;
 
 public class GameWindow extends JFrame{
@@ -46,15 +47,15 @@ public class GameWindow extends JFrame{
 
         add(container);
         GameMenuView menuView = new GameMenuView();
-        GameGameLoopView gameLoopView = new  GameGameLoopView();
+        GameGameLoopView gameLoopView = new GameGameLoopView();
 		
         container.add(menuView, "MENU");
         container.add(gameLoopView, "GAME");
         
-        
-        new GameMenuController(menuView, this); 
+        new GameMenuController(menuView, this);
         showPanel("MENU");
         
+        new GamePanelController(gameLoopView);
         
 		setVisible(true);
 	}

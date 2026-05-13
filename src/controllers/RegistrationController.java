@@ -28,10 +28,6 @@ public class RegistrationController {
     public RegistrationController(RegistrationWindow view) {
         this.view = view;
         this.repository = new UserRepository();
-        initController();
-    }
-
-    private void initController() {
         registrationListener();
     }
 
