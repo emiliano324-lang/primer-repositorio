@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 public class LoginView extends JPanel {
 
-	LoginWindow window;
+	private LoginWindow window;
 	
 	Font font;
 	
@@ -69,7 +69,8 @@ public class LoginView extends JPanel {
 		return String.valueOf(pwdFieldPassword.getPassword());
 	}
 	
-	public LoginView() {
+	public LoginView(LoginWindow window) {
+		this.window = window;		
 		initializeComponents();
 		
     }

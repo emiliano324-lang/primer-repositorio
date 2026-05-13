@@ -32,7 +32,7 @@ public class LoginWindow extends JFrame {
 		Cursor miCursor = tk.createCustomCursor(iconoCursor.getImage(), new Point(0, 0), "Mi Cursor");
 		setCursor(miCursor);
 
-		view = new LoginView();
+		view = new LoginView(this);
 		add(view);
 
 		new LoginController(view);

@@ -10,19 +10,19 @@ import models.User;
 
 public class LoginRepository {
 	
-	public User login(String email, String password) {
+	public User login(String name, String password) {
 		
-		String sql = "SELECT id, email, password, FROM users WHERE email = ? AND password = ?";
+		String sql = "SELECT id, name, email, password FROM users WHERE name = ? AND password = ?";
 		
 		try (
 			Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 		){
 			
-			stmt.setString(1, email);
+			stmt.setString(1, name);
 			stmt.setString(2, password);
 			
-			ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.next()) {
 				User user = new User();

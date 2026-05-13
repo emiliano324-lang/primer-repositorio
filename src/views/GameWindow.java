@@ -17,8 +17,6 @@ import controllers.GameMenuController;
 import controllers.LoginController;
 
 public class GameWindow extends JFrame{
-
-	
 	private CardLayout layout;
     private JPanel container;
 

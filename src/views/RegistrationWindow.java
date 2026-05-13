@@ -33,7 +33,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import utils.Config;
+import config.Config;
 
 public class RegistrationWindow extends JFrame{
 	
