@@ -1,54 +1,131 @@
 package repository;
 
-import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import org.mindrot.jbcrypt.BCrypt;
 
+import config.DatabaseConnection;
 import models.User;
 
 public class UserRepository {
 
-	private final String FILE = "src/assets/files/users.json";
-	private final ObjectMapper mapper =
-			new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-
 	public void save(User user) throws IOException {
 		
 		List<User> users = getUsers();
-		users.add(user);
-		updateAll(users);
 		
+		String sql = "INSERT INTO users (name, password, email, sex, imagePath) VALUES (?,?,?,?,?)";
+		
+		try(
+			Connection connection = DatabaseConnection.getConnection();
+			PreparedStatement pst = connection.prepareStatement(sql)
+		){
+			
+			String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());;
+			
+			pst.setString(1, user.getName());
+			pst.setString(2, hashedPassword);
+			pst.setString(3, user.getEmail());
+			pst.setString(4, user.getSex());
+			pst.setString(5, user.getImagePath());
+			
+			int affectedRows = pst.executeUpdate();
+			
+			if(affectedRows > 0) {
+				users.add(user);
+				System.out.println("Nuevo usuario guardado");
+			}
+			
+			System.out.println("Filas modificadas: " + affectedRows);
+			
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public List<User> getUsers() throws IOException{
 		
-		File file = new File(FILE);
+		List<User> users = new ArrayList<User>();
 		
-		if(!file.exists() || file.length() == 0) {
-			return new ArrayList<>();
-		}
+		try(
+			Connection connection = DatabaseConnection.getConnection();
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM users");
+		){
+			while(rs.next()) {
 				
-		return mapper.readValue(file, new TypeReference<List<User>>() {});
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String sex = rs.getString("sex");
+				String imagePath = rs.getString("imagePath");
+				
+				User user = new User(id, name, email, sex, imagePath);
+				
+				users.add(user);
+			}
+			
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return users;
 	}
 	
-	public void updateAll(List<User> users) throws IOException {
-		mapper.writeValue(new File(FILE), users);
-	}
-	 
-	public void delete(int index) throws IOException {
-		List<User> users = getUsers();
-		users.remove(index);
-		updateAll(users);
+	public boolean delete(int id) {
+		
+		String sql = "DELETE FROM users WHERE id = ?";
+		
+		try(
+			Connection connection = DatabaseConnection.getConnection();
+			PreparedStatement pst = connection.prepareStatement(sql)) {
+			
+			pst.setInt(1, id);
+			int affectedRows = pst.executeUpdate();
+			if(affectedRows > 0) {
+				System.out.println("Usuario eliminado");
+				return true;
+			}
+			
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return false;
 	}
 	
-	public void update(int index, User updatedUser) throws IOException {
-		List<User> users = getUsers();
-		users.set(index, updatedUser);
-		updateAll(users);
+	public boolean update(int index, User updatedUser) throws IOException {
+
+		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ?, imagePath = ? WHERE id = ?";
+		
+		try(Connection connection = DatabaseConnection.getConnection();
+			PreparedStatement pst = connection.prepareStatement(sql)){
+		
+			String hashedPassword = BCrypt.hashpw(updatedUser.getPassword(), BCrypt.gensalt());;
+			
+			pst.setString(1,  updatedUser.getName());
+			pst.setString(2, hashedPassword);
+			pst.setString(3,  updatedUser.getEmail());
+			pst.setString(4,  updatedUser.getSex());
+			pst.setString(5, updatedUser.getImagePath());
+			pst.setInt(6,  updatedUser.getId());
+			
+			int affectedRows = pst.executeUpdate();
+			System.out.println("Filas modificadas: " + affectedRows);
+			
+			if(affectedRows > 0) {
+				return true;
+			}
+				
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		return false;
 	}
 }

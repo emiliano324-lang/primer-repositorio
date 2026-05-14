@@ -45,6 +45,12 @@ public class UserController {
 		
 		view.getBtnDelete().addActionListener(e ->{
 			
+			boolean deleted = repo.delete(model.getUserAt(view.getSelectedRow()).getId());
+			
+			if(deleted) {
+				model.removeRow(view.getSelectedRow());
+			}
+			
 			int row = view.getSelectedRow();
 			if(row == -1) {
 				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
@@ -54,8 +60,10 @@ public class UserController {
 			
 			try {
 	            JOptionPane.showMessageDialog(view, "Se eliminó al usuario", "Usuario eliminado", JOptionPane.INFORMATION_MESSAGE);
-				//System.out.println("se removio");
-				repo.delete(row);
+				
+	            //TODO: Eliminar con conexion a base de datos
+	            //System.out.println("se removio");
+				//repo.delete(row, model.getUserAt(row));
 				loadUsers();
 			}catch(Exception ex) {
 				

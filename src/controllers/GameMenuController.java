@@ -27,13 +27,14 @@ public class GameMenuController {
 
         view.getBtnPlay().addActionListener(e -> window.showPanel("GAME"));
         view.getBtnCredits().addActionListener(e -> window.showPanel("CREDITS"));
-        
+        view.getBtnSkillTree().addActionListener(e -> window.showPanel("SKILLTREE"));
         view.getBtnExit().addActionListener(e -> {
         		new HomeController(new MainWindow());
         		window.dispose();
         });
         
         mouseListeners(view.getBtnPlay());
+        mouseListeners(view.getBtnSkillTree());
         mouseListeners(view.getBtnCredits());
         mouseListeners(view.getBtnExit());
     }

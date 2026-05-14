@@ -26,18 +26,18 @@ public class User {
 		this.imagePath = imagePath;
 	}
 	
-	public User(int id, String name, String email, String sexo, String imagePath) {
+	public User(int id, String name, String email, String sex, String imagePath) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.sex = sexo;
+		this.sex = sex;
 		this.imagePath = imagePath;
 	}
 	
-	public User(String name, String email, String sexo, String imagePath) {
+	public User(String name, String email, String sex, String imagePath) {
 		this.name = name;
 		this.email = email;
-		this.sex = sexo;
+		this.sex = sex;
 		this.imagePath = imagePath;
 	}
 	

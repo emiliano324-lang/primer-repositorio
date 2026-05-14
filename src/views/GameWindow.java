@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import controllers.GameMenuController;
 import controllers.GamePanelController;
+import controllers.GameSkillTreeController;
 import controllers.LoginController;
 
 public class GameWindow extends JFrame{
@@ -48,14 +49,19 @@ public class GameWindow extends JFrame{
         add(container);
         GameMenuView menuView = new GameMenuView();
         GameGameLoopView gameLoopView = new GameGameLoopView();
+        GameSkillTreeView gameSkillTreeView = new GameSkillTreeView();
 		
         container.add(menuView, "MENU");
         container.add(gameLoopView, "GAME");
+        container.add(gameSkillTreeView, "SKILLTREE");
+        
         
         new GameMenuController(menuView, this);
         showPanel("MENU");
         
         new GamePanelController(gameLoopView);
+        
+        new GameSkillTreeController(gameSkillTreeView);
         
 		setVisible(true);
 	}

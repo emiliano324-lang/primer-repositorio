@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import utils.AppFont;
 
 public class GameGameLoopView extends JPanel {
+	
 	GameWindow window;
 	
 	private JButton attack;
@@ -56,7 +57,7 @@ public class GameGameLoopView extends JPanel {
 		
 		JPanel actionBar = new JPanel();
 		actionBar.setOpaque(false);
-		//actionBar.setBackground(new Color(0, 0, 0, 100));
+		//actionBar.setBackground(Color.BLACK);
 		
 		attack = createButton("Atacar");
 		block = createButton("Bloquear");

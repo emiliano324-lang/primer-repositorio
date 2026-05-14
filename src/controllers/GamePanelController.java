@@ -15,7 +15,6 @@ public class GamePanelController {
 	GameMenuView gameMenuView;
 	GameGameLoopView gameGameLoopView;
 	
-	
 	public GamePanelController(GameGameLoopView gameGameLoopView) {
 		this.gameGameLoopView = gameGameLoopView;
 		

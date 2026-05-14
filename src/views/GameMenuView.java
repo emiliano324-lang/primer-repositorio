@@ -25,8 +25,9 @@ public class GameMenuView extends JPanel{
 	private GameWindow window;
 	private JLabel lblTitle;
 	private JButton btnPlay;
-	private JButton btnExit;
+	private JButton btnSkillTree;
 	private JButton btnCredits;
+	private JButton btnExit;
 	//private JButton btnSettings;
 	
 	Image mainMenuBackground;
@@ -44,12 +45,16 @@ public class GameMenuView extends JPanel{
 		return btnPlay;
 	}
 
-	public JButton getBtnExit() {
-		return btnExit;
+	public JButton getBtnSkillTree() {
+		return btnSkillTree;
 	}
-
+	
 	public JButton getBtnCredits() {
 		return btnCredits;
+	}
+
+	public JButton getBtnExit() {
+		return btnExit;
 	}
 	
 	private void initializeComponents() {
@@ -73,10 +78,14 @@ public class GameMenuView extends JPanel{
 		add(btnPlay, c);
 		
 		c.gridy = 2;
+		btnSkillTree = createButton("MEJORAS");
+		add(btnSkillTree, c);
+		
+		c.gridy = 3;
 		btnCredits = createButton("CREDITOS");
 		add(btnCredits, c);
 		
-		c.gridy = 3;
+		c.gridy = 4;
 		btnExit = createButton("SALIR");
 		add(btnExit, c);
 	}
@@ -104,7 +113,7 @@ public class GameMenuView extends JPanel{
 	}
 	
 	public void paintComponent(Graphics g) {
-		super.paintComponents(g);
+		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.drawImage(mainMenuBackground, 0, 0, getWidth(), getHeight(), null);
@@ -113,7 +122,7 @@ public class GameMenuView extends JPanel{
 	private void loadImage() {
 		
 		try {
-			mainMenuBackground = ImageIO.read(new File("src/img/fondoPrincipal.png"));
+			mainMenuBackground = ImageIO.read(getClass().getResource("/img/fondoPrincipal.png"));
 		} catch (IOException ex) {
 			System.out.println("La imagen no existe");
 		}

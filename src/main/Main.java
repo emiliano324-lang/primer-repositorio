@@ -13,10 +13,10 @@ public class  Main {
 	
 
 	public static void main(String[] args) {
-		GameWindow window = new GameWindow();
+		//GameWindow window = new GameWindow();
 		//new HomeController(new MainWindow());
 
-		//LoginWindow login = new LoginWindow();
+		LoginWindow login = new LoginWindow();
 
 
 		//new RegistrationController(new RegistrationWindow());

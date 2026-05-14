@@ -12,6 +12,7 @@ import exceptions.InvalidPasswordException;
 import exceptions.InvalidUserException;
 import models.User;
 import repository.LoginRepository;
+import utils.Session;
 import views.LoginView;
 import views.MainWindow;
 import views.RegistrationWindow;
@@ -68,14 +69,19 @@ public class LoginController {
 	}
 	
 	private void handleLogin() {
+		
 		if(!validateLogin(new User(view.getUsername(), view.getPassword()))){
 			return;
 		}
+		
 		User user = repository.login(view.getUsername(), view.getPassword());
+		
 		if(user == null) {
 			view.showLblErrorPassword("Credenciales incorrectas");
 			return;
 		}
+		
+		Session.login(user);
 		
 		JOptionPane.showMessageDialog(view.getWindow(),  "Se inició la sesión", "Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
 		new HomeController(new MainWindow());
