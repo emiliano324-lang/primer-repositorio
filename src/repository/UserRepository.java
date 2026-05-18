@@ -74,7 +74,6 @@ public class UserRepository {
 		}catch(SQLException ex) {
 			ex.printStackTrace();
 		}
-		
 		return users;
 	}
 	
