@@ -55,11 +55,10 @@ public class GameMenuController {
 			
 			public void mousePressed(MouseEvent e) {
 				b.setForeground(Color.LIGHT_GRAY);
-				
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				b.setForeground(defaultForeground);
-				
 			}
 		});
 	}
