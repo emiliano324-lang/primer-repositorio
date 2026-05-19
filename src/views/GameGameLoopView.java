@@ -28,7 +28,9 @@ public class GameGameLoopView extends JPanel {
 
 	GameWindow window;
 
-	private Timer animation;
+	private Timer animationIdle;
+	public Timer animation;
+
 	public int selfFrame = 0; // cambiar a private despues
 	public int foeFrame = 0; // cambiar a private despues
 
@@ -93,8 +95,8 @@ public class GameGameLoopView extends JPanel {
 
 		loadImage();
 		initializeComponents();
-		animate(idleFramesSelf, idleFramesFoe);
-		// animateFoe();
+		animationIdle(idleFramesSelf, idleFramesFoe);
+		
 	}
 
 	// MÉTODOS
@@ -176,30 +178,103 @@ public class GameGameLoopView extends JPanel {
 		g2.drawImage(combatBackground, 0, 0, getWidth(), getHeight(), null);
 	}
 
-	public void animate(String[] framesSelf, String[] framesFoe) {
+	public void animationIdle(String[] framesSelf, String[] framesFoe) {
 
-		animation = new Timer(500, new ActionListener() {
+		animation  = new Timer(250, new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
-				ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
-				characterSelf.setIcon(frameSelf);
-				characterFoe.setIcon(frameFoe);
-				selfFrame++;
-				foeFrame++;
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
 
-				if (selfFrame >= framesSelf.length) {
-					selfFrame = 0;
-				}
+	            ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
+	            ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
 
-				if (foeFrame >= framesFoe.length) {
-					foeFrame = 0;
-				}
-			}
-		});
+	            characterSelf.setIcon(frameSelf);
+	            characterFoe.setIcon(frameFoe);
+
+	            selfFrame++;
+	            foeFrame++;
+
+	            if (selfFrame >= framesSelf.length) {
+	                selfFrame = 0;
+	            }
+
+	            if (foeFrame >= framesFoe.length) {
+	                foeFrame = 0;
+	            }
+	        }
+	    });
 
 		animation.start();
+	}
+	public void animateOnce(String[] framesSelf, String[] framesFoe) {
+
+	    animation = new Timer(100, new ActionListener() {
+
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+
+	            ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
+	            ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
+
+	            characterSelf.setIcon(frameSelf);
+	            characterFoe.setIcon(frameFoe);
+
+	            selfFrame++;
+	            foeFrame++;
+
+	          
+	            if (selfFrame >= framesSelf.length ||
+	                foeFrame >= framesFoe.length) {
+
+	                animation.stop();
+
+	                selfFrame = 0;
+	                foeFrame = 0;
+
+	               
+	                animationIdle(idleFramesSelf, idleFramesFoe);
+	            }
+	        }
+	    });
+
+	    animation.start();
+	}
+	public void animateAttack(String[] framesSelf, String[] framesFoe) {
+
+		animation  = new Timer(250, null);
+
+	    selfFrame = 0;
+	    foeFrame = 0;
+
+	    animation .addActionListener(new ActionListener() {
+
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+
+	            ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
+	            ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
+
+	            characterSelf.setIcon(frameSelf);
+	            characterFoe.setIcon(frameFoe);
+
+	            selfFrame++;
+	            foeFrame++;
+
+	            if (selfFrame >= framesSelf.length ||
+	                foeFrame >= framesFoe.length) {
+
+	            	animation .stop();
+
+	                
+	                selfFrame = 0;
+	                foeFrame = 0;
+
+	                animationIdle(idleFramesSelf, idleFramesFoe);
+	            }
+	        }
+	    });
+
+	    animation .start();
 	}
 
 	private JButton createButton(String text) {

@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
+import utils.ScreenManager;
 import views.GameMenuView;
 import views.GameWindow;
 import views.MainWindow;
@@ -25,9 +26,9 @@ public class GameMenuController {
 
     private void gameMenuListener() {
 
-        view.getBtnPlay().addActionListener(e -> window.showPanel("GAME"));
-        view.getBtnCredits().addActionListener(e -> window.showPanel("CREDITS"));
-        view.getBtnSkillTree().addActionListener(e -> window.showPanel("SKILLTREE"));
+        view.getBtnPlay().addActionListener(e -> ScreenManager.showPanel("GAME"));
+        view.getBtnCredits().addActionListener(e ->  ScreenManager.showPanel("CREDITS"));
+        view.getBtnSkillTree().addActionListener(e ->  ScreenManager.showPanel("SKILLTREE"));
         view.getBtnExit().addActionListener(e -> {
         		new HomeController(new MainWindow());
         		window.dispose();

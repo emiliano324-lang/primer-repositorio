@@ -17,6 +17,7 @@ import controllers.GameMenuController;
 import controllers.GamePanelController;
 import controllers.GameSkillTreeController;
 import controllers.LoginController;
+import utils.ScreenManager;
 
 public class GameWindow extends JFrame{
 	private CardLayout layout;
@@ -47,6 +48,7 @@ public class GameWindow extends JFrame{
 		container = new JPanel(layout);
 
         add(container);
+        ScreenManager.initialize(layout, container);    
         GameMenuView menuView = new GameMenuView();
         GameGameLoopView gameLoopView = new GameGameLoopView();
         GameSkillTreeView gameSkillTreeView = new GameSkillTreeView();
@@ -56,18 +58,15 @@ public class GameWindow extends JFrame{
         container.add(gameSkillTreeView, "SKILLTREE");
         
         
-        new GameMenuController(menuView, this);
-        showPanel("MENU");
-        
+
+        new GameMenuController(menuView,this);
         new GamePanelController(gameLoopView);
-        
         new GameSkillTreeController(gameSkillTreeView);
-        
+        ScreenManager.showPanel("MENU");
 		setVisible(true);
+		
 	}
 	
-	public void showPanel(String name) {
-        layout.show(container, name);
-    }
+	
 	
 }

@@ -52,10 +52,10 @@ public class GamePanelController {
 				
 				gameGameLoopView.selfFrame = 0;
 				gameGameLoopView.foeFrame = 0;
-				
-				gameGameLoopView.animate(gameGameLoopView.attackFramesSelf, gameGameLoopView.damageFramesFoe);
-				
-				
+
+			    gameGameLoopView.animation.stop();
+
+			    gameGameLoopView. animateOnce(gameGameLoopView.attackFramesSelf, gameGameLoopView.damageFramesFoe);
 			}
 			public void mouseReleased(MouseEvent e) {
 				b.setForeground(defaultForeground);
