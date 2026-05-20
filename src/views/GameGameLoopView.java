@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
 import utils.AppFont;
@@ -29,38 +30,82 @@ public class GameGameLoopView extends JPanel {
 	GameWindow window;
 
 	private Timer animationIdle;
-	public Timer animation;
+	private Timer animation;
 
-	public int selfFrame = 0; // cambiar a private despues
-	public int foeFrame = 0; // cambiar a private despues
-
-	public String[] idleFramesSelf = {
+	private int selfFrame = 0;
+	private int foeFrame = 0;
+	
+	private String[] idleFramesSelf = {
 		"/img/IdleSelf/IdleSelf0.png",
 		"/img/IdleSelf/IdleSelf1.png",
 		"/img/IdleSelf/IdleSelf2.png",
 		"/img/IdleSelf/IdleSelf3.png"
 	};
 	
-	public String[] idleFramesFoe = {
+	private String[] idleFramesFoe = {
 		"/img/IdleFoe/IdleFoe0.png",
 		"/img/IdleFoe/IdleFoe1.png",
 		"/img/IdleFoe/IdleFoe2.png",
 		"/img/IdleFoe/IdleFoe3.png"
 	};
 
-	public String[] attackFramesSelf = {
+	private String[] attackFramesSelf = {
 		"/img/AttackSelf/AttackSelf0.png",
 		"/img/AttackSelf/AttackSelf1.png",
 		"/img/AttackSelf/AttackSelf2.png",
 		"/img/AttackSelf/AttackSelf3.png" 
 	};
 
-	public String[] damageFramesFoe = {
+	private String[] attackFramesFoe = {
+		"/img/AttackFoe/AttackFoe0.png",
+		"/img/AttackFoe/AttackFoe1.png",
+		"/img/AttackFoe/AttackFoe2.png",
+		"/img/AttackFoe/AttackFoe3.png"
+	};
+	
+	private String[] blockFramesSelf = {
+		"/img/BlockSelf/BlockSelf0.png",
+		"/img/BlockSelf/BlockSelf1.png",
+		"/img/BlockSelf/BlockSelf2.png",
+		"/img/BlockSelf/BlockSelf3.png"
+	};
+	
+	private String[] blockFramesFoe = {
+		"/img/BlockFoe/BlockFoe0.png",
+		"/img/BlockFoe/BlockFoe1.png",
+		"/img/BlockFoe/BlockFoe2.png",
+		"/img/BlockFoe/BlockFoe3.png"
+	};
+	
+	private String[] healFramesSelf = {
+		"/img/HealSelf/HealSelf0.png", 
+		"/img/HealSelf/HealSelf1.png", 
+		"/img/HealSelf/HealSelf2.png", 
+		"/img/HealSelf/HealSelf3.png" 
+	};
+	
+	private String[] healFramesFoe = {
+		"/img/HealFoe/HealFoe0.png",
+		"/img/HealFoe/HealFoe1.png",
+		"/img/HealFoe/HealFoe2.png",
+		"/img/HealFoe/HealFoe3.png"
+	};
+	
+	private String[] damageFramesSelf = {
+		"/img/DamageSelf/DamageSelf0.png",
+		"/img/DamageSelf/DamageSelf1.png",
+		"/img/DamageSelf/DamageSelf2.png",
+		"/img/DamageSelf/DamageSelf3.png"
+	};
+	
+	private String[] damageFramesFoe = {
 		"/img/DamageFoe/DamageFoe0.png",
 		"/img/DamageFoe/DamageFoe1.png",
 		"/img/DamageFoe/DamageFoe2.png",
-		"/img/DamageFoe/DamageFoe3.png",
+		"/img/DamageFoe/DamageFoe3.png"
 	};
+	
+	private JProgressBar healthBar;
 	
 	private JButton attack;
 	private JButton block;
@@ -87,6 +132,86 @@ public class GameGameLoopView extends JPanel {
 
 	public JButton getAnalyze() {
 		return analyze;
+	}
+	
+	public GameWindow getWindow() {
+		return window;
+	}
+
+	public Timer getAnimationIdle() {
+		return animationIdle;
+	}
+
+	public Timer getAnimation() {
+		return animation;
+	}
+
+	public int getSelfFrame() {
+		return selfFrame;
+	}
+
+	public void setSelfFrame(int selfFrame) {
+		this.selfFrame = selfFrame;
+	}
+	
+	public void setFoeFrame(int foeFrame) {
+		this.foeFrame = foeFrame;
+	}
+	
+	public int getFoeFrame() {
+		return foeFrame;
+	}
+
+	public String[] getIdleFramesSelf() {
+		return idleFramesSelf;
+	}
+
+	public String[] getIdleFramesFoe() {
+		return idleFramesFoe;
+	}
+
+	public String[] getAttackFramesSelf() {
+		return attackFramesSelf;
+	}
+
+	public String[] getAttackFramesFoe() {
+		return attackFramesFoe;
+	}
+
+	public String[] getBlockFramesSelf() {
+		return blockFramesSelf;
+	}
+
+	public String[] getBlockFramesFoe() {
+		return blockFramesFoe;
+	}
+
+	public String[] getHealFramesSelf() {
+		return healFramesSelf;
+	}
+
+	public String[] getHealFramesFoe() {
+		return healFramesFoe;
+	}
+
+	public String[] getDamageFramesSelf() {
+		return damageFramesSelf;
+	}
+
+	public String[] getDamageFramesFoe() {
+		return damageFramesFoe;
+	}
+
+	public JLabel getCharacterSelf() {
+		return characterSelf;
+	}
+
+	public JLabel getCharacterFoe() {
+		return characterFoe;
+	}
+
+	public Image getCombatBackground() {
+		return combatBackground;
 	}
 
 	// CONSTRUCTOR
@@ -137,11 +262,13 @@ public class GameGameLoopView extends JPanel {
 		JPanel actionBar = new JPanel();
 		actionBar.setOpaque(false);
 
+		healthBar = createProgressBar();
 		attack = createButton("Atacar");
 		block = createButton("Bloquear");
 		heal = createButton("Curarse");
 		analyze = createButton("Analizar");
 
+		actionBar.add(healthBar);
 		actionBar.add(attack);
 		actionBar.add(block);
 		actionBar.add(heal);
@@ -151,7 +278,6 @@ public class GameGameLoopView extends JPanel {
 	}
 
 	private ImageIcon loadIcon(String path, int w, int h) {
-
 		try {
 			Image icon = ImageIO.read(getClass().getResource(path));
 			icon = icon.getScaledInstance(w, h, Image.SCALE_SMOOTH);
@@ -165,7 +291,7 @@ public class GameGameLoopView extends JPanel {
 
 	private void loadImage() {
 		try {
-			combatBackground = ImageIO.read(getClass().getResource("/img/fondo pelea.jpg"));
+			combatBackground = ImageIO.read(getClass().getResource("/img/fondo_pelea.jpg"));
 		} catch (IOException ex) {
 			System.out.println("La imagen no existe");
 		}
@@ -222,7 +348,6 @@ public class GameGameLoopView extends JPanel {
 	            selfFrame++;
 	            foeFrame++;
 
-	          
 	            if (selfFrame >= framesSelf.length ||
 	                foeFrame >= framesFoe.length) {
 
@@ -230,7 +355,6 @@ public class GameGameLoopView extends JPanel {
 
 	                selfFrame = 0;
 	                foeFrame = 0;
-
 	               
 	                animationIdle(idleFramesSelf, idleFramesFoe);
 	            }
@@ -239,14 +363,14 @@ public class GameGameLoopView extends JPanel {
 
 	    animation.start();
 	}
-	public void animateAttack(String[] framesSelf, String[] framesFoe) {
+	public void animateAction(String[] framesSelf, String[] framesFoe) {
 
 		animation  = new Timer(250, null);
 
 	    selfFrame = 0;
 	    foeFrame = 0;
 
-	    animation .addActionListener(new ActionListener() {
+	    animation.addActionListener(new ActionListener() {
 
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
@@ -263,8 +387,7 @@ public class GameGameLoopView extends JPanel {
 	            if (selfFrame >= framesSelf.length ||
 	                foeFrame >= framesFoe.length) {
 
-	            	animation .stop();
-
+	            	animation.stop();
 	                
 	                selfFrame = 0;
 	                foeFrame = 0;
@@ -274,9 +397,21 @@ public class GameGameLoopView extends JPanel {
 	        }
 	    });
 
-	    animation .start();
+	    animation.start();
 	}
 
+	private JProgressBar createProgressBar() {
+		JProgressBar progressBar = new JProgressBar();
+		
+		//TODO: Cambiar despues para el personaje
+		progressBar.setMaximum(100);
+		progressBar.setMinimum(0);
+		progressBar.setForeground(Color.GREEN);
+		progressBar.setValue(progressBar.getMaximum());
+		
+		return progressBar;
+	}
+	
 	private JButton createButton(String text) {
 		JButton button = new JButton(text);
 

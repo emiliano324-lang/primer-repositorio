@@ -50,12 +50,29 @@ public class GamePanelController {
 			public void mousePressed(MouseEvent e) {
 				b.setForeground(Color.LIGHT_GRAY);
 				
-				gameGameLoopView.selfFrame = 0;
-				gameGameLoopView.foeFrame = 0;
+				String[] actionFramesSelf = new String[4];
+				String[] actionFramesFoe = new String[4];
+				
+				gameGameLoopView.setSelfFrame(0);
+				gameGameLoopView.setFoeFrame(0);
 
-			    gameGameLoopView.animation.stop();
-
-			    gameGameLoopView. animateOnce(gameGameLoopView.attackFramesSelf, gameGameLoopView.damageFramesFoe);
+			    gameGameLoopView.getAnimation().stop();
+			    	
+			    if(b == gameGameLoopView.getAttack()) {
+			    	actionFramesSelf = gameGameLoopView.getAttackFramesSelf();
+			    	actionFramesFoe = gameGameLoopView.getDamageFramesFoe();
+			    }else if(b == gameGameLoopView.getBlock()) {
+			    	actionFramesSelf = gameGameLoopView.getBlockFramesSelf();
+			    	actionFramesFoe = gameGameLoopView.getHealFramesFoe();
+			    }else if(b == gameGameLoopView.getHeal()) {
+			   		actionFramesSelf = gameGameLoopView.getHealFramesSelf();
+			   		actionFramesFoe = gameGameLoopView.getBlockFramesFoe();
+			    }else {
+		    		actionFramesSelf = gameGameLoopView.getDamageFramesSelf();
+		    		actionFramesFoe = gameGameLoopView.getAttackFramesFoe();
+			    }
+			    
+			    gameGameLoopView.animateOnce(actionFramesSelf, actionFramesFoe);
 			}
 			public void mouseReleased(MouseEvent e) {
 				b.setForeground(defaultForeground);

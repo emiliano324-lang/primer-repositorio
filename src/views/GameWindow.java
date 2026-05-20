@@ -57,8 +57,6 @@ public class GameWindow extends JFrame{
         container.add(gameLoopView, "GAME");
         container.add(gameSkillTreeView, "SKILLTREE");
         
-        
-
         new GameMenuController(menuView,this);
         new GamePanelController(gameLoopView);
         new GameSkillTreeController(gameSkillTreeView);
