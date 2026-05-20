@@ -27,15 +27,13 @@ public class GameWindow extends JFrame{
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		
-		  setUndecorated(true); // Quita bordes y barra
-	        setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setUndecorated(true); // Quita bordes y barra
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-	        GraphicsDevice gd = GraphicsEnvironment
-	                .getLocalGraphicsEnvironment()
-	                .getDefaultScreenDevice();
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-	        gd.setFullScreenWindow(this);
-		
+		gd.setFullScreenWindow(this);
+	
 		Image icon = tk.getImage("src/img/logo_uabcs.png");
 		setIconImage(icon);
 		
