@@ -28,6 +28,7 @@ public class GameMenuView extends JPanel{
 	private JButton btnSkillTree;
 	private JButton btnCredits;
 	private JButton btnExit;
+	private JLabel lblavailable;
 	//private JButton btnSettings;
 	
 	Image mainMenuBackground;
@@ -78,16 +79,25 @@ public class GameMenuView extends JPanel{
 		add(btnPlay, c);
 		
 		c.gridy = 2;
-		btnSkillTree = createButton("MEJORAS");
+		btnSkillTree = createButton("MEJORAS :");
 		add(btnSkillTree, c);
 		
+		//TODO: poner un label de cuantas mejoras tienes disponibles.
+		/*
 		c.gridy = 3;
+		lblavailable = createButton("");
+		add(lblavailable, c);
+		*/
+		c.gridy = 4;
 		btnCredits = createButton("CREDITOS");
 		add(btnCredits, c);
 		
-		c.gridy = 4;
+		c.gridy = 5;
 		btnExit = createButton("SALIR");
 		add(btnExit, c);
+		
+		
+		
 	}
 	
 	private void createIcon() {
@@ -140,6 +150,9 @@ public class GameMenuView extends JPanel{
 
 		return null;
 	}
+	
+	
+	
 	
 	
 	private JButton createButton(String text) {

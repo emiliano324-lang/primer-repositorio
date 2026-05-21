@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
+import utils.GameCharacter;
 import views.GameGameLoopView;
 import views.GameMenuView;
 import views.GameWindow;
@@ -19,11 +20,14 @@ public class GamePanelController {
 	GameWindow window;
 	GameMenuView gameMenuView;
 	GameGameLoopView gameGameLoopView;
+	GameCharacter character = new GameCharacter("juan",17,12,13,15,300);
+	
 	
 	public GamePanelController(GameGameLoopView gameGameLoopView) {
 		this.gameGameLoopView = gameGameLoopView;
 		
 		registerListeners();
+		
 	}
 	
 	public void registerListeners() {
