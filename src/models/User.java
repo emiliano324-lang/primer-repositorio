@@ -8,7 +8,6 @@ public class User {
 	private String confirmPassword;
 	private String email;
 	private String sex;
-	private String imagePath;
 	
 	public User() {
 	}
@@ -18,27 +17,24 @@ public class User {
 		this.password = password;
 	}
 	
-	public User(String name, String email, String password, String sex, String imagePath) {
+	public User(String name, String email, String password, String sex) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.sex = sex;
-		this.imagePath = imagePath;
 	}
 	
-	public User(int id, String name, String email, String sex, String imagePath) {
+	public User(int id, String name, String email, String sex) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.sex = sex;
-		this.imagePath = imagePath;
 	}
 	
-	public User(String name, String email, String sex, String imagePath) {
+	public User(String name, String email, String sex) {
 		this.name = name;
 		this.email = email;
 		this.sex = sex;
-		this.imagePath = imagePath;
 	}
 	
 	/*public User(int id, String email, String password) {
@@ -97,13 +93,13 @@ public class User {
 		return sex;
 	}
 	
-	public String getImagePath() {
+	/*public String getImagePath() {
 		return imagePath;
 	}
 	
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
-	}
+	}*/
 	
 	public String toCsv() {
 		return name + "," + email + "," + sex;

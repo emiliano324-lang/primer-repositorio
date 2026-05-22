@@ -20,7 +20,7 @@ public class UserRepository {
 		
 		List<User> users = getUsers();
 		
-		String sql = "INSERT INTO users (name, password, email, sex, imagePath) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO users (name, password, email, sex) VALUES (?,?,?,?)";
 		
 		try(
 			Connection connection = DatabaseConnection.getConnection();
@@ -33,7 +33,7 @@ public class UserRepository {
 			pst.setString(2, hashedPassword);
 			pst.setString(3, user.getEmail());
 			pst.setString(4, user.getSex());
-			pst.setString(5, user.getImagePath());
+			//pst.setString(5, user.getImagePath());
 			
 			int affectedRows = pst.executeUpdate();
 			
@@ -64,9 +64,9 @@ public class UserRepository {
 				String name = rs.getString("name");
 				String email = rs.getString("email");
 				String sex = rs.getString("sex");
-				String imagePath = rs.getString("imagePath");
+				//String imagePath = rs.getString("imagePath");
 				
-				User user = new User(id, name, email, sex, imagePath);
+				User user = new User(id, name, email, sex);
 				
 				users.add(user);
 			}
@@ -101,7 +101,7 @@ public class UserRepository {
 	
 	public boolean update(int index, User updatedUser) throws IOException {
 
-		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ?, imagePath = ? WHERE id = ?";
+		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ? WHERE id = ?";
 		
 		try(Connection connection = DatabaseConnection.getConnection();
 			PreparedStatement pst = connection.prepareStatement(sql)){
@@ -112,8 +112,8 @@ public class UserRepository {
 			pst.setString(2, hashedPassword);
 			pst.setString(3,  updatedUser.getEmail());
 			pst.setString(4,  updatedUser.getSex());
-			pst.setString(5, updatedUser.getImagePath());
-			pst.setInt(6,  updatedUser.getId());
+			//pst.setString(5, updatedUser.getImagePath());
+			pst.setInt(5,  updatedUser.getId());
 			
 			int affectedRows = pst.executeUpdate();
 			System.out.println("Filas modificadas: " + affectedRows);
