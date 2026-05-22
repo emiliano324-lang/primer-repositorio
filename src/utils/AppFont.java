@@ -18,7 +18,7 @@ public class AppFont {
 	}
 
 	public static Font normal() {
-		return base.deriveFont(35f);
+		return base.deriveFont(30f);
 	}
 
 	public static Font bold() {

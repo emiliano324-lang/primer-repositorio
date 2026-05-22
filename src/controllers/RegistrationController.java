@@ -149,7 +149,7 @@ public class RegistrationController {
 
 	    	view.resetErrorLabels();
 	    	
-	    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getSex(), view.getSelectedImagePath());
+	    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getSex());
 	    	String imagePathString = saveImage();
 	    	
 	    	if(validateRegistration(user)) {

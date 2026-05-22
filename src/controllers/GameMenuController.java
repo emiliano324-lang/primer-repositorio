@@ -29,6 +29,7 @@ public class GameMenuController {
         view.getBtnPlay().addActionListener(e -> ScreenManager.showPanel("GAME"));
         view.getBtnCredits().addActionListener(e ->  ScreenManager.showPanel("CREDITS"));
         view.getBtnSkillTree().addActionListener(e ->  ScreenManager.showPanel("SKILLTREE"));
+        
         view.getBtnExit().addActionListener(e -> {
         		new HomeController(new MainWindow());
         		window.dispose();

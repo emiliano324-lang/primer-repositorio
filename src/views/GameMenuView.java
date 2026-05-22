@@ -79,7 +79,7 @@ public class GameMenuView extends JPanel{
 		add(btnPlay, c);
 		
 		c.gridy = 2;
-		btnSkillTree = createButton("MEJORAS :");
+		btnSkillTree = createButton("MEJORAS");
 		add(btnSkillTree, c);
 		
 		//TODO: poner un label de cuantas mejoras tienes disponibles.

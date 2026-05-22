@@ -25,7 +25,7 @@ import javax.swing.Timer;
 
 import utils.AppFont;
 
-public class GameGameLoopView extends JPanel {
+public class GameCombatView extends JPanel {
 
 	GameWindow window;
 
@@ -34,6 +34,20 @@ public class GameGameLoopView extends JPanel {
 
 	private int selfFrame = 0;
 	private int foeFrame = 0;
+	
+	private JProgressBar healthBar;
+	
+	private JButton attack;
+	private JButton block;
+	private JButton heal;
+	private JButton analyze;
+
+	private JButton back;
+	
+	private JLabel characterSelf;
+	private JLabel characterFoe;
+
+	Image combatBackground;
 	
 	private String[] idleFramesSelf = {
 		"/img/IdleSelf/IdleSelf0.png",
@@ -105,18 +119,6 @@ public class GameGameLoopView extends JPanel {
 		"/img/DamageFoe/DamageFoe3.png"
 	};
 	
-	private JProgressBar healthBar;
-	
-	private JButton attack;
-	private JButton block;
-	private JButton heal;
-	private JButton analyze;
-
-	private JLabel characterSelf;
-	private JLabel characterFoe;
-
-	Image combatBackground;
-
 	// GETTERS Y SETTERS
 	public JButton getAttack() {
 		return attack;
@@ -215,7 +217,7 @@ public class GameGameLoopView extends JPanel {
 	}
 
 	// CONSTRUCTOR
-	public GameGameLoopView() {
+	public GameCombatView() {
 		setLayout(new BorderLayout());
 
 		loadImage();
@@ -227,6 +229,15 @@ public class GameGameLoopView extends JPanel {
 	// MÉTODOS
 	private void initializeComponents() {
 
+		JPanel centerPanel = createCenterPanel();
+		JPanel southBar = createActionsPanel();
+		
+		add(centerPanel, BorderLayout.CENTER);
+		add(southBar, BorderLayout.SOUTH);
+	}
+	
+	private JPanel createCenterPanel() {
+		
 		JPanel centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setOpaque(false);
 
@@ -257,10 +268,13 @@ public class GameGameLoopView extends JPanel {
 
 		centerPanel.add(characterFoe, gbc);
 
-		add(centerPanel, BorderLayout.CENTER);
+		return centerPanel;
+	}
 
-		JPanel actionBar = new JPanel();
-		actionBar.setOpaque(false);
+	private JPanel createActionsPanel() {
+		
+		JPanel actionsPanel = new JPanel();
+		actionsPanel.setOpaque(false);
 
 		healthBar = createProgressBar();
 		attack = createButton("Atacar");
@@ -268,15 +282,15 @@ public class GameGameLoopView extends JPanel {
 		heal = createButton("Curarse");
 		analyze = createButton("Analizar");
 
-		actionBar.add(healthBar);
-		actionBar.add(attack);
-		actionBar.add(block);
-		actionBar.add(heal);
-		actionBar.add(analyze);
+		actionsPanel.add(healthBar);
+		actionsPanel.add(attack);
+		actionsPanel.add(block);
+		actionsPanel.add(heal);
+		actionsPanel.add(analyze);
 
-		add(actionBar, BorderLayout.SOUTH);
+		return actionsPanel;
 	}
-
+	
 	private ImageIcon loadIcon(String path, int w, int h) {
 		try {
 			Image icon = ImageIO.read(getClass().getResource(path));
@@ -303,7 +317,7 @@ public class GameGameLoopView extends JPanel {
 
 		g2.drawImage(combatBackground, 0, 0, getWidth(), getHeight(), null);
 	}
-
+	
 	public void animationIdle(String[] framesSelf, String[] framesFoe) {
 
 		animation  = new Timer(250, new ActionListener() {
