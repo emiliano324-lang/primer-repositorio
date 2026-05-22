@@ -10,7 +10,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
-import utils.GameCharacter;
 import views.GameCombatView;
 import views.GameMenuView;
 import views.GameWindow;
@@ -20,7 +19,6 @@ public class GameCombatController {
 	GameWindow window;
 	GameMenuView gameMenuView;
 	GameCombatView gameCombatView;
-	GameCharacter character = new GameCharacter("juan",17,12,13,15,300);
 	
 	
 	public GameCombatController(GameCombatView combatView) {
