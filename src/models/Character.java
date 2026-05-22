@@ -9,18 +9,19 @@ public abstract class Character {
 	private int attackPoints;
 	private int blockPoints;
 	private int healPoints;
-	private int level;
 	
-	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int level) {
+	
+	
+	
+	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.health = health;
 		this.attackPoints = attackPoints;
 		this.blockPoints = blockPoints;
-		this.healPoints = healPoints;
-		this.level = level;
+		this.healPoints = 100;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -69,12 +70,10 @@ public abstract class Character {
 		this.healPoints = healPoints;
 	}
 	
-	public int getLevel() {
-		return level;
-	}
+	public abstract void heal();
 	
-	public void setLevel(int level) {
-		this.level = level;
-	}
+	public abstract void getDamage(int damage);	
+	
+	
 }
 

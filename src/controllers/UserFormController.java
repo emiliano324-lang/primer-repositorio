@@ -91,8 +91,7 @@ public class UserFormController {
                 view.getTxtFieldName().getText(),
                 view.getTxtFieldEmail().getText(),
                 view.getPwdPassword(),
-                view.getSex(),
-                view.getSelectedImagePath()
+                view.getSex()
         );
 
         if(validateForm(formUser)) {
@@ -106,7 +105,6 @@ public class UserFormController {
                 user.setEmail(formUser.getEmail());
                 user.setPassword(formUser.getPassword());
                 user.setSex(formUser.getSex());
-                user.setImagePath(formUser.getImagePath());
             }
 
             saved = true;
