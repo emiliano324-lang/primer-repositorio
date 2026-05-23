@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 import controllers.GameMenuController;
 import controllers.GameCombatController;
-import controllers.GameSkillTreeController;
+import controllers.GameUpgradeTreeController;
 import controllers.LoginController;
 import utils.ScreenManager;
 
@@ -49,15 +49,15 @@ public class GameWindow extends JFrame{
         ScreenManager.initialize(layout, container);    
         GameMenuView menuView = new GameMenuView();
         GameCombatView gameLoopView = new GameCombatView();
-        GameSkillTreeView gameSkillTreeView = new GameSkillTreeView();
+        GameUpgradeTreeView gameUpgradeTreeView = new GameUpgradeTreeView();
 		
         container.add(menuView, "MENU");
         container.add(gameLoopView, "GAME");
-        container.add(gameSkillTreeView, "SKILLTREE");
+        container.add(gameUpgradeTreeView, "SKILLTREE");
         
         new GameMenuController(menuView,this);
         new GameCombatController(gameLoopView);
-        new GameSkillTreeController(gameSkillTreeView);
+        new GameUpgradeTreeController(gameUpgradeTreeView);
        
         ScreenManager.showPanel("MENU");
 		setVisible(true);

@@ -24,6 +24,7 @@ import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
 import utils.AppFont;
+import utils.CustomJSwing;
 
 public class GameCombatView extends JPanel {
 
@@ -277,10 +278,11 @@ public class GameCombatView extends JPanel {
 		actionsPanel.setOpaque(false);
 
 		healthBar = createProgressBar();
-		attack = createButton("Atacar");
-		block = createButton("Bloquear");
-		heal = createButton("Curarse");
-		analyze = createButton("Analizar");
+		
+		attack = CustomJSwing.createJButton("Atacar");
+		block = CustomJSwing.createJButton("Bloquear");
+		heal = CustomJSwing.createJButton("Curarse");
+		analyze = CustomJSwing.createJButton("Analizar");
 
 		actionsPanel.add(healthBar);
 		actionsPanel.add(attack);
@@ -377,6 +379,7 @@ public class GameCombatView extends JPanel {
 
 	    animation.start();
 	}
+	
 	public void animateAction(String[] framesSelf, String[] framesFoe) {
 
 		animation  = new Timer(250, null);
@@ -417,28 +420,12 @@ public class GameCombatView extends JPanel {
 	private JProgressBar createProgressBar() {
 		JProgressBar progressBar = new JProgressBar();
 		
-		//TODO: Cambiar despues para el personaje
+		// TODO: Cambiar despues para el personaje
 		progressBar.setMaximum(100);
 		progressBar.setMinimum(0);
 		progressBar.setForeground(Color.GREEN);
 		progressBar.setValue(progressBar.getMaximum());
 		
 		return progressBar;
-	}
-	
-	private JButton createButton(String text) {
-		JButton button = new JButton(text);
-
-		button.setFont(AppFont.normal());
-		button.setForeground(new Color(254, 252, 251));
-
-		button.setFocusPainted(false);
-		button.setContentAreaFilled(false);
-		button.setOpaque(false);
-		button.setBorderPainted(false);
-
-		button.setBorder(BorderFactory.createEmptyBorder(50, 20, 50, 20));
-
-		return button;
 	}
 }

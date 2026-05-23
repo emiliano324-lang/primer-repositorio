@@ -1,24 +1,20 @@
 package views;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import utils.AppFont;
+import utils.CustomJSwing;
 
 public class GameMenuView extends JPanel{
 	
@@ -75,11 +71,11 @@ public class GameMenuView extends JPanel{
 		c.fill = GridBagConstraints.NONE;
 
 		c.gridy = 1;
-		btnPlay = createButton("JUGAR");
+		btnPlay = CustomJSwing.createMenuButton("JUGAR");
 		add(btnPlay, c);
 		
 		c.gridy = 2;
-		btnSkillTree = createButton("MEJORAS");
+		btnSkillTree = CustomJSwing.createMenuButton("MEJORAS");
 		add(btnSkillTree, c);
 		
 		//TODO: poner un label de cuantas mejoras tienes disponibles.
@@ -89,15 +85,12 @@ public class GameMenuView extends JPanel{
 		add(lblavailable, c);
 		*/
 		c.gridy = 4;
-		btnCredits = createButton("CREDITOS");
+		btnCredits = CustomJSwing.createMenuButton("CREDITOS");
 		add(btnCredits, c);
 		
 		c.gridy = 5;
-		btnExit = createButton("SALIR");
+		btnExit = CustomJSwing.createMenuButton("SALIR");
 		add(btnExit, c);
-		
-		
-		
 	}
 	
 	private void createIcon() {
@@ -113,7 +106,7 @@ public class GameMenuView extends JPanel{
 
 	    c.insets = new Insets(10, 20, 40, 0);
 
-	    ImageIcon icon = new ImageIcon("src/img/TECHNARYAN TITULO.png");
+	    ImageIcon icon = loadIcon("/img/TECHNARYAN TITULO.png", 900, 193);
 
 	    Image img = icon.getImage().getScaledInstance(900, 193, Image.SCALE_SMOOTH);
  
@@ -150,22 +143,7 @@ public class GameMenuView extends JPanel{
 
 		return null;
 	}
-	
-	
-	
-	
-	
-	private JButton createButton(String text) {
-		
-		JButton button = new JButton(text);
-		
-		button.setForeground(new Color(254, 252, 251));
-		button.setFont(AppFont.title());
-
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
-		button.setOpaque(false);
-		
-		return button;
-	}
 }
+	
+	
+	
