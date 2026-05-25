@@ -8,18 +8,19 @@ public class Enemy extends Character{
 	
 	
 	
-	public Enemy(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, Random randomAction) {
-		super(name, maxHealth, health, attackPoints, blockPoints, healPoints);
+	public Enemy(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, Random randomAction,boolean status,
+			int healCharges,int blockCharges) {
+		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,status,healCharges,blockCharges);
 		this.randomAction = randomAction;
 		
 	}
 	
 	@Override
 	public void heal() {
-		
+		setHealth(getHealPoints()+getHealth());	
 	}
 	public void getDamage(int damage) {
-		
+		setHealth(getHealth()-damage);
 	}
 	
 	public void chooseAction() {

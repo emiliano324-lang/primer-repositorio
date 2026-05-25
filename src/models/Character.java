@@ -1,7 +1,7 @@
 package models;
 
 public abstract class Character {
-
+	
 	private String name;
 	
 	private int maxHealth;
@@ -9,17 +9,20 @@ public abstract class Character {
 	private int attackPoints;
 	private int blockPoints;
 	private int healPoints;
+	private boolean status;
+	private int healCharges;
+	private int blockCharges;
 	
 	
-	
-	
-	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints) {
+	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints,boolean status,
+			int healCharges,int blockCharges) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.health = health;
 		this.attackPoints = attackPoints;
 		this.blockPoints = blockPoints;
-		this.healPoints = 100;
+		this.healPoints = healPoints;
+		this.status = true;
 	}
 	
 	public String getName() {
@@ -72,7 +75,31 @@ public abstract class Character {
 	
 	public abstract void heal();
 	
-	public abstract void getDamage(int damage);	
+	public abstract void getDamage(int damage);
+
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public int getBlockCharges() {
+		return blockCharges;
+	}
+
+	public void setBlockCharges(int blockCharges) {
+		this.blockCharges = blockCharges;
+	}
+
+	public int getHealCharges() {
+		return healCharges;
+	}
+
+	public void setHealCharges(int healCharges) {
+		this.healCharges = healCharges;
+	}	
 	
 	
 }
