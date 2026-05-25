@@ -12,6 +12,7 @@ import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
 import config.DatabaseConnection;
+import enums.Sex;
 import models.User;
 
 public class UserRepository {
@@ -20,7 +21,7 @@ public class UserRepository {
 		
 		List<User> users = getUsers();
 		
-		String sql = "INSERT INTO users (name, password, email, sex) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO users (name, password, email, sex, role) VALUES (?,?,?,?,?)";
 		
 		try(
 			Connection connection = DatabaseConnection.getConnection();
@@ -32,8 +33,8 @@ public class UserRepository {
 			pst.setString(1, user.getName());
 			pst.setString(2, hashedPassword);
 			pst.setString(3, user.getEmail());
-			pst.setString(4, user.getSex());
-			//pst.setString(5, user.getImagePath());
+			pst.setString(4, user.getSex().name());
+			pst.setString(5, user.getRole().name());
 			
 			int affectedRows = pst.executeUpdate();
 			
@@ -63,7 +64,8 @@ public class UserRepository {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
-				String sex = rs.getString("sex");
+				Sex sex = Sex.valueOf(rs.getString("sex"));
+				String role = rs.getString("role");
 				//String imagePath = rs.getString("imagePath");
 				
 				User user = new User(id, name, email, sex);
@@ -101,7 +103,7 @@ public class UserRepository {
 	
 	public boolean update(int index, User updatedUser) throws IOException {
 
-		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ? WHERE id = ?";
+		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ?, role = ? WHERE id = ?";
 		
 		try(Connection connection = DatabaseConnection.getConnection();
 			PreparedStatement pst = connection.prepareStatement(sql)){
@@ -111,9 +113,10 @@ public class UserRepository {
 			pst.setString(1,  updatedUser.getName());
 			pst.setString(2, hashedPassword);
 			pst.setString(3,  updatedUser.getEmail());
-			pst.setString(4,  updatedUser.getSex());
+			pst.setString(4,  updatedUser.getSex().name());
+			pst.setString(5, updatedUser.getRole().name());
 			//pst.setString(5, updatedUser.getImagePath());
-			pst.setInt(5,  updatedUser.getId());
+			pst.setInt(6,  updatedUser.getId());
 			
 			int affectedRows = pst.executeUpdate();
 			System.out.println("Filas modificadas: " + affectedRows);

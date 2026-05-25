@@ -10,17 +10,45 @@ public abstract class Character {
 	private int blockPoints;
 	private int healPoints;
 	
+	private boolean blocking;
 	
-	
-	
-	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints) {
+	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, boolean blocking) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.health = health;
 		this.attackPoints = attackPoints;
 		this.blockPoints = blockPoints;
 		this.healPoints = 100;
+		this.blocking = blocking;
 	}
+	
+	public void receiveDamage(int amount) {
+
+		if(blocking) {
+
+			amount -= blockPoints;
+
+			if(amount < 0) {
+				amount = 0;
+			}
+		}
+
+		health -= amount;
+
+		if(health < 0) {
+			health = 0;
+		}
+	}
+
+	public void heal(int amount) {
+
+		health += amount;
+
+		if(health > maxHealth) {
+			health = maxHealth;
+		}
+	}
+	
 	
 	public String getName() {
 		return name;
@@ -43,6 +71,11 @@ public abstract class Character {
 	}
 	
 	public void setHealth(int health) {
+		
+		if(health > maxHealth) {
+			this.health = maxHealth;
+		}
+		
 		this.health = health;
 	}
 	
@@ -70,10 +103,16 @@ public abstract class Character {
 		this.healPoints = healPoints;
 	}
 	
-	public abstract void heal();
+	public boolean isBlocking() {
+		return blocking;
+	}
 	
-	public abstract void getDamage(int damage);	
+	public void setBlocking(boolean blocking) {
+		this.blocking = blocking;
+	}
 	
-	
+	public boolean isDead() {
+		return health <= 0;
+	}
 }
 

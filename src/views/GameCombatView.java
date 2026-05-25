@@ -121,6 +121,10 @@ public class GameCombatView extends JPanel {
 	};
 	
 	// GETTERS Y SETTERS
+	public JProgressBar getHealthBar() {
+		return healthBar;
+	}
+	
 	public JButton getAttack() {
 		return attack;
 	}

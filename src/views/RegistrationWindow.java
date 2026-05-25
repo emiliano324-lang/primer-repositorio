@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import config.Config;
+import enums.Sex;
 
 public class RegistrationWindow extends JFrame{
 	
@@ -149,16 +150,16 @@ public class RegistrationWindow extends JFrame{
 		return String.valueOf(pwdConfirmPassword.getPassword());
 	}
 	
-	public String getSex() {
+	public Sex getSex() {
 		
 		if(rbMan.isSelected()) {
-			return "Masculino";
+			return Sex.MALE;
 			
 		}else if(rbWoman.isSelected()) {
-			return "Femenino";
+			return Sex.FEMALE;
 		}
 
-		return "No definido";
+		return Sex.OTHER;
 	}
 	
 	public RegistrationWindow() {

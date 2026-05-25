@@ -76,7 +76,10 @@ public class PDFExporter {
 								.setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Email")),
 
 						new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f))
-								.setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Sexo"))};
+								.setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Sexo")),
+				
+						new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f))
+								.setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Role"))};
 
 				for (Cell celda : headerFooter) {
 					if (i == 0) {
@@ -100,7 +103,10 @@ public class PDFExporter {
                         .add(new Paragraph(u.getEmail())));
 
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
-                        .add(new Paragraph(u.getSex())));
+                        .add(new Paragraph(u.getSex().name())));
+                
+                table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
+                        .add(new Paragraph(u.getRole().name())));
                 indice++;
 			}
 

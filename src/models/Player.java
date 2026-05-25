@@ -2,34 +2,16 @@ package models;
 
 public class Player extends Character{
 
-	
 	private boolean[] upgrades = {false,false,false,false,false,false};
 	private int level;
 	private int tokens;
 	
-	public Player(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int level,
-			boolean[] hablilities,int tokens) {
-		super(name, maxHealth, health, attackPoints, blockPoints, healPoints);
+	public Player(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, boolean blocking, int level,
+			boolean[] upgrades, int tokens) {
+		super(name, maxHealth, health, attackPoints, blockPoints, healPoints, blocking);
 		this.upgrades = upgrades;
-		this.level = 1;
-		this.tokens = 2;
+		this.level = level;
+		this.tokens = tokens;
 	}
 	
-	@Override
-	public void heal() {
-		setHealth(getHealPoints()+getHealth());
-		
-	}
-	
-	
-	@Override
-	public void getDamage(int damage) {
-		setHealth(getHealth()-damage);
-		if(getHealth() == 0) setHealth(0);
-	}
-
-	
-	
-	
-
 }

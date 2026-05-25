@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import config.Config;
+import enums.Sex;
 
 
 public class UserFormDialog extends JDialog {
@@ -57,17 +58,17 @@ public class UserFormDialog extends JDialog {
 	private JButton btnSelectImage;
 
     // GETTERS
-	public String getSex() {
+	public Sex getSex() {
 
         if(rbMan.isSelected()) {
-            return "Masculino";
+            return Sex.MALE;
         }
 
         if(rbWoman.isSelected()) {
-            return "Femenino";
+            return Sex.FEMALE;
         }
 
-        return "No Definido";
+        return Sex.OTHER;
     }
 	
 	public JLabel getLblImagePreview() {
