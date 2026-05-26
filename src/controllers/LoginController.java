@@ -13,6 +13,7 @@ import exceptions.InvalidUserException;
 import models.User;
 import repository.LoginRepository;
 import utils.Session;
+import views.GameWindow;
 import views.LoginView;
 import views.MainWindow;
 import views.RegistrationWindow;
@@ -82,9 +83,15 @@ public class LoginController {
 		}
 		
 		Session.login(user);
-		
 		JOptionPane.showMessageDialog(view.getWindow(),  "Se inició la sesión", "Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
-		new HomeController(new MainWindow());
+		
+		if(Session.getRole().name().equals("ADMIN")) {
+			new HomeController(new MainWindow());			
+			
+		}else {
+			new GameWindow();
+		}
+		
 		
 		view.getWindow().dispose();
 	}

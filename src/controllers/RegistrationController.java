@@ -60,7 +60,7 @@ public class RegistrationController {
            }
         });
         
-        view.getBtnSelectImage().addActionListener(e -> view.chooseImage());
+        //view.getBtnSelectImage().addActionListener(e -> view.chooseImage());
         
         view.getBtnRegistrate().addActionListener(e -> register());
 
@@ -150,8 +150,8 @@ public class RegistrationController {
 
 	    	view.resetErrorLabels();
 	    	
-	    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getSex());
-	    	String imagePathString = saveImage();
+	    	User user = new User(view.getName(), view.getEmail(), view.getPassword(), view.getSex(), view.getRole());
+	    	//String imagePathString = saveImage();
 	    	
 	    	if(validateRegistration(user)) {
 	    		
@@ -170,7 +170,7 @@ public class RegistrationController {
     
 
     
-    private String saveImage() {
+    /*private String saveImage() {
     	
 	    	try {
 	    		String original = view.getSelectedImagePath();
@@ -202,7 +202,7 @@ public class RegistrationController {
 	    		ex.printStackTrace();
 	    		return null;
 	    	}
-    }
+    }*/
     
     private void handleBack() {
         new LoginWindow();

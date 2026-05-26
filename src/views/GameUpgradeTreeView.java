@@ -31,6 +31,8 @@ public class GameUpgradeTreeView extends JPanel {
 	private JButton back;
 	private JLabel lblTokens;
 
+	private JLabel errorLabelNode;
+	
 	private UpgradeTree tree;
 
 	private UpgradeNode root;
@@ -43,7 +45,7 @@ public class GameUpgradeTreeView extends JPanel {
 
 	private UpgradeNode block1;
 	private UpgradeNode block2;
-
+	
 	public GameUpgradeTreeView() {
 
 		setLayout(null);
@@ -97,72 +99,47 @@ public class GameUpgradeTreeView extends JPanel {
 
 		back = CustomJSwing.createJButton("Regresar");
 		back.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-		// NUEVO
-		back.setBounds(20, screenHeight - 100, 300, 50);
-
-		// TOKENS LABEL
+		back.setBounds(20, screenHeight - 100, 500, 50);
 
 		lblTokens = createLabel("Monedas: 10");
+		lblTokens.setBounds(screenWidth - 500, screenHeight - 100, 500, 50);
 
-		// NUEVO
-		lblTokens.setBounds(screenWidth - 100, screenHeight - 100, 300, 50);
-
+		errorLabelNode = createErrorLabel("");
+		
+		errorLabelNode.setBounds(screenWidth / 3 + 45, 100, screenWidth / 3, 30);
+		
+		//errorAlreadyUnlocked.setVisible(false);
+		//errorGetPreviousFirst.setVisible(false);
+		
 		add(back);
-
 		add(lblTokens);
+		add(errorLabelNode);
 	}
-
-	// =====================================================
-	// NODES
-	// =====================================================
 
 	private void initializeNodes() {
 
-		// ROOT
-
 		root.setBounds(170, 430, 80, 80);
 
-		// HEAL
-
 		heal1.setBounds(680, 220, 80, 80);
-
 		heal2.setBounds(1120, 220, 80, 80);
 
-		// DAMAGE
-
 		damage1.setBounds(680, 430, 80, 80);
-
 		damage2.setBounds(1120, 430, 80, 80);
 
-		// BLOCK
-
 		block1.setBounds(680, 640, 80, 80);
-
 		block2.setBounds(1120, 640, 80, 80);
-
-		// =================================================
-		// CONFIGURE
-		// =================================================
 
 		configureNode(root, new Color(255, 221, 64));
 		root.setUnlocked(true);
 
 		configureNode(heal1, Color.GREEN);
-
 		configureNode(heal2, Color.GREEN);
 
 		configureNode(damage1, Color.RED);
-
 		configureNode(damage2, Color.RED);
 
 		configureNode(block1, new Color(80, 230, 255));
-
 		configureNode(block2, new Color(80, 230, 255));
-
-		// =================================================
-		// ADD
-		// =================================================
 
 		add(root);
 
@@ -175,11 +152,6 @@ public class GameUpgradeTreeView extends JPanel {
 		add(block1);
 		add(block2);
 	}
-
-	// =====================================================
-	// CONFIGURE NODE
-	// =====================================================
-
 	private void configureNode(UpgradeNode node, Color color) {
 		
 		node.setFocusPainted(false);
@@ -194,10 +166,6 @@ public class GameUpgradeTreeView extends JPanel {
 		
 		node.setText("");
 	}
-
-	// =====================================================
-	// PAINT
-	// =====================================================
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -240,10 +208,7 @@ public class GameUpgradeTreeView extends JPanel {
 		int block2X = 1120;
 		int block2Y = 640;
 
-		// =================================================
-		// MAIN LINES
-		// =================================================
-
+		// Lineas principales
 		g2.setColor(yellow);
 
 		g2.drawLine(rootX + 40, rootY + 40, 500, rootY + 40);
@@ -256,10 +221,7 @@ public class GameUpgradeTreeView extends JPanel {
 
 		g2.drawLine(500, 680, block1X, block1Y + 40);
 
-		// =================================================
-		// SECONDARY LINES
-		// =================================================
-
+		// Lineas Conexiones
 		g2.setColor(green);
 
 		g2.drawLine(heal1X + 80, heal1Y + 40, heal2X, heal2Y + 40);
@@ -272,54 +234,31 @@ public class GameUpgradeTreeView extends JPanel {
 
 		g2.drawLine(block1X + 80, block1Y + 40, block2X, block2Y + 40);
 
-		// =================================================
-		// NODES
-		// =================================================
-
+		// Dibujar nodos
 		drawNode(g2, rootX, rootY, yellow, root);
 
 		drawNode(g2, heal1X, heal1Y, green, heal1);
-
 		drawNode(g2, heal2X, heal2Y, green, heal2);
 
 		drawNode(g2, damage1X, damage1Y, red, damage1);
-
 		drawNode(g2, damage2X, damage2Y, red, damage2);
 
 		drawNode(g2, block1X, block1Y, cyan, block1);
-
 		drawNode(g2, block2X, block2Y, cyan, block2);
-
-		// =================================================
-		// TEXT
-		// =================================================
 
 		g2.setFont(AppFont.normal());
 
 		g2.setColor(Color.WHITE);
 
-		// HEAL
-
 		g2.drawString("CURACIÓN I", heal1X - 90, heal1Y - 20);
-
 		g2.drawString("CURACIÓN II", heal2X - 110, heal2Y - 20);
 
-		// DAMAGE
-
 		g2.drawString("DAÑO I", damage1X - 40, damage1Y - 20);
-
 		g2.drawString("DAÑO II", damage2X - 40, damage2Y - 20);
 
-		// BLOCK
-
 		g2.drawString("BLOQUEO I", block1X - 70, block1Y - 20);
-
 		g2.drawString("BLOQUEO II", block2X - 80, block2Y - 20);
 	}
-
-	// =====================================================
-	// DRAW NODE
-	// =====================================================
 
 	private void drawNode(Graphics2D g2, int x, int y, Color borderColor, UpgradeNode node) {
 
@@ -335,10 +274,6 @@ public class GameUpgradeTreeView extends JPanel {
 		g2.fillOval(x + 12, y + 12, 56, 56);
 	}
 
-	// =====================================================
-	// LOAD IMAGE
-	// =====================================================
-
 	private void loadImage() {
 
 		try {
@@ -350,10 +285,6 @@ public class GameUpgradeTreeView extends JPanel {
 			System.out.println("La imagen no existe");
 		}
 	}
-
-	// =====================================================
-	// LOAD ICON
-	// =====================================================
 
 	private ImageIcon loadIcon(String path, int w, int h) {
 
@@ -373,10 +304,6 @@ public class GameUpgradeTreeView extends JPanel {
 		return null;
 	}
 
-	// =====================================================
-	// LABEL
-	// =====================================================
-
 	private JLabel createLabel(String text) {
 
 		JLabel label = new JLabel(text);
@@ -388,10 +315,25 @@ public class GameUpgradeTreeView extends JPanel {
 		return label;
 	}
 
-	// =====================================================
-	// GETTERS
-	// =====================================================
+	private JLabel createErrorLabel(String text) {
 
+		JLabel label = new JLabel(text);
+
+		label.setFont(AppFont.normal());
+
+		label.setForeground(Color.RED);
+
+		return label;
+	}
+	
+	public void showErrorLabel() {
+		errorLabelNode.setVisible(true);
+	}
+	
+	public void resetErrorLabel() {
+		errorLabelNode.setVisible(false);
+	}
+	
 	public JButton getBack() {
 		return back;
 	}
@@ -427,4 +369,9 @@ public class GameUpgradeTreeView extends JPanel {
 	public UpgradeNode getBlock2() {
 		return block2;
 	}
+	
+	public JLabel getErrorLabelNode() {
+		return errorLabelNode;
+	}
+
 }

@@ -22,7 +22,7 @@ public class UserFormController {
 
     private void registerListeners() {
 
-    	view.getBtnSelectImage().addActionListener(e -> view.chooseImage());
+    	//view.getBtnSelectImage().addActionListener(e -> view.chooseImage());
         view.getBtnSave().addActionListener(e -> handleSave());
         view.getBtnCancel().addActionListener(e -> handleCancel());
     }
@@ -91,7 +91,8 @@ public class UserFormController {
                 view.getTxtFieldName().getText(),
                 view.getTxtFieldEmail().getText(),
                 view.getPwdPassword(),
-                view.getSex()
+                view.getSex(),
+                view.getRole()
         );
 
         if(validateForm(formUser)) {

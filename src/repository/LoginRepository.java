@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import config.DatabaseConnection;
+import enums.Role;
 import models.User;
 import utils.PasswordUtils;
 
@@ -13,7 +14,7 @@ public class LoginRepository {
 	
 	public User login(String name, String password) {
 		
-		String sql = "SELECT id, name, email, password FROM users WHERE name = ?";
+		String sql = "SELECT id_user, name, email, password, role FROM users WHERE name = ?";
 		
 		try (
 			Connection conn = DatabaseConnection.getConnection();
@@ -34,11 +35,14 @@ public class LoginRepository {
 				}
 				
 				User user = new User();
-				user.setId(rs.getInt("id"));
+				user.setId(rs.getInt("id_user"));
 				user.setName(rs.getString("name"));
 				user.setPassword(hashedPassword);
 				user.setEmail(rs.getString("email"));
 				
+				String role = rs.getString("role");
+
+				user.setRole(Role.valueOf(role));
 				return user;
 			}
 			

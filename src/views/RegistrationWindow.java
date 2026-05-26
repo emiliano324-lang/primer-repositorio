@@ -34,61 +34,56 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import config.Config;
+import enums.Role;
+import enums.Sex;
 
-public class RegistrationWindow extends JFrame{
-	
+public class RegistrationWindow extends JFrame {
+
 	LoginWindow window;
-	
+
 	private JButton btnRegistrate;
 	private JButton btnExit;
+
 	private JTextField txtFieldName;
 	private JTextField txtFieldEmail;
 	private JPasswordField pwdPassword;
 	private JPasswordField pwdConfirmPassword;
+
 	private JLabel lblErrorFieldName;
 	private JLabel lblErrorFieldEmail;
 	private JLabel lblErrorFieldPassword;
 	private JLabel lblErrorFieldConfirmPassword;
+
 	private ButtonGroup grpSexes;
 	private JRadioButton rbMan;
 	private JRadioButton rbWoman;
 	private JRadioButton rbDoNotSay;
-	private JButton btnSelectImage;
-	private JLabel lblImagePreview;
-	private JLabel lblImageName;
-	private String selectedImagePath;
-	private JLabel lblErrorImage;
-	
+
+	private ButtonGroup grpRoles;
+	private JRadioButton rbAdmin;
+	private JRadioButton rbClient;
+
+	/*
+	 * private JButton btnSelectImage; private JLabel lblImagePreview; private
+	 * JLabel lblImageName; private String selectedImagePath; private JLabel
+	 * lblErrorImage;
+	 */
+
 	public ButtonGroup getGrpSexes() {
 		return grpSexes;
 	}
-	public JRadioButton getRbMan() {
-		return rbMan;
-	}
-	public JRadioButton getRbWoman() {
-		return rbWoman;
-	}
-	public JRadioButton getRbDoNotSay() {
-		return rbDoNotSay;
-	}
-	public JButton getBtnSelectImage() {
-		return btnSelectImage;
-	}
-	public JLabel getLblImagePreview() {
-		return lblImagePreview;
-	}
-	public JLabel getLblImageName() {
-		return lblImageName;
-	}
-	public String getSelectedImagePath() {
-		return selectedImagePath;
-	}
-	public JLabel getLblErrorImage() {
-		return lblErrorImage;
-	}
+
+	/*
+	 * public JButton getBtnSelectImage() { return btnSelectImage; } public JLabel
+	 * getLblImagePreview() { return lblImagePreview; } public JLabel
+	 * getLblImageName() { return lblImageName; } public String
+	 * getSelectedImagePath() { return selectedImagePath; } public JLabel
+	 * getLblErrorImage() { return lblErrorImage; }
+	 */
 	public JButton getBtnExit() {
 		return btnExit;
 	}
+
 	public LoginWindow getWindow() {
 		return window;
 	}
@@ -136,354 +131,378 @@ public class RegistrationWindow extends JFrame{
 	public String getName() {
 		return txtFieldName.getText();
 	}
-	
+
 	public String getEmail() {
 		return txtFieldEmail.getText();
 	}
-	
+
 	public String getPassword() {
 		return String.valueOf(pwdPassword.getPassword());
 	}
-	
+
 	public String getConfirmPassword() {
 		return String.valueOf(pwdConfirmPassword.getPassword());
 	}
-	
-	public String getSex() {
-		
-		if(rbMan.isSelected()) {
-			return "Masculino";
-			
-		}else if(rbWoman.isSelected()) {
-			return "Femenino";
+
+	public Sex getSex() {
+
+		if (rbMan.isSelected()) {
+			return Sex.MALE;
+
+		} else if (rbWoman.isSelected()) {
+			return Sex.FEMALE;
 		}
 
-		return "No definido";
+		return Sex.OTHER;
 	}
 	
-	public RegistrationWindow() {
+	public Role getRole() {
+		if(rbAdmin.isSelected()) {
+			return Role.ADMIN;
+		}
 		
+		return Role.CLIENT;
+	}
+
+	public RegistrationWindow() {
+
 		setSize(450, 450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setLocation(100,100);
-		//setBounds(100,100,500,500);
+		// setLocation(100,100);
+		// setBounds(100,100,500,500);
 		setResizable(false);
 		setTitle("Registro");
 		setLocationRelativeTo(null);
-		
+
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Image icon = tk.getImage("src/img/logo_uabcs.png");
 		setIconImage(icon);
-		
+
 		initializeComponents();
-		
+
 		// VALIDACIONES DE CERRAR VENTANA
 		addWindowListener(new WindowAdapter() {
 
 		});
-		
+
 		setVisible(true);
 	}
-	
+
 	public void initializeComponents() {
-		
+
 		Color customBlue = new Color(0, 31, 84);
 		Font subtitleFont = new Font("Verdana", Font.BOLD, 16);
 		Font textFont = new Font("Verdana", Font.BOLD, 12);
 		FlowLayout alignToCenter = new FlowLayout(FlowLayout.CENTER);
 		Color defaultButtonColor;
-		
+
 		// CREAR TITULO "FORMULARIO DE REGISTRO"
 		JPanel superiorBar = new JPanel(alignToCenter);
 
 		superiorBar.setBackground(customBlue);
 
 		JLabel title = new JLabel("FORMULARIO DE REGISTRO");
-		
+
 		title.setForeground(Color.WHITE);
 		title.setFont(new Font("Verdana", Font.BOLD, 20));
-		
+
 		// CREAR FORMULARIO
 		JPanel componentsPanel = new JPanel();
-		
+
 		componentsPanel.setLayout(new BoxLayout(componentsPanel, BoxLayout.Y_AXIS));
-		componentsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		componentsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		componentsPanel.setBackground(customBlue);
-		
+
 		// APARTADO DE DATOS IMPORTANTE (NOMBRE DE USUARIO, CORREO, CONTRASEÑA, ETC.)
 		JPanel importantDataSection = new JPanel(alignToCenter);
-		
+
 		importantDataSection.setOpaque(false);
 		importantDataSection.add(createLabel("Datos Importantes", subtitleFont));
 
 		// CREAR PANEL GRID DE DOS COLUMNAS
-		JPanel importantDataGrid = new JPanel(new GridLayout(1,2,10,0));
+		JPanel importantDataGrid = new JPanel(new GridLayout(1, 2, 10, 0));
 		importantDataGrid.setOpaque(false);
-		
+
 		// COLUMNA IZQUIERDA
 		JPanel labelsColumn = new JPanel();
-		labelsColumn.setLayout(new BoxLayout(labelsColumn,BoxLayout.Y_AXIS));
+		labelsColumn.setLayout(new BoxLayout(labelsColumn, BoxLayout.Y_AXIS));
 		labelsColumn.setOpaque(false);
-		
+
 		// COLUMNA DERECHA
 		JPanel fieldsColumn = new JPanel();
-		fieldsColumn.setLayout(new BoxLayout(fieldsColumn,BoxLayout.Y_AXIS));
-		
+		fieldsColumn.setLayout(new BoxLayout(fieldsColumn, BoxLayout.Y_AXIS));
+
 		// ETIQUETAS
 		labelsColumn.add(createLabel("Nombre de Usuario", textFont));
 		labelsColumn.add(createLabel("Email", textFont));
 		labelsColumn.add(createLabel("Contraseña", textFont));
 		labelsColumn.add(createLabel("Confirmar contraseña", textFont));
-		
+
 		// CAMPOS Y SU ETIQUETA DE ERROR
 		txtFieldName = createTextField(fieldsColumn);
 		lblErrorFieldName = createErrorLabel(fieldsColumn);
-		
+
 		txtFieldEmail = createTextField(fieldsColumn);
 		lblErrorFieldEmail = createErrorLabel(fieldsColumn);
-		
+
 		pwdPassword = createPasswordField(fieldsColumn);
 		lblErrorFieldPassword = createErrorLabel(fieldsColumn);
 
 		pwdConfirmPassword = createPasswordField(fieldsColumn);
-	    lblErrorFieldConfirmPassword = createErrorLabel(fieldsColumn);
-		
+		lblErrorFieldConfirmPassword = createErrorLabel(fieldsColumn);
+
 		// AÑADIR AMBAS COLUMNAS EN EL PANEL
 		importantDataGrid.add(labelsColumn);
 		importantDataGrid.add(fieldsColumn);
-		
+
 		// APARTADO DE SEXO
 		JPanel sexSection = new JPanel(alignToCenter);
 
 		sexSection.setOpaque(false);
 		sexSection.add(createLabel("Sexo", subtitleFont));
-		
+
 		// PANEL DE OPCIÓN DE SEXO
 		JPanel sexFlowPanel = new JPanel(alignToCenter);
-		
+
 		sexFlowPanel.setOpaque(false);
-		
+
 		grpSexes = new ButtonGroup();
-		
+
 		rbMan = createJRadioButton("Hombre", grpSexes, sexFlowPanel);
 		rbWoman = createJRadioButton("Mujer", grpSexes, sexFlowPanel);
 		rbDoNotSay = createJRadioButton("Prefiero no decir", grpSexes, sexFlowPanel);
-		
-		// PANEL DE IMAGEN
-		JPanel imageSection = new JPanel(alignToCenter);
-		
-		imageSection.setOpaque(false);
-		imageSection.add(createLabel("Foto", subtitleFont));
-		
-		btnSelectImage = new JButton("Seleccionar imagen");
 
-		lblImageName = new JLabel("Ninguna imagen seleccionada");
+		// PANEL DE ROL
+		JPanel roleSection = new JPanel(alignToCenter);
 
-		lblImagePreview = new JLabel();
-		lblImagePreview.setPreferredSize(new Dimension(120,120));
-		lblImagePreview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		roleSection.setOpaque(false);
+		roleSection.add(createLabel("Rol", subtitleFont));
 
-		lblErrorImage = createErrorLabel(componentsPanel);
+		JPanel roleFlowPanel = new JPanel(alignToCenter);
+		roleFlowPanel.setOpaque(false);
 
-		JPanel imagePanel = new JPanel();
-		imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.Y_AXIS));
+		grpRoles = new ButtonGroup();
 
-		btnSelectImage.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblImagePreview.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblImageName.setAlignmentX(Component.CENTER_ALIGNMENT);
+		rbAdmin = createJRadioButton("Administrador", grpRoles, roleFlowPanel);
+		rbClient = createJRadioButton("Cliente", grpRoles, roleFlowPanel);
 
-		imagePanel.add(lblImagePreview);
-		imagePanel.add(btnSelectImage);
-		imagePanel.add(lblImageName);
-		
+		/*
+		 * btnSelectImage = new JButton("Seleccionar imagen");
+		 * 
+		 * lblImageName = new JLabel("Ninguna imagen seleccionada");
+		 * 
+		 * lblImagePreview = new JLabel(); lblImagePreview.setPreferredSize(new
+		 * Dimension(120,120));
+		 * lblImagePreview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		 * 
+		 * lblErrorImage = createErrorLabel(componentsPanel);
+		 * 
+		 * JPanel imagePanel = new JPanel(); imagePanel.setLayout(new
+		 * BoxLayout(imagePanel, BoxLayout.Y_AXIS));
+		 * 
+		 * btnSelectImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		 * lblImagePreview.setAlignmentX(Component.CENTER_ALIGNMENT);
+		 * lblImageName.setAlignmentX(Component.CENTER_ALIGNMENT);
+		 * 
+		 * imagePanel.add(lblImagePreview); imagePanel.add(btnSelectImage);
+		 * imagePanel.add(lblImageName);
+		 */
+
 		// APARTADO DE PRIVACIDAD
 		JPanel privacySection = new JPanel(alignToCenter);
-		
+
 		privacySection.setOpaque(false);
 		privacySection.add(createLabel("Privacidad", subtitleFont));
-		
+
 		JPanel termsAndConditionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		termsAndConditionsPanel.setOpaque(false);
-		
-		JRadioButton rbTermsAndConditions = createJRadioButton("Acepto terminos y condiciones", null, termsAndConditionsPanel);
-		
+
+		JRadioButton rbTermsAndConditions = createJRadioButton("Acepto terminos y condiciones", null,
+				termsAndConditionsPanel);
+
 		// BOTONES DE SALIR Y REGISTRARSE
 		JPanel exitAndRegisterButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		exitAndRegisterButtons.setBackground(customBlue);
-		
+
 		btnExit = createJButton("Atras", textFont, exitAndRegisterButtons);
 		btnRegistrate = createJButton("Registrarme", textFont, exitAndRegisterButtons);
-		
+
 		// BARRA VERTICAL DE SCROLL
 		JScrollPane scroll = new JScrollPane(componentsPanel);
 		scroll.setHorizontalScrollBar(null);
-		
+
 		add(scroll);
-		
+
 		// AÑADIR TITULO
 		superiorBar.add(title);
 		add(superiorBar, BorderLayout.NORTH);
-		
+
 		// AÑADIR APARTADO DE DATOS IMPORTANTES
 		componentsPanel.add(importantDataSection);
 		componentsPanel.add(importantDataGrid);
-		
+
 		// AÑADIR APARTADO SEXO
 		componentsPanel.add(sexSection);
 		componentsPanel.add(sexFlowPanel);
-		
+
+		// AÑADIR APARTADO ROLES
+		componentsPanel.add(roleSection);
+		componentsPanel.add(roleFlowPanel);
+
 		// AÑADIR APARTADO FOTO
-		componentsPanel.add(imageSection);
-		componentsPanel.add(imagePanel);
-		
+		/*
+		 * componentsPanel.add(imageSection); componentsPanel.add(imagePanel);
+		 */
+
 		// AÑADIR APARTADO DE PRIVACIDAD
 		componentsPanel.add(privacySection);
 		componentsPanel.add(termsAndConditionsPanel);
-		
+
 		// AÑADIR BOTONES DE REGISTRAR Y SALIR
 		exitAndRegisterButtons.add(btnExit);
 		exitAndRegisterButtons.add(btnRegistrate);
 		componentsPanel.add(exitAndRegisterButtons);
 	}
-	
+
 	// IMAGEN
-	public void chooseImage() {
-		String lastDirectory = Config.get("registration.image.last.directory", System.getProperty("user.home"));
-		
-		JFileChooser chooser = new JFileChooser(lastDirectory);
-		chooser.setDialogTitle("Seleccionar imagen");
-		
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png");
-		chooser.setFileFilter(filter);
-		
-		int option = chooser.showOpenDialog(this);
-		
-		if(option == JFileChooser.APPROVE_OPTION) {
-			File file = chooser.getSelectedFile();
-			
-			selectedImagePath = file.getAbsolutePath();
-			lastDirectory = file.getParent();
-			
-			Config.set("registration.image.last.directory", lastDirectory);
-			
-			lblImageName.setText(file.getName());
-			
-			ImageIcon icon = new ImageIcon(selectedImagePath);
-			Image img = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-			
-			lblImagePreview.setIcon(new ImageIcon(img));
-		}
-		
-	}
-		
+	/*
+	 * public void chooseImage() { String lastDirectory =
+	 * Config.get("registration.image.last.directory",
+	 * System.getProperty("user.home"));
+	 * 
+	 * JFileChooser chooser = new JFileChooser(lastDirectory);
+	 * chooser.setDialogTitle("Seleccionar imagen");
+	 * 
+	 * FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes",
+	 * "jpg", "jpeg", "png"); chooser.setFileFilter(filter);
+	 * 
+	 * int option = chooser.showOpenDialog(this);
+	 * 
+	 * if(option == JFileChooser.APPROVE_OPTION) { File file =
+	 * chooser.getSelectedFile();
+	 * 
+	 * selectedImagePath = file.getAbsolutePath(); lastDirectory = file.getParent();
+	 * 
+	 * Config.set("registration.image.last.directory", lastDirectory);
+	 * 
+	 * lblImageName.setText(file.getName());
+	 * 
+	 * ImageIcon icon = new ImageIcon(selectedImagePath); Image img =
+	 * icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+	 * 
+	 * lblImagePreview.setIcon(new ImageIcon(img)); }
+	 * 
+	 * }
+	 */
+
 	// CREAR COMPONENTES
-	private JLabel createLabel(String lblText, Font font /*JPanel panel*/) {
-		
+	private JLabel createLabel(String lblText, Font font /* JPanel panel */) {
+
 		JLabel label = new JLabel(lblText);
-		
+
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
 		label.setVisible(true);
-		label.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-		
+		label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
 		return label;
 	}
-	
+
 	private JTextField createTextField(JPanel panel) {
-		
+
 		JTextField textField = new JTextField();
-		
+
 		textField.setFont(new Font("Verdana", Font.BOLD, 12));
-		
+
 		panel.add(textField);
-		
+
 		return textField;
 	}
-	
+
 	private JPasswordField createPasswordField(JPanel panel) {
-		
+
 		JPasswordField passwordField = new JPasswordField();
-		
+
 		passwordField.setFont(new Font("Verdana", Font.BOLD, 12));
-		
+
 		panel.add(passwordField);
-		
+
 		return passwordField;
 	}
-	
+
 	private JButton createJButton(String lblText, Font font, JPanel panel) {
-		
+
 		JButton button = new JButton(lblText);
-		
+
 		Color defaultButtonColor = button.getBackground();
-		
+
 		button.setFont(font);
-		
+
 		panel.add(button);
-		
+
 		button.addMouseListener(new MouseAdapter() {
-			
-			public void mouseEntered (MouseEvent e) {
+
+			public void mouseEntered(MouseEvent e) {
 				changeBackground(button);
 			}
-		
+
 			public void mouseExited(MouseEvent e) {
 				resetBackground(button, defaultButtonColor);
 			}
-			
+
 		});
-		
+
 		return button;
 	}
 
 	private JRadioButton createJRadioButton(String lblText, ButtonGroup grpButtons, JPanel panel) {
-		
+
 		JRadioButton button = new JRadioButton(lblText);
-		
+
 		button.setOpaque(false);
 		button.setFont(new Font("Verdana", Font.BOLD, 12));
 		button.setForeground(Color.WHITE);
-		
-		if(grpButtons != null) {
+
+		if (grpButtons != null) {
 			grpButtons.add(button);
-		} 	
-		
-		if(panel != null) {
+		}
+
+		if (panel != null) {
 			panel.add(button);
 		}
-		
+
 		return button;
 	}
-	
+
 	private JLabel createErrorLabel(JPanel panel) {
-		
+
 		JLabel errorLabel = new JLabel();
-		
+
 		errorLabel.setFont(new Font("Verdana", Font.BOLD, 11));
 		errorLabel.setForeground(Color.RED);
 		errorLabel.setVisible(false);
-		
+
 		panel.add(errorLabel);
-		
+
 		return errorLabel;
-	} 
-	
+	}
+
 	// CAMBIO DE FONDO
 	private void changeBackground(JComponent c) {
 		c.setBackground(Color.BLACK);
 		c.setForeground(Color.WHITE);
 	}
-	
+
 	private void resetBackground(JComponent c, Color defaultButtonColor) {
 		c.setBackground(defaultButtonColor);
 		c.setForeground(Color.BLACK);
 	}
-	
+
 	public void resetErrorLabels() {
 		lblErrorFieldName.setVisible(false);
-	    lblErrorFieldEmail.setVisible(false);
-	    lblErrorFieldPassword.setVisible(false);
-	    lblErrorFieldConfirmPassword.setVisible(false);
+		lblErrorFieldEmail.setVisible(false);
+		lblErrorFieldPassword.setVisible(false);
+		lblErrorFieldConfirmPassword.setVisible(false);
 	}
-	
+
 }

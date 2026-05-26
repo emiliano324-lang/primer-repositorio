@@ -24,7 +24,7 @@ public class GameMenuView extends JPanel{
 	private JButton btnSkillTree;
 	private JButton btnCredits;
 	private JButton btnExit;
-	private JLabel lblavailable;
+	private JLabel lblAvailable;
 	//private JButton btnSettings;
 	
 	Image mainMenuBackground;

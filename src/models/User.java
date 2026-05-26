@@ -1,5 +1,8 @@
 package models;
 
+import enums.Role;
+import enums.Sex;
+
 public class User {
 	
 	private int id;
@@ -7,7 +10,8 @@ public class User {
 	private String password;
 	private String confirmPassword;
 	private String email;
-	private String sex;
+	private Sex sex;
+	private Role role;
 	private Player player;
 
 	
@@ -19,30 +23,34 @@ public class User {
 		this.password = password;
 	}
 	
-	public User(String name, String email, String password, String sex) {
+	public User(String name, String email, String password, Sex sex, Role role) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.sex = sex;
+		this.role = role;
 	}
 	
-	public User(int id, String name, String email, String sex) {
+	public User(int id, String name, String email, Sex sex, Role role) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.sex = sex;
+		this.role = role;
 	}
 	
-	public User(String name, String email, String sex) {
+	public User(String name, String email, Sex sex, Role role) {
 		this.name = name;
 		this.email = email;
 		this.sex = sex;
+		this.role = role;
 	}
-	public User(int id,String name, String email, String password, String sex,Player player) {
+	public User(int id,String name, String email, String password, Sex sex, Role role, Player player) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.sex = sex;
+		this.role = role;
 		this.setPlayer(player);
 	}
 	
@@ -79,7 +87,7 @@ public class User {
 		this.email = email;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(Sex sex) {
 		this.sex = sex;
 	}
 	
@@ -103,7 +111,7 @@ public class User {
 		return email;
 	}
 	
-	public String getSex() {
+	public Sex getSex() {
 		return sex;
 	}
 	
@@ -115,6 +123,14 @@ public class User {
 		this.player = player;
 	}
 	
+	public Role getRole() {
+		return role;
+	}
+	
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
 	/*public String getImagePath() {
 		return imagePath;
 	}
@@ -123,7 +139,7 @@ public class User {
 		this.imagePath = imagePath;
 	}*/
 	
-	public String toCsv() {
+	/*public String toCsv() {
 		return name + "," + email + "," + sex;
 	}
 	
@@ -136,7 +152,7 @@ public class User {
 		String sexo = data[2];
 		
 		return new User(name, email, sexo, null);
-	}
+	}*/
 	
 	
 }

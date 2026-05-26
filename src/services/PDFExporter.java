@@ -98,9 +98,12 @@ public class PDFExporter {
 
                 table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT)
                         .add(new Paragraph(u.getEmail())));
-
+                
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
-                        .add(new Paragraph(u.getSex())));
+                        .add(new Paragraph(u.getSex().name())));
+                
+                table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
+                        .add(new Paragraph(u.getRole().name())));
                 indice++;
 			}
 

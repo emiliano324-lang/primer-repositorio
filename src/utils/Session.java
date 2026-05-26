@@ -1,5 +1,6 @@
 package utils;
 
+import enums.Role;
 import models.Player;
 import models.User;
 import repository.UserRepository;
@@ -46,9 +47,7 @@ public class Session {
 	    player.setId(playerId);
 	}
 	
-	
-	/*
-	public static String getRole( ) {
+	public static Role getRole() {
 		return currentUser.getRole();
-	}*/
+	}
 }

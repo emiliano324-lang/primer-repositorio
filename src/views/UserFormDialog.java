@@ -27,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import config.Config;
+import enums.Role;
+import enums.Sex;
 
 
 public class UserFormDialog extends JDialog {
@@ -45,30 +47,41 @@ public class UserFormDialog extends JDialog {
 	private JLabel lblErrorImage;
 
     private ButtonGroup grpSexes;
-
     private JRadioButton rbMan;
     private JRadioButton rbWoman;
     private JRadioButton rbDoNotSay;
 
-    private String selectedImagePath;
+    private ButtonGroup grpRoles;
+	private JRadioButton rbAdmin;
+	private JRadioButton rbClient;
+    
+    //private String selectedImagePath;
     
     private JButton btnSave;
     private JButton btnCancel;
-	private JButton btnSelectImage;
+	//private JButton btnSelectImage;
 
     // GETTERS
-	public String getSex() {
+	public Sex getSex() {
 
         if(rbMan.isSelected()) {
-            return "Masculino";
+            return Sex.MALE;
         }
 
         if(rbWoman.isSelected()) {
-            return "Femenino";
+            return Sex.FEMALE;
         }
 
-        return "No Definido";
+        return Sex.OTHER;
     }
+	
+	public Role getRole() {
+		if(rbAdmin.isSelected()) {
+			return Role.ADMIN;
+		}
+		
+		return Role.CLIENT;
+	}
 	
 	public JLabel getLblImagePreview() {
 		return lblImagePreview;
@@ -82,13 +95,13 @@ public class UserFormDialog extends JDialog {
 		return lblErrorImage;
 	}
 
-	public String getSelectedImagePath() {
+	/*public String getSelectedImagePath() {
 		return selectedImagePath;
 	}
 
 	public JButton getBtnSelectImage() {
 		return btnSelectImage;
-	}
+	}*/
 
 	public JTextField getTxtFieldName() {
 		return txtFieldName;
@@ -285,8 +298,22 @@ public class UserFormDialog extends JDialog {
 		rbWoman = createRadio("Mujer", grpSexes, sexFlowPanel);
 		rbDoNotSay = createRadio("Prefiero no decir", grpSexes, sexFlowPanel);
 		
+		JPanel roleSection = new JPanel(alignToCenter);
+
+		roleSection.setOpaque(false);
+		roleSection.add(createLabel("Rol", subtitleFont));
+
+		JPanel roleFlowPanel = new JPanel(alignToCenter);
+
+		roleFlowPanel.setOpaque(false);
+		
+		grpRoles = new ButtonGroup();
+
+		rbAdmin = createRadio("Administrador", grpRoles, roleFlowPanel);
+		rbClient = createRadio("Cliente", grpRoles, roleFlowPanel);
+		
 		// PANEL DE IMAGEN
-		JPanel imageSection = new JPanel(alignToCenter);
+		/*JPanel imageSection = new JPanel(alignToCenter);
 		
 		imageSection.setOpaque(false);
 		imageSection.add(createLabel("Foto", subtitleFont));
@@ -310,7 +337,7 @@ public class UserFormDialog extends JDialog {
 
 		imagePanel.add(lblImagePreview);
 		imagePanel.add(btnSelectImage);
-		imagePanel.add(lblImageName);
+		imagePanel.add(lblImageName);*/
 
 		
 		// APARTADO DE PRIVACIDAD
@@ -349,9 +376,14 @@ public class UserFormDialog extends JDialog {
 		componentsPanel.add(sexSection);
 		componentsPanel.add(sexFlowPanel);
 		
+		// AÑADIR APARTADO ROLES
+		componentsPanel.add(roleSection);
+		componentsPanel.add(roleFlowPanel);
+
+		
 		// AÑADIR APARTADO FOTO
-		componentsPanel.add(imageSection);
-		componentsPanel.add(imagePanel);
+		/*componentsPanel.add(imageSection);
+		componentsPanel.add(imagePanel);*/
 		
 		// AÑADIR APARTADO DE PRIVACIDAD
 		componentsPanel.add(privacySection);
@@ -365,7 +397,7 @@ public class UserFormDialog extends JDialog {
 		return scroll;
     }
 
-    public void chooseImage() {
+    /*public void chooseImage() {
 		String lastDirectory = Config.get("registration.image.last.directory", System.getProperty("user.home"));
 		
 		JFileChooser chooser = new JFileChooser(lastDirectory);
@@ -392,7 +424,7 @@ public class UserFormDialog extends JDialog {
 			lblImagePreview.setIcon(new ImageIcon(img));
 		}
 		
-	}
+	}*/
     
     private JPanel createTitlePanel() {
 

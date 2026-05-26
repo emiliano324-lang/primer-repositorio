@@ -16,6 +16,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import models.User;
+import utils.Session;
+
 public class MainWindow extends JFrame {
 	
 	public static final String HOME = "HOME";
@@ -29,6 +32,7 @@ public class MainWindow extends JFrame {
 	
 	private CardLayout cardLayout;
 	private JPanel container;
+	private User user;
 
 	public MainWindow() {
 		setSize(500, 500);

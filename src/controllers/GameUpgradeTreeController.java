@@ -27,9 +27,9 @@ public class GameUpgradeTreeController implements ActionListener {
 	private void registerListeners() {
 		view.getBack().addActionListener(e -> ScreenManager.showPanel("MENU"));
 
-		view.getRootNode().addActionListener(e -> unlockNode(null));
+		view.getRootNode().addActionListener(this);
 
-		view.getHeal1().addActionListener(e -> view.getHeal1().setUnlocked(true));
+		view.getHeal1().addActionListener(this);
 		view.getHeal2().addActionListener(this);
 
 		view.getDamage1().addActionListener(this);
@@ -91,56 +91,23 @@ public class GameUpgradeTreeController implements ActionListener {
 	private void unlockNode(UpgradeNode node) {
 
 		if (node.isUnlocked()) {
+			view.getErrorLabelNode().setText("YA DESBLOQUEADO");
+			view.showErrorLabel();
+			return;
+		}else if(!node.getParentNode().isUnlocked()) {
+			view.getErrorLabelNode().setText("DEBES DESBLOQUEAR EL ANTERIOR");
+			view.showErrorLabel();
 			return;
 		}
-
+		
+		view.resetErrorLabel();
+		
 		node.setUnlocked(true);
 
 		node.setFillColor(Color.WHITE);
 
 		view.repaint();
 
-		System.out.println(node.getUpgradeName() + " desbloqueado");
-
-		enableChildren(node);
 	}
 
-	// =====================================================
-	// ENABLE CHILDREN
-	// =====================================================
-
-	private void enableChildren(UpgradeNode node) {
-
-		// ROOT
-
-		if (node == view.getRootNode()) {
-
-			view.getHeal1().setEnabled(true);
-
-			view.getDamage1().setEnabled(true);
-
-			view.getBlock1().setEnabled(true);
-		}
-
-		// HEAL
-
-		if (node == view.getHeal1()) {
-
-			view.getHeal2().setEnabled(true);
-		}
-
-		// DAMAGE
-
-		if (node == view.getDamage1()) {
-
-			view.getDamage2().setEnabled(true);
-		}
-
-		// BLOCK
-
-		if (node == view.getBlock1()) {
-
-			view.getBlock2().setEnabled(true);
-		}
-	}
 }

@@ -12,6 +12,8 @@ import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
 import config.DatabaseConnection;
+import enums.Role;
+import enums.Sex;
 import models.Player;
 import models.User;
 
@@ -21,7 +23,7 @@ public class UserRepository {
 		
 		List<User> users = getUsers();
 		
-		String sql = "INSERT INTO users (name, password, email, sex) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO users (name, password, email, sex, role) VALUES (?,?,?,?,?)";
 		
 		try(
 			Connection connection = DatabaseConnection.getConnection();
@@ -33,7 +35,8 @@ public class UserRepository {
 			pst.setString(1, user.getName());
 			pst.setString(2, hashedPassword);
 			pst.setString(3, user.getEmail());
-			pst.setString(4, user.getSex());
+			pst.setString(4, user.getSex().name());
+			pst.setString(5, user.getRole().name());
 			//pst.setString(5, user.getImagePath());
 			
 			int affectedRows = pst.executeUpdate();
@@ -63,13 +66,14 @@ public class UserRepository {
 		){
 			while(rs.next()) {
 				
-				int id = rs.getInt("id");
+				int id = rs.getInt("id_user");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
-				String sex = rs.getString("sex");
+				Sex sex = Sex.valueOf(rs.getString("sex"));
+				Role role = Role.valueOf(rs.getString("role"));
 				//String imagePath = rs.getString("imagePath");
 				
-				User user = new User(id, name, email, sex);
+				User user = new User(id, name, email, sex, role);
 				
 				users.add(user);
 			}
@@ -82,7 +86,7 @@ public class UserRepository {
 	
 	public boolean delete(int id) {
 		
-		String sql = "DELETE FROM users WHERE id = ?";
+		String sql = "DELETE FROM users WHERE id_user = ?";
 		
 		try(
 			Connection connection = DatabaseConnection.getConnection();
@@ -104,7 +108,7 @@ public class UserRepository {
 	
 	public boolean update(int index, User updatedUser) throws IOException {
 
-		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ? WHERE id = ?";
+		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ? WHERE id_user = ?";
 		
 		try(Connection connection = DatabaseConnection.getConnection();
 			PreparedStatement pst = connection.prepareStatement(sql)){
@@ -114,9 +118,10 @@ public class UserRepository {
 			pst.setString(1,  updatedUser.getName());
 			pst.setString(2, hashedPassword);
 			pst.setString(3,  updatedUser.getEmail());
-			pst.setString(4,  updatedUser.getSex());
+			pst.setString(4,  updatedUser.getSex().name());
+			pst.setString(5, updatedUser.getRole().name());
 			//pst.setString(5, updatedUser.getImagePath());
-			pst.setInt(5,  updatedUser.getId());
+			pst.setInt(6,  updatedUser.getId());
 			
 			int affectedRows = pst.executeUpdate();
 			System.out.println("Filas modificadas: " + affectedRows);
@@ -142,7 +147,7 @@ public class UserRepository {
 	            healPoints = ?,
 	            level = ?,
 	            tokens = ?
-	        WHERE id = ?
+	        WHERE id_character = ?
 	    """;
 
 	    try(
