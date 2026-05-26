@@ -6,18 +6,41 @@ public class Player extends Character{
 	private boolean[] upgrades = {false,false,false,false,false,false};
 	private int level;
 	private int tokens;
+	private int id;
+	
 	
 	public Player(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int level,
-			boolean[] hablilities,int tokens,boolean status,int healCharges,int blockCharges) {
+			int tokens,boolean status,int healCharges,int blockCharges, boolean[] upgrades) {
 		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,status,healCharges,blockCharges);
 		this.upgrades = upgrades;
-		this.level = 0;
-		this.tokens = 0;
+		this.setLevel(0);
+		this.setTokens(0);
 	}
 	
 	
+	public int getTokens() {
+		return tokens;
+	}
 	
+	public void setTokens(int tokens) {
+		this.tokens = tokens;
+	}
 	
+	public int getLevel() {
+		return level;
+	}
+	
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	@Override
 	public void heal() {
@@ -29,7 +52,6 @@ public class Player extends Character{
 			}	
 		}
 	}
-	
 	
 	@Override
 	public void getDamage(int damage) {
@@ -74,6 +96,8 @@ public class Player extends Character{
 	public boolean isDead() {
 		return getHealth() <= 0;
 	}
+
+
 	
 	
 

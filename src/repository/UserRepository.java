@@ -12,6 +12,7 @@ import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
 import config.DatabaseConnection;
+import models.Player;
 import models.User;
 
 public class UserRepository {
@@ -48,6 +49,8 @@ public class UserRepository {
 			ex.printStackTrace();
 		}
 	}
+	
+	
 
 	public List<User> getUsers() throws IOException{
 		
@@ -127,4 +130,103 @@ public class UserRepository {
 		}
 		return false;
 	}
+	
+	public boolean updatePlayer(Player player) {
+
+	    String sql = """
+	        UPDATE players
+	        SET
+	            health = ?,
+	            attackPoints = ?,
+	            blockPoints = ?,
+	            healPoints = ?,
+	            level = ?,
+	            tokens = ?
+	        WHERE id = ?
+	    """;
+
+	    try(
+	        Connection connection =
+	            DatabaseConnection.getConnection();
+
+	        PreparedStatement pst =
+	            connection.prepareStatement(sql)
+	    ){
+
+	        pst.setInt(1, player.getHealth());
+	        pst.setInt(2, player.getAttackPoints());
+	        pst.setInt(3, player.getBlockPoints());
+	        pst.setInt(4, player.getHealPoints());
+	        pst.setInt(5, player.getLevel());
+	        pst.setInt(6, player.getTokens());
+
+	        pst.setInt(7, player.getId());
+
+	        int affectedRows =
+	            pst.executeUpdate();
+
+	        return affectedRows > 0;
+
+	    }catch(SQLException ex) {
+	        ex.printStackTrace();
+	    }
+
+	    return false;
+	}
+	public int savePlayer(Player player) {
+
+	    String sql = """
+	        INSERT INTO players
+	        (maxHealth, health, attackPoints,
+	         blockPoints, healPoints,
+	         level, tokens)
+	        VALUES (?, ?, ?, ?, ?, ?, ?)
+	    """;
+
+	    try(
+	        Connection connection =
+	            DatabaseConnection.getConnection();
+
+	        PreparedStatement pst =
+	            connection.prepareStatement(
+	                sql,
+	                Statement.RETURN_GENERATED_KEYS
+	            )
+	    ){
+
+	        pst.setInt(1, player.getMaxHealth());
+	        pst.setInt(2, player.getHealth());
+	        pst.setInt(3, player.getAttackPoints());
+	        pst.setInt(4, player.getBlockPoints());
+	        pst.setInt(5, player.getHealPoints());
+	        pst.setInt(6, player.getLevel());
+	        pst.setInt(7, player.getTokens());
+
+	        pst.executeUpdate();
+
+	        ResultSet rs = pst.getGeneratedKeys();
+
+	        if(rs.next()) {
+	            return rs.getInt(1);
+	        }
+
+	    }catch(SQLException ex) {
+	        ex.printStackTrace();
+	    }
+
+	    return -1;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -10,6 +10,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
+import models.Player;
+import utils.Session;
 import views.GameCombatView;
 import views.GameMenuView;
 import views.GameWindow;
@@ -18,14 +20,15 @@ public class GameCombatController {
 
 	GameWindow window;
 	GameMenuView gameMenuView;
-	GameCombatView gameCombatView;
+	GameCombatView gameCombatView;	
+	Player player = new Player("",0,0,0,0,0,0,0,false,0,0,null);
 	
 	
 	public GameCombatController(GameCombatView combatView) {
 		this.gameCombatView = combatView;
 		
 		registerListeners();
-		
+		Session.loadCharacter(player);
 	}
 	
 	public void registerListeners() {
@@ -61,8 +64,15 @@ public class GameCombatController {
 			    gameCombatView.getAnimation().stop();
 			    	
 			    if(b == gameCombatView.getAttack()) {
+			    	
+			    	
+			    	
 			    	actionFramesSelf = gameCombatView.getAttackFramesSelf();
 			    	actionFramesFoe = gameCombatView.getDamageFramesFoe();
+			    	
+			    	
+			    	
+			    	
 			    }else if(b == gameCombatView.getBlock()) {
 			    	actionFramesSelf = gameCombatView.getBlockFramesSelf();
 			    	actionFramesFoe = gameCombatView.getHealFramesFoe();

@@ -8,6 +8,8 @@ public class User {
 	private String confirmPassword;
 	private String email;
 	private String sex;
+	private Player player;
+
 	
 	public User() {
 	}
@@ -36,6 +38,18 @@ public class User {
 		this.email = email;
 		this.sex = sex;
 	}
+	public User(int id,String name, String email, String password, String sex,Player player) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.sex = sex;
+		this.setPlayer(player);
+	}
+	
+	public User(int id,Player  player) {
+		this.setPlayer(player);
+	}
+	
 	
 	/*public User(int id, String email, String password) {
 	this.id = id;
@@ -93,6 +107,14 @@ public class User {
 		return sex;
 	}
 	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
 	/*public String getImagePath() {
 		return imagePath;
 	}
@@ -115,4 +137,6 @@ public class User {
 		
 		return new User(name, email, sexo, null);
 	}
+	
+	
 }

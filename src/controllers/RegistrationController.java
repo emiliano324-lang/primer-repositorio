@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import models.Player;
 import models.User;
 import repository.UserRepository;
 import views.LoginWindow;
@@ -166,7 +167,9 @@ public class RegistrationController {
 	    		}
 	    	}
     }
+    
 
+    
     private String saveImage() {
     	
 	    	try {
