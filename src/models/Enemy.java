@@ -4,34 +4,75 @@ import java.util.Random;
 
 public class Enemy extends Character{
 
-	private Random randomAction = new Random();
+	private int randomAction;
 	
-	
-	
-	public Enemy(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, Random randomAction,boolean status,
-			int healCharges,int blockCharges) {
-		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,status,healCharges,blockCharges);
+	public Enemy(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int randomAction,boolean status,
+			int healCharges,int blockCharges,boolean turn,boolean blocking) {
+		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,status,healCharges,blockCharges,turn,blocking);
 		this.randomAction = randomAction;
 		
 	}
 	
+	public int getRandomAction() {
+		return randomAction;
+	}
+	public void setRandomAction(int randomAction) {
+		this.randomAction = randomAction;
+	}
 	@Override
 	public void heal() {
-		setHealth(getHealPoints()+getHealth());	
+		if(!isDead()) {
+			if(getHealth()+getHealPoints() > getMaxHealth()) {
+				setHealth(getMaxHealth());
+			}else{
+				setHealth(getHealPoints()+getHealth());
+			}	
+		}
 	}
+
 	public void getDamage(int damage) {
+		//dano bloqueado
+		if(isBlocking()) {
+			damage -= getBlockPoints();
+			setHealth(getHealth()-damage);
+			setBlocking(false);
+			if(getHealth() <= 0) {
+				setHealth(0) ;
+				setStatus(true);
+				return;
+			}
+		}
+		//dano normal
 		setHealth(getHealth()-damage);
+		if(getHealth() <= 0) {
+			setHealth(0) ;
+			setStatus(true);
+			return;
+		}
+	}
+	public void block(){
+		if(getBlockCharges() > 0) setBlocking(true);
 	}
 	
-	public void chooseAction() {
+	
+	
+	/*
+	public void chooseAction(int damage,int heal, int block) {
 		
-		switch(randomAction.nextInt(3)) {
+		switch(randomAction) {
 		case 0:
 			// Chooses Attack
+			getDamage(damage);
 		case 1:
 			// Choose Heal
+			heal();
 		case 2:
-			// Chooses Block
+			
+			block();
 		}
+	}
+	*/
+	private boolean isDead() {
+		return getStatus();
 	}
 }

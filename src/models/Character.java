@@ -12,10 +12,10 @@ public abstract class Character {
 	private boolean status;
 	private int healCharges;
 	private int blockCharges;
-	
-	
+	private boolean turn;
+	private boolean blocking;
 	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints,boolean status,
-			int healCharges,int blockCharges) {
+			int healCharges,int blockCharges,boolean turn,boolean blocking) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.health = health;
@@ -23,6 +23,7 @@ public abstract class Character {
 		this.blockPoints = blockPoints;
 		this.healPoints = healPoints;
 		this.status = true;
+		
 	}
 	
 	public String getName() {
@@ -92,6 +93,14 @@ public abstract class Character {
 	public void setBlockCharges(int blockCharges) {
 		this.blockCharges = blockCharges;
 	}
+	
+	public boolean getTurn() {
+		return turn;
+	}
+	
+	public void setTurn(boolean turn) {
+		this.turn = turn;
+	}	
 
 	public int getHealCharges() {
 		return healCharges;
@@ -99,7 +108,16 @@ public abstract class Character {
 
 	public void setHealCharges(int healCharges) {
 		this.healCharges = healCharges;
-	}	
+	}
+
+	public boolean isBlocking() {
+		return blocking;
+	}
+
+	public void setBlocking(boolean blocking) {
+		this.blocking = blocking;
+	}
+
 	
 	
 }

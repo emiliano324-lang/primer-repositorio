@@ -14,6 +14,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import config.DatabaseConnection;
 import enums.Role;
 import enums.Sex;
+import models.Enemy;
 import models.Player;
 import models.User;
 
@@ -195,6 +196,23 @@ public class UserRepository {
 
 	    return -1;
 	}
+	
+	public void updateEnemy(Enemy enemy) {
+	    String sql = """
+		        UPDATE enemy
+		        SET
+	    		    id_enemy = ?
+	    		    name = ?	
+		            health = ?,
+		            attackPoints = ?,
+		            blockPoints = ?,
+		            healPoints = ?,
+		            level = ?,
+		            tokens = ?
+		        WHERE id_character = ?
+		    """;
+	}
+	
 	public int savePlayer(Player player) {
 
 		// characters (id_user, name, level, health, max_health, attack_points, defense_points, heal_points, tokens)
@@ -275,6 +293,47 @@ public class UserRepository {
 	        ex.printStackTrace();
 	    }
 	}
+	
+	
+	//TODO: Modificar esto
+	
+	
+	
+	
+	/*
+	public void createEnemy(User user) {
+
+		String sql = "INSERT INTO characters(id_user, name, level, health, max_health, attack_points, defense_points, heal_points, tokens)"
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		try(
+			Connection connection = DatabaseConnection.getConnection();
+	        PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+		    ){
+			
+			 pst.setInt(1, user.getId()); // id_user
+			 pst.setString(2, user.getName()); // name
+			 pst.setInt(3, 1); // level
+			 pst.setInt(4, 100); // health
+			 pst.setInt(5, 100); // max health
+			 pst.setInt(6, 10); // attack points
+			 pst.setInt(7, 20); // defense points
+			 pst.setInt(8, 40); // defense points
+			 pst.setInt(9, 0); // defense points
+
+			 pst.executeUpdate();
+
+			 ResultSet rs = pst.getGeneratedKeys();
+
+	    }catch(SQLException ex) {
+	        ex.printStackTrace();
+	    }
+		
+	}
+	*/
+	
+	
+	
 	
 	public boolean deletePlayer(int idUser) {
 

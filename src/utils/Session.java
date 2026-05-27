@@ -1,6 +1,7 @@
 package utils;
 
 import enums.Role;
+import models.Enemy;
 import models.Player;
 import models.User;
 import repository.UserRepository;
@@ -32,6 +33,11 @@ public class Session {
 		repo.updatePlayer(currentUser.getPlayer());
 		
 	}
+	
+	public static void saveCharacter(Enemy enemy) {
+		
+	}
+	
 	public static void loadCharacter(Player player) {
 
 	    if(currentUser == null) {
@@ -49,6 +55,10 @@ public class Session {
 	    }
 	    
 	    player.setId(playerId);
+	}
+	
+	public static void loadCharacter(Enemy enemy) {
+		
 	}
 	
 	public static Role getRole() {
