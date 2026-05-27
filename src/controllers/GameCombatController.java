@@ -24,6 +24,7 @@ public class GameCombatController {
 	GameMenuView gameMenuView;
 	GameCombatView gameCombatView;	
 	Random random;
+	
 	Player player = new Player("",0,0,0,0,0,0,0,false,0,0,null,false,false);
 	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 40, 20, 15,0,false,0,0,false,false);
 	
@@ -92,8 +93,8 @@ public class GameCombatController {
 				    }
 				    player.setTurn(false);
 				}else {
-					//TODO Accion del enemigo
-					//TODO:Hacer las animaciones de ataque del enemigo y resibir dano del personaje
+					//TODO: Accion del enemigo
+					//TODO: Hacer las animaciones de ataque del enemigo y recibir daño del personaje
 					
 					enemy.setRandomAction(random.nextInt(3) + 1);
 					
@@ -109,7 +110,6 @@ public class GameCombatController {
 				}
 			    gameCombatView.animateOnce(actionFramesSelf, actionFramesFoe);
 			}
-			
 			
 			public void mouseReleased(MouseEvent e) {
 				b.setForeground(defaultForeground);

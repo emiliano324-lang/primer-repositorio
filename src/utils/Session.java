@@ -27,11 +27,11 @@ public class Session {
 	}
 	
 	public static void saveCharacter(Player player) {
-		if(currentUser == null) return;
+		if(currentUser == null) 
+			return;
 		
 		UserRepository repo = new UserRepository();
 		repo.updatePlayer(currentUser.getPlayer());
-		
 	}
 	
 	public static void saveCharacter(Enemy enemy) {
@@ -57,7 +57,7 @@ public class Session {
 	    player.setId(playerId);
 	}
 	
-	public static void loadCharacter(Enemy enemy) {
+	public static void loadEnemy(Enemy enemy) {
 		
 	}
 	

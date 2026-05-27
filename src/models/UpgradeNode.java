@@ -6,17 +6,13 @@ import javax.swing.JButton;
 
 public class UpgradeNode extends JButton {
 
-	// =====================================================
-	// FIELDS
-	// =====================================================
-
 	private int value;
 
 	private String upgradeName;
 
-	private boolean unlocked; // NUEVO
+	private boolean unlocked;
 
-	private Color fillColor = Color.BLACK; // NUEVO
+	private Color fillColor = Color.BLACK;
 
 	private UpgradeNode parentNode;
 
@@ -24,22 +20,11 @@ public class UpgradeNode extends JButton {
 	private UpgradeNode child2;
 	private UpgradeNode child3;
 
-	// =====================================================
-	// CONSTRUCTOR
-	// =====================================================
-
-	public UpgradeNode(
-			int value,
-			String skillName) {
-
+	public UpgradeNode(int value, String upgradeName) {
+	
 		this.value = value;
-
-		this.upgradeName = skillName;
+		this.upgradeName = upgradeName;
 	}
-
-	// =====================================================
-	// GETTERS & SETTERS
-	// =====================================================
 
 	public int getValue() {
 		return value;
@@ -88,10 +73,6 @@ public class UpgradeNode extends JButton {
 	public void setChild3(UpgradeNode child3) {
 		this.child3 = child3;
 	}
-
-	// =====================================================
-	// NUEVO
-	// =====================================================
 
 	public boolean isUnlocked() {
 		return unlocked;

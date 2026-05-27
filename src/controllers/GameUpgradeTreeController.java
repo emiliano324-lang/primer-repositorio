@@ -8,16 +8,21 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
+import models.Player;
 import models.UpgradeNode;
 import utils.ScreenManager;
+import utils.Session;
 import views.GameUpgradeTreeView;
 
 public class GameUpgradeTreeController implements ActionListener {
 
 	private GameUpgradeTreeView view;
-
+	private Player player;
+	
 	public GameUpgradeTreeController(GameUpgradeTreeView view) {
 
+		player = Session.getCurrentUser().getPlayer();
+		
 		this.view = view;
 
 		initializeLockedNodes();
@@ -101,6 +106,8 @@ public class GameUpgradeTreeController implements ActionListener {
 		}
 		
 		view.resetErrorLabel();
+		
+		player.upgrade(node.getUpgradeName());
 		
 		node.setUnlocked(true);
 

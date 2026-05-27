@@ -108,8 +108,7 @@ public class GameUpgradeTreeView extends JPanel {
 		
 		errorLabelNode.setBounds(screenWidth / 3 + 45, 100, screenWidth / 3, 30);
 		
-		//errorAlreadyUnlocked.setVisible(false);
-		//errorGetPreviousFirst.setVisible(false);
+		errorLabelNode.setVisible(false);
 		
 		add(back);
 		add(lblTokens);

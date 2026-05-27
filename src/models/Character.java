@@ -14,6 +14,7 @@ public abstract class Character {
 	private int blockCharges;
 	private boolean turn;
 	private boolean blocking;
+	
 	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints,boolean status,
 			int healCharges,int blockCharges,boolean turn,boolean blocking) {
 		this.name = name;
