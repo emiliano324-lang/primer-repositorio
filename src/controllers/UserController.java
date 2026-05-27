@@ -43,6 +43,53 @@ public class UserController {
 			
 		});
 		
+		view.getBtnDelete().addActionListener(e -> {
+
+		    int row = view.getSelectedRow();
+
+		    if(row == -1) {
+
+		        JOptionPane.showMessageDialog(
+		            view,
+		            "Selecciona un usuario"
+		        );
+
+		        return;
+		    }
+
+		    User user = model.getUserAt(row);
+
+		    try {
+
+		        repo.deletePlayer(user.getId());
+		        boolean deleted = repo.delete(user.getId());
+
+		        if(deleted) {
+
+		            model.removeRow(row);
+
+		            JOptionPane.showMessageDialog(
+		                view,
+		                "Se eliminó al usuario",
+		                "Usuario eliminado",
+		                JOptionPane.INFORMATION_MESSAGE
+		            );
+
+		            loadUsers();
+		        }
+
+		    }catch(Exception ex) {
+
+		        ex.printStackTrace();
+
+		        JOptionPane.showMessageDialog(
+		            view,
+		            "Error al eliminar usuario"
+		        );
+		    }
+		});
+		
+		/*
 		view.getBtnDelete().addActionListener(e ->{
 			
 			boolean deleted = repo.delete(model.getUserAt(view.getSelectedRow()).getId());
@@ -69,7 +116,7 @@ public class UserController {
 				
 			}
 		});
-		
+		*/
 		 view.getBtnPdf().addActionListener(e -> generatePdf());
 		
 	}

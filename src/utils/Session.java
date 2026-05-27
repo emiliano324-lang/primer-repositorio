@@ -42,8 +42,12 @@ public class Session {
 
 	    player = currentUser.getPlayer();
 
-	    int playerId = repo.savePlayer(player);
+	    int playerId = repo.updatePlayer(player);
 
+	    if(playerId == -1) {
+	    	return;
+	    }
+	    
 	    player.setId(playerId);
 	}
 	
