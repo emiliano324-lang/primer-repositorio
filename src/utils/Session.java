@@ -1,9 +1,12 @@
 package utils;
 
+import java.io.IOException;
+
 import enums.Role;
 import models.Enemy;
 import models.Player;
 import models.User;
+import repository.CharacterRepository;
 import repository.UserRepository;
 
 public class Session {
@@ -30,7 +33,7 @@ public class Session {
 		if(currentUser == null) 
 			return;
 		
-		UserRepository repo = new UserRepository();
+		CharacterRepository repo = new CharacterRepository();
 		repo.updatePlayer(currentUser.getPlayer());
 	}
 	
@@ -38,23 +41,24 @@ public class Session {
 		
 	}
 	
-	public static void loadCharacter(Player player) {
+	public static void loadCharacter(Player player) throws IOException {
 
 	    if(currentUser == null) {
 	        return;
 	    }
 
-	    UserRepository repo = new UserRepository();
+	    CharacterRepository repo = new CharacterRepository();
 
-	    player = currentUser.getPlayer();
-
-	    int playerId = repo.updatePlayer(player);
+	    player = repo.loadPlayer(currentUser.getId()); 
+	    		
+	    /*
+	    int playerId = repo.loadPlayer(player.getId());
 
 	    if(playerId == -1) {
 	    	return;
 	    }
 	    
-	    player.setId(playerId);
+	    player.setId(playerId);*/
 	}
 	
 	public static void loadEnemy(Enemy enemy) {

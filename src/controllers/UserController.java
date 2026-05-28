@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import models.User;
+import repository.CharacterRepository;
 import repository.UserRepository;
 import services.PDFExporter;
 import tablemodels.UserTableModel;
@@ -18,14 +19,15 @@ import views.UsersView;
 public class UserController {
 
 	private UsersView view;
-	private UserRepository repo;
+	private UserRepository userRepo;
+	private CharacterRepository characterRepo;
 	private UserTableModel model;
 	private PDFExporter pdfExporter;
 	
 	
 	public UserController(UsersView view) {
 		this.view = view;
-		repo = new UserRepository();
+		userRepo = new UserRepository();
 		pdfExporter = new PDFExporter();
 		
 		this.view.getBtnAdd().addActionListener(e -> {
@@ -61,8 +63,8 @@ public class UserController {
 
 		    try {
 
-		        repo.deletePlayer(user.getId());
-		        boolean deleted = repo.delete(user.getId());
+		        characterRepo.deletePlayer(user.getId());
+		        boolean deleted = userRepo.delete(user.getId());
 
 		        if(deleted) {
 
@@ -70,7 +72,7 @@ public class UserController {
 
 		            JOptionPane.showMessageDialog(
 		                view,
-		                "Se eliminó al usuario",
+		                "Se eliminó al usuario y su personaje",
 		                "Usuario eliminado",
 		                JOptionPane.INFORMATION_MESSAGE
 		            );
@@ -125,7 +127,7 @@ public class UserController {
 		
 		//System.out.println("Carga usuarios");
 		try {
-			List<User> users = repo.getUsers();
+			List<User> users = userRepo.getUsers();
 			
 			if(model == null) {
 				model = new UserTableModel(users);
@@ -151,10 +153,10 @@ public class UserController {
 	        
 	        try {
 	            if(user == null) {
-	                repo.save(savedUser);
+	                userRepo.save(savedUser);
 	            } else {
 	                int row = view.getSelectedRow();
-	                repo.update(row, savedUser);
+	                userRepo.update(row, savedUser);
 	            }
 	            loadUsers();
 
@@ -173,7 +175,7 @@ public class UserController {
 			return;
 		}
 		try {
-			pdfExporter.exportUsers(repo.getUsers(), file);
+			pdfExporter.exportUsers(userRepo.getUsers(), file);
 			if(Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().open(file);
 			}

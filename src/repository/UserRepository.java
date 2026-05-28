@@ -19,6 +19,7 @@ import models.Player;
 import models.User;
 
 public class UserRepository {
+	
 
 	public void save(User user) throws IOException {
 
@@ -53,7 +54,8 @@ public class UserRepository {
 
 					System.out.println("Usuario guardado con ID: " + generatedId);
 
-					createPlayer(user);
+					CharacterRepository characterRepo = new CharacterRepository();
+					characterRepo.createPlayer(user);				
 				}
 
 				users.add(user);
@@ -146,93 +148,6 @@ public class UserRepository {
 		return false;
 	}
 
-	public Player loadPlayer(int idPlayer) throws IOException {
-
-		try (Connection connection = DatabaseConnection.getConnection();
-				Statement st = connection.createStatement();
-				ResultSet rs = st.executeQuery("SELECT * FROM characters WHERE id_user = ?");) {
-
-			String name = rs.getString("name");
-			int maxHealth = rs.getInt("max_health");
-			int health = rs.getInt("health");
-			int attackPoints = rs.getInt("attack_points");
-			int blockPoints = rs.getInt("defense_points");
-			int healPoints = rs.getInt("heal_points");
-			int level = rs.getInt("level");
-			int tokens = rs.getInt("tokens");
-			
-			Player player = new Player(name, maxHealth, health, attackPoints, blockPoints, healPoints, level, tokens);
-			
-			return player;
-			/*
-			 * public Player(
-			 * String name, 
-			 * int maxHealth,
-			 * int health, 
-			 * int attackPoints, 
-			 * int blockPoints, 
-			 * int healPoints, 
-			 * int level, 
-			 * int tokens,
-			 * boolean status,
-			 * int healCharges,
-			 * int blockCharges, 
-			 * boolean[] upgrades,
-			 * boolean turn,
-			 */
-
-			/*while (rs.next()) {
-
-				int id = rs.getInt("id_user");
-				String name = rs.getString("name");
-				String email = rs.getString("email");
-				Sex sex = Sex.valueOf(rs.getString("sex"));
-				Role role = Role.valueOf(rs.getString("role"));
-				// String imagePath = rs.getString("imagePath");
-
-				User user = new User(id, name, email, sex, role);
-
-				users.add(user);
-			}*/
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public int updatePlayer(Player player) {
-
-		String sql = "UPDATE characters " + "SET " + "health = ?, " + "max_health = ?, " + "attack_points = ?, "
-				+ "defense_points = ?, " + "heal_points = ?, " + "tokens = ?" + "WHERE id_character = ?";
-
-		try (Connection connection = DatabaseConnection.getConnection();
-
-				PreparedStatement pst = connection.prepareStatement(sql)) {
-
-			pst.setInt(1, player.getHealth());
-			pst.setInt(2, player.getAttackPoints());
-			pst.setInt(3, player.getBlockPoints());
-			pst.setInt(4, player.getHealPoints());
-			pst.setInt(5, player.getLevel());
-			pst.setInt(6, player.getTokens());
-
-			pst.setInt(7, player.getId());
-
-			return player.getId();
-
-			/*
-			 * int affectedRows = pst.executeUpdate();
-			 * 
-			 * return affectedRows > 0;
-			 */
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-
-		return -1;
-	}
-
 	public void updateEnemy(Enemy enemy) {
 
 		String sql = """
@@ -250,39 +165,8 @@ public class UserRepository {
 				""";
 	}
 
-	public int savePlayer(Player player) {
 
-		String sql = "INSERT INTO characters (maxHealth, health, attackPoints, blockPoints, healPoints, level, tokens) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-		try (Connection connection = DatabaseConnection.getConnection();
-
-				PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-			pst.setInt(1, player.getMaxHealth());
-			pst.setInt(2, player.getHealth());
-			pst.setInt(3, player.getAttackPoints());
-			pst.setInt(4, player.getBlockPoints());
-			pst.setInt(5, player.getHealPoints());
-			pst.setInt(6, player.getLevel());
-			pst.setInt(7, player.getTokens());
-
-			pst.executeUpdate();
-
-			ResultSet rs = pst.getGeneratedKeys();
-
-			if (rs.next()) {
-				return rs.getInt(1);
-			}
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-
-		return -1;
-	}
-
-	public void createPlayer(User user) {
+	/*public void createPlayer(User user) {
 
 		String sql = "INSERT INTO characters(id_user, name, level, health, max_health, attack_points, defense_points, heal_points, tokens)"
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -335,7 +219,7 @@ public class UserRepository {
 	 * }catch(SQLException ex) { ex.printStackTrace(); }
 	 * 
 	 * }
-	 */
+	 
 
 	public boolean deletePlayer(int idUser) {
 
@@ -360,5 +244,5 @@ public class UserRepository {
 		}
 
 		return false;
-	}
+	}*/
 }

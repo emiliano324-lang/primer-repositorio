@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -33,7 +34,11 @@ public class GameCombatController {
 		this.gameCombatView = combatView;
 		
 		registerListeners();
-		Session.loadCharacter(player);
+		try {
+			Session.loadCharacter(player);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void registerListeners() {

@@ -42,6 +42,17 @@ public class Player extends Character{
 		this.id = id;
 	}
 	
+	 public boolean[] getUpgrades() {
+	        return upgrades;
+	    }
+
+	    public void setUpgrades(
+	            boolean[] upgrades
+	    ) {
+
+	        this.upgrades = upgrades;
+	    }
+	
 	@Override
 	public void heal() {
 		if(!isDead()) {
@@ -102,12 +113,12 @@ public class Player extends Character{
 			upgrades[3] = true;
 		}
 		
-		if(nomUpgrade.equalsIgnoreCase("BLOCK I") && upgrades[4] == false) {
+		if(nomUpgrade.equalsIgnoreCase("BLOQUEO I") && upgrades[4] == false) {
 			setBlockPoints((int)(getBlockPoints() + (getBlockPoints() * 0.30)));
 			upgrades[4] = true;
 		}
 		
-		if(nomUpgrade.equalsIgnoreCase("BLOCK II") && upgrades[5] == false) {
+		if(nomUpgrade.equalsIgnoreCase("BLOQUEO II") && upgrades[5] == false) {
 			setBlockPoints((int)(getBlockPoints() + (getBlockPoints() * 0.60)));
 			upgrades[5] = true;
 		}
