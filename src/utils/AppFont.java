@@ -26,7 +26,7 @@ public class AppFont {
 	}
 	
 	public static Font small() {
-		return base.deriveFont(10f);
+		return base.deriveFont(20f);
 	}
 
 	public static Font title() {

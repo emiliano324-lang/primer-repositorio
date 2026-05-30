@@ -23,103 +23,68 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
+import models.Player;
 import utils.AppFont;
 import utils.CustomJSwing;
+import utils.Session;
 
 public class GameCombatView extends JPanel {
 
 	GameWindow window;
 
+	Player player;
+	
 	private Timer animationIdle;
 	private Timer animation;
 
 	private int selfFrame = 0;
 	private int foeFrame = 0;
-	
+
 	private JProgressBar healthBar;
-	
+
 	private JButton attack;
 	private JButton block;
 	private JButton heal;
 	private JButton analyze;
 
 	private JButton back;
-	
+
 	private JLabel characterSelf;
 	private JLabel characterFoe;
+	private JLabel lblTopPanelMessage;
 
 	Image combatBackground;
-	
-	private String[] idleFramesSelf = {
-		"/img/IdleSelf/IdleSelf0.png",
-		"/img/IdleSelf/IdleSelf1.png",
-		"/img/IdleSelf/IdleSelf2.png",
-		"/img/IdleSelf/IdleSelf3.png"
-	};
-	
-	private String[] idleFramesFoe = {
-		"/img/IdleFoe/IdleFoe0.png",
-		"/img/IdleFoe/IdleFoe1.png",
-		"/img/IdleFoe/IdleFoe2.png",
-		"/img/IdleFoe/IdleFoe3.png"
-	};
 
-	private String[] attackFramesSelf = {
-		"/img/AttackSelf/AttackSelf0.png",
-		"/img/AttackSelf/AttackSelf1.png",
-		"/img/AttackSelf/AttackSelf2.png",
-		"/img/AttackSelf/AttackSelf3.png" 
-	};
+	private String[] idleFramesSelf = { "/img/IdleSelf/IdleSelf0.png", "/img/IdleSelf/IdleSelf1.png",
+			"/img/IdleSelf/IdleSelf2.png", "/img/IdleSelf/IdleSelf3.png" };
 
-	private String[] attackFramesFoe = {
-		"/img/AttackFoe/AttackFoe0.png",
-		"/img/AttackFoe/AttackFoe1.png",
-		"/img/AttackFoe/AttackFoe2.png",
-		"/img/AttackFoe/AttackFoe3.png"
-	};
-	
-	private String[] blockFramesSelf = {
-		"/img/BlockSelf/BlockSelf0.png",
-		"/img/BlockSelf/BlockSelf1.png",
-		"/img/BlockSelf/BlockSelf2.png",
-		"/img/BlockSelf/BlockSelf3.png"
-	};
-	
-	private String[] blockFramesFoe = {
-		"/img/BlockFoe/BlockFoe0.png",
-		"/img/BlockFoe/BlockFoe1.png",
-		"/img/BlockFoe/BlockFoe2.png",
-		"/img/BlockFoe/BlockFoe3.png"
-	};
-	
-	private String[] healFramesSelf = {
-		"/img/HealSelf/HealSelf0.png", 
-		"/img/HealSelf/HealSelf1.png", 
-		"/img/HealSelf/HealSelf2.png", 
-		"/img/HealSelf/HealSelf3.png" 
-	};
-	
-	private String[] healFramesFoe = {
-		"/img/HealFoe/HealFoe0.png",
-		"/img/HealFoe/HealFoe1.png",
-		"/img/HealFoe/HealFoe2.png",
-		"/img/HealFoe/HealFoe3.png"
-	};
-	
-	private String[] damageFramesSelf = {
-		"/img/DamageSelf/DamageSelf0.png",
-		"/img/DamageSelf/DamageSelf1.png",
-		"/img/DamageSelf/DamageSelf2.png",
-		"/img/DamageSelf/DamageSelf3.png"
-	};
-	
-	private String[] damageFramesFoe = {
-		"/img/DamageFoe/DamageFoe0.png",
-		"/img/DamageFoe/DamageFoe1.png",
-		"/img/DamageFoe/DamageFoe2.png",
-		"/img/DamageFoe/DamageFoe3.png"
-	};
-	
+	private String[] idleFramesFoe = { "/img/IdleFoe/IdleFoe0.png", "/img/IdleFoe/IdleFoe1.png",
+			"/img/IdleFoe/IdleFoe2.png", "/img/IdleFoe/IdleFoe3.png" };
+
+	private String[] attackFramesSelf = { "/img/AttackSelf/AttackSelf0.png", "/img/AttackSelf/AttackSelf1.png",
+			"/img/AttackSelf/AttackSelf2.png", "/img/AttackSelf/AttackSelf3.png" };
+
+	private String[] attackFramesFoe = { "/img/AttackFoe/AttackFoe0.png", "/img/AttackFoe/AttackFoe1.png",
+			"/img/AttackFoe/AttackFoe2.png", "/img/AttackFoe/AttackFoe3.png" };
+
+	private String[] blockFramesSelf = { "/img/BlockSelf/BlockSelf0.png", "/img/BlockSelf/BlockSelf1.png",
+			"/img/BlockSelf/BlockSelf2.png", "/img/BlockSelf/BlockSelf3.png" };
+
+	private String[] blockFramesFoe = { "/img/BlockFoe/BlockFoe0.png", "/img/BlockFoe/BlockFoe1.png",
+			"/img/BlockFoe/BlockFoe2.png", "/img/BlockFoe/BlockFoe3.png" };
+
+	private String[] healFramesSelf = { "/img/HealSelf/HealSelf0.png", "/img/HealSelf/HealSelf1.png",
+			"/img/HealSelf/HealSelf2.png", "/img/HealSelf/HealSelf3.png" };
+
+	private String[] healFramesFoe = { "/img/HealFoe/HealFoe0.png", "/img/HealFoe/HealFoe1.png",
+			"/img/HealFoe/HealFoe2.png", "/img/HealFoe/HealFoe3.png" };
+
+	private String[] damageFramesSelf = { "/img/DamageSelf/DamageSelf0.png", "/img/DamageSelf/DamageSelf1.png",
+			"/img/DamageSelf/DamageSelf2.png", "/img/DamageSelf/DamageSelf3.png" };
+
+	private String[] damageFramesFoe = { "/img/DamageFoe/DamageFoe0.png", "/img/DamageFoe/DamageFoe1.png",
+			"/img/DamageFoe/DamageFoe2.png", "/img/DamageFoe/DamageFoe3.png" };
+
 	// GETTERS Y SETTERS
 	public JButton getAttack() {
 		return attack;
@@ -136,7 +101,7 @@ public class GameCombatView extends JPanel {
 	public JButton getAnalyze() {
 		return analyze;
 	}
-	
+
 	public GameWindow getWindow() {
 		return window;
 	}
@@ -156,11 +121,11 @@ public class GameCombatView extends JPanel {
 	public void setSelfFrame(int selfFrame) {
 		this.selfFrame = selfFrame;
 	}
-	
+
 	public void setFoeFrame(int foeFrame) {
 		this.foeFrame = foeFrame;
 	}
-	
+
 	public int getFoeFrame() {
 		return foeFrame;
 	}
@@ -224,21 +189,23 @@ public class GameCombatView extends JPanel {
 		loadImage();
 		initializeComponents();
 		animationIdle(idleFramesSelf, idleFramesFoe);
-		
+
 	}
 
 	// MÉTODOS
 	private void initializeComponents() {
 
+		JPanel registersPanel = createTopPanel();
 		JPanel centerPanel = createCenterPanel();
 		JPanel southBar = createActionsPanel();
-		
+
+		add(registersPanel, BorderLayout.NORTH);
 		add(centerPanel, BorderLayout.CENTER);
 		add(southBar, BorderLayout.SOUTH);
 	}
-	
+
 	private JPanel createCenterPanel() {
-		
+
 		JPanel centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setOpaque(false);
 
@@ -247,7 +214,7 @@ public class GameCombatView extends JPanel {
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 
-		ImageIcon iconSelf = loadIcon("/img/IdleSelf/IdleSelf0.png", 128 * 3, 192 * 3);
+		ImageIcon iconSelf = loadIcon("/img/IdleSelf/IdleSelf0.png", 128 * 2, 192 * 2);
 		characterSelf = new JLabel(iconSelf);
 
 		gbc.gridx = 0;
@@ -258,7 +225,7 @@ public class GameCombatView extends JPanel {
 
 		centerPanel.add(characterSelf, gbc);
 
-		ImageIcon iconFoe = loadIcon("/img/IdleFoe/IdleFoe0.png", 128 * 2, 192 * 2);
+		ImageIcon iconFoe = loadIcon("/img/IdleFoe/IdleFoe0.png", 128, 192);
 		characterFoe = new JLabel(iconFoe);
 
 		gbc.gridx = 1;
@@ -272,13 +239,25 @@ public class GameCombatView extends JPanel {
 		return centerPanel;
 	}
 
+	private JPanel createTopPanel() {
+
+		JPanel topPanel = new JPanel();
+		topPanel.setOpaque(false);
+
+		lblTopPanelMessage = createLabel("Ha comenzado la pelea");
+
+		topPanel.add(lblTopPanelMessage);
+
+		return topPanel;
+	}
+
 	private JPanel createActionsPanel() {
-		
+
 		JPanel actionsPanel = new JPanel();
 		actionsPanel.setOpaque(false);
 
 		healthBar = createProgressBar();
-		
+
 		attack = CustomJSwing.createJButton("Atacar");
 		block = CustomJSwing.createJButton("Bloquear");
 		heal = CustomJSwing.createJButton("Curarse");
@@ -292,13 +271,14 @@ public class GameCombatView extends JPanel {
 
 		return actionsPanel;
 	}
-	
+
 	private ImageIcon loadIcon(String path, int w, int h) {
 		try {
 			Image icon = ImageIO.read(getClass().getResource(path));
 			icon = icon.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 			return new ImageIcon(icon);
 		} catch (Exception ex) {
+			System.out.println(path);
 			ex.printStackTrace();
 		}
 
@@ -319,113 +299,129 @@ public class GameCombatView extends JPanel {
 
 		g2.drawImage(combatBackground, 0, 0, getWidth(), getHeight(), null);
 	}
-	
+
 	public void animationIdle(String[] framesSelf, String[] framesFoe) {
 
-		animation  = new Timer(250, new ActionListener() {
+		animation = new Timer(250, new ActionListener() {
 
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-	            ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
-	            ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
+				ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 2, 192 * 2);
+				ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 2, 192 * 2);
 
-	            characterSelf.setIcon(frameSelf);
-	            characterFoe.setIcon(frameFoe);
+				characterSelf.setIcon(frameSelf);
+				characterFoe.setIcon(frameFoe);
 
-	            selfFrame++;
-	            foeFrame++;
+				selfFrame++;
+				foeFrame++;
 
-	            if (selfFrame >= framesSelf.length) {
-	                selfFrame = 0;
-	            }
+				if (selfFrame >= framesSelf.length) {
+					selfFrame = 0;
+				}
 
-	            if (foeFrame >= framesFoe.length) {
-	                foeFrame = 0;
-	            }
-	        }
-	    });
+				if (foeFrame >= framesFoe.length) {
+					foeFrame = 0;
+				}
+			}
+		});
 
 		animation.start();
 	}
+
 	public void animateOnce(String[] framesSelf, String[] framesFoe) {
 
-	    animation = new Timer(100, new ActionListener() {
+		animation = new Timer(100, new ActionListener() {
 
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-	            ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
-	            ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
+				ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
+				ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
 
-	            characterSelf.setIcon(frameSelf);
-	            characterFoe.setIcon(frameFoe);
+				characterSelf.setIcon(frameSelf);
+				characterFoe.setIcon(frameFoe);
 
-	            selfFrame++;
-	            foeFrame++;
+				selfFrame++;
+				foeFrame++;
 
-	            if (selfFrame >= framesSelf.length ||
-	                foeFrame >= framesFoe.length) {
+				if (selfFrame >= framesSelf.length || foeFrame >= framesFoe.length) {
 
-	                animation.stop();
+					animation.stop();
 
-	                selfFrame = 0;
-	                foeFrame = 0;
-	               
-	                animationIdle(idleFramesSelf, idleFramesFoe);
-	            }
-	        }
-	    });
+					selfFrame = 0;
+					foeFrame = 0;
 
-	    animation.start();
+					animationIdle(idleFramesSelf, idleFramesFoe);
+				}
+			}
+		});
+
+		animation.start();
 	}
-	
+
 	public void animateAction(String[] framesSelf, String[] framesFoe) {
 
-		animation  = new Timer(250, null);
+		animation = new Timer(250, null);
 
-	    selfFrame = 0;
-	    foeFrame = 0;
+		selfFrame = 0;
+		foeFrame = 0;
 
-	    animation.addActionListener(new ActionListener() {
+		animation.addActionListener(new ActionListener() {
 
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-	            ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
-	            ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
+				ImageIcon frameSelf = loadIcon(framesSelf[selfFrame], 128 * 3, 192 * 3);
+				ImageIcon frameFoe = loadIcon(framesFoe[foeFrame], 128 * 3, 192 * 3);
 
-	            characterSelf.setIcon(frameSelf);
-	            characterFoe.setIcon(frameFoe);
+				characterSelf.setIcon(frameSelf);
+				characterFoe.setIcon(frameFoe);
 
-	            selfFrame++;
-	            foeFrame++;
+				selfFrame++;
+				foeFrame++;
 
-	            if (selfFrame >= framesSelf.length ||
-	                foeFrame >= framesFoe.length) {
+				if (selfFrame >= framesSelf.length || foeFrame >= framesFoe.length) {
 
-	            	animation.stop();
-	                
-	                selfFrame = 0;
-	                foeFrame = 0;
+					animation.stop();
 
-	                animationIdle(idleFramesSelf, idleFramesFoe);
-	            }
-	        }
-	    });
+					selfFrame = 0;
+					foeFrame = 0;
 
-	    animation.start();
+					animationIdle(idleFramesSelf, idleFramesFoe);
+				}
+			}
+		});
+
+		animation.start();
+	}
+
+	public void topPanelMessage(String text) {
+	    lblTopPanelMessage.setText(text);
+	    lblTopPanelMessage.repaint();
+	    lblTopPanelMessage.revalidate();
+	}
+
+	private JLabel createLabel(String text) {
+
+		JLabel label = new JLabel(text);
+
+		label.setFont(AppFont.small());
+		label.setForeground(new Color(254, 252, 251));
+		label.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
+
+		return label;
 	}
 
 	private JProgressBar createProgressBar() {
 		JProgressBar progressBar = new JProgressBar();
-		
+
 		// TODO: Cambiar despues para el personaje
-		progressBar.setMaximum(100);
+		progressBar.setMaximum(Session.getCurrentUser().getPlayer().getMaxHealth());
 		progressBar.setMinimum(0);
 		progressBar.setForeground(Color.GREEN);
 		progressBar.setValue(progressBar.getMaximum());
-		
+
 		return progressBar;
 	}
 }

@@ -33,9 +33,13 @@ public class GameCombatController {
 	public GameCombatController(GameCombatView combatView) {
 		this.gameCombatView = combatView;
 		
+		random = new Random();
+		
+		player.setTurn(true);
+		
 		registerListeners();
 		try {
-			Session.loadCharacter(player);
+			player = Session.loadCharacter();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -63,6 +67,7 @@ public class GameCombatController {
 			}
 			
 			public void mousePressed(MouseEvent e) {
+				
 				b.setForeground(Color.LIGHT_GRAY);
 				
 				String[] actionFramesSelf = new String[4];
@@ -73,47 +78,68 @@ public class GameCombatController {
 
 			    gameCombatView.getAnimation().stop();
 			    
-			    
 			    if(player.getTurn()) {
 				    if(b == gameCombatView.getAttack()) {
-				    
+
 				    	actionFramesSelf = gameCombatView.getAttackFramesSelf();
 					    actionFramesFoe = gameCombatView.getDamageFramesFoe();
+					    
 					    enemy.setHealth(enemy.getHealth()-player.getAttackPoints());
-					   
+					    
+					    gameCombatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
 					    
 				    }else if(b == gameCombatView.getBlock()) {
+
 				    	actionFramesSelf = gameCombatView.getBlockFramesSelf();
 				    	actionFramesFoe = gameCombatView.getHealFramesFoe();
+
 				    	player.block();
 				    	
-				    	
+				    	gameCombatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + player.getBlockCharges() + " bloqueos.");
+					    
 				    }else if(b == gameCombatView.getHeal()) {
-				   		actionFramesSelf = gameCombatView.getHealFramesSelf();
+
+				    	actionFramesSelf = gameCombatView.getHealFramesSelf();
 				   		actionFramesFoe = gameCombatView.getBlockFramesFoe();
 				   		player.heal();
+				   		
+				   		gameCombatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + player.getHealCharges() + " curaciones.");
+					    
+				    }else if(b == gameCombatView.getAnalyze()) {
+				    	
+				    	gameCombatView.topPanelMessage("Vida actual del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
+				   
 				    }else {
 			    		actionFramesSelf = gameCombatView.getDamageFramesSelf();
 			    		actionFramesFoe = gameCombatView.getAttackFramesFoe();
 				    }
+				    
 				    player.setTurn(false);
+				    
 				}else {
 					//TODO: Accion del enemigo
 					//TODO: Hacer las animaciones de ataque del enemigo y recibir daño del personaje
 					
-					enemy.setRandomAction(random.nextInt(3) + 1);
+					enemy.setRandomAction(random.nextInt(3));
 					
-					if(enemy.getRandomAction() == 1) {
+					switch(enemy.getRandomAction()) {
+					
+					case 0:
 						player.getDamage(enemy.getAttackPoints());
-		
-					}else if(enemy.getRandomAction() == 2) {
+						break;
+					case 1:
 						enemy.heal();
-					}else{
+						break;
+					case 2:
 						enemy.block();
+						break;
+					default:
+						break;
 					}
 					
+					player.setTurn(true);
 				}
-			    gameCombatView.animateOnce(actionFramesSelf, actionFramesFoe);
+			    //gameCombatView.animateOnce(actionFramesSelf, actionFramesFoe);
 			}
 			
 			public void mouseReleased(MouseEvent e) {

@@ -41,16 +41,20 @@ public class Session {
 		
 	}
 	
-	public static void loadCharacter(Player player) throws IOException {
+	public static Player loadCharacter() throws IOException {
 
+		Player player;
+		
 	    if(currentUser == null) {
-	        return;
+	        return null;
 	    }
 
 	    CharacterRepository repo = new CharacterRepository();
 
 	    player = repo.loadPlayer(currentUser.getId()); 
-	    		
+	    
+	    return player;
+	    
 	    /*
 	    int playerId = repo.loadPlayer(player.getId());
 

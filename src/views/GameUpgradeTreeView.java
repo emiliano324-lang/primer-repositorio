@@ -106,7 +106,7 @@ public class GameUpgradeTreeView extends JPanel {
 
 		errorLabelNode = createErrorLabel("");
 		
-		errorLabelNode.setBounds(screenWidth / 3 + 45, 100, screenWidth / 3, 30);
+		errorLabelNode.setBounds(0, 100, 1, 30);
 		
 		errorLabelNode.setVisible(false);
 		
@@ -330,6 +330,19 @@ public class GameUpgradeTreeView extends JPanel {
 		label.setForeground(Color.RED);
 
 		return label;
+	}
+	
+	public void setErrorMessage(String message) {
+
+		errorLabelNode.setText(message);
+
+		errorLabelNode.setSize(errorLabelNode.getPreferredSize());
+
+		int x = (getWidth() - errorLabelNode.getWidth()) / 2;
+
+		errorLabelNode.setLocation(x, 100);
+
+		errorLabelNode.setVisible(true);
 	}
 	
 	public void showErrorLabel() {

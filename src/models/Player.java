@@ -66,20 +66,25 @@ public class Player extends Character{
 	
 	@Override
 	public void getDamage(int damage) {
-		//dano bloqueado
+		//Daño bloqueado
 		if(isBlocking()) {
+			
 			damage -= getBlockPoints();
+			
 			setHealth(getHealth()-damage);
 			setBlocking(false);
+			
 			if(getHealth() <= 0) {
 				setHealth(0) ;
 				setStatus(true);
 				return;
 			}
 		}
-		//dano normal
+		
+		//Daño normal
 		setHealth(getHealth()-damage);
 		if(getHealth() <= 0) {
+			
 			setHealth(0) ;
 			setStatus(true);
 			return;
