@@ -114,7 +114,7 @@ public class GameCombatController {
 			    		actionFramesFoe = gameCombatView.getAttackFramesFoe();
 				    }
 				    
-				    player.setTurn(false);
+				    player.setTurn(b == gameCombatView.getAnalyze() ? true : false);
 				    
 				}else {
 					//TODO: Accion del enemigo
@@ -126,6 +126,7 @@ public class GameCombatController {
 					
 					case 0:
 						player.getDamage(enemy.getAttackPoints());
+						
 						break;
 					case 1:
 						enemy.heal();
