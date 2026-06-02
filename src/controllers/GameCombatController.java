@@ -24,36 +24,38 @@ public class GameCombatController {
 
 	GameWindow window;
 	GameMenuView menuView;
-	GameCombatView combatView;	
+	GameCombatView combatView;
 
 	Player player = new Player();
-	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 5, 30, 15,0,false,5,5,false,false);
+	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 5, 30, 15, 0, false, 5, 5, false, false);
 
 	Random random;
-	
+
 	public GameCombatController(GameCombatView combatView) {
 		this.combatView = combatView;
-		
+
+		random = new Random();
+
 		try {
 			player = Session.loadCharacter();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		player.setTurn(true);
-		
+
 		registerListeners();
-		
+
 		combatView.initializePlayer(player);
 	}
-	
+
 	public void registerListeners() {
 		mouseListeners(combatView.getAttack());
 		mouseListeners(combatView.getBlock());
 		mouseListeners(combatView.getHeal());
 		mouseListeners(combatView.getAnalyze());
 	}
-	
+
 	public void mouseListeners(JButton b) {
 		Color defaultForeground = b.getForeground();
 		String defaultText = b.getText();
@@ -90,7 +92,6 @@ public class GameCombatController {
 					    
 					    combatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
 					    
-					   // player.setTurn(false);
 				    }else if(b == combatView.getBlock()) {
 
 				    	actionFramesSelf = combatView.getBlockFramesSelf();
@@ -104,6 +105,7 @@ public class GameCombatController {
 
 				    	actionFramesSelf = combatView.getHealFramesSelf();
 				   		actionFramesFoe = combatView.getBlockFramesFoe();
+				   		
 				   		player.heal();
 				   		
 				   		combatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + player.getHealCharges() + " curaciones.");
@@ -125,6 +127,7 @@ public class GameCombatController {
 				   		player.heal();
 
 				    }else {
+				    	
 			    		actionFramesSelf = combatView.getDamageFramesSelf();
 			    		actionFramesFoe = combatView.getAttackFramesFoe();
 				    }
@@ -136,12 +139,15 @@ public class GameCombatController {
 						
 					enemy.setRandomAction((int)(Math.random() * 3) + 1);
 					
+
 					
 					if(enemy.getRandomAction() == 1 && enemy.getBlockCharges() > 0) {
 					
 						enemy.block();
 						actionFramesFoe = combatView.getBlockFramesFoe();
 						actionFramesSelf = combatView.getIdleFramesSelf();
+
+					
 						
 						
 					}else if(enemy.getRandomAction() == 2 && enemy.getBlockCharges() > 0) {
@@ -172,23 +178,22 @@ public class GameCombatController {
 			    	player.setTokens(player.getTokens() + 1);
 			    	
 			    	ScreenManager.showPanel("MENU");
-			    }
+			    }			    
 			    
-			    
+			
+			
 			}
-			
-			
 			
 			
 			
 			public void mouseReleased(MouseEvent e) {
 				b.setForeground(defaultForeground);
-				
-			}
-		});
-	}
+				}
+			});
+			
 	
+		}
 	
-	
+		
 	
 }

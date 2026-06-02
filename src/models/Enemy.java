@@ -18,6 +18,7 @@ public class Enemy extends Character{
 	}
 	public void setRandomAction(int randomAction) {
 		this.randomAction = randomAction;
+		
 	}
 	@Override
 	public void heal() {
