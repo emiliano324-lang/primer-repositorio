@@ -7,7 +7,9 @@ public class Player extends Character{
 	private int tokens;
 	private int id;
 	
+	public Player() {
 	
+	}
 	
 	public Player(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int level,
 			int tokens,boolean status,int healCharges,int blockCharges, boolean[] upgrades,boolean turn,boolean blocking) {
@@ -77,7 +79,7 @@ public class Player extends Character{
 			
 			if(getHealth() <= 0) {
 				setHealth(0) ;
-				setStatus(true);
+				setDead(true);
 				return;
 			}
 		}
@@ -87,7 +89,7 @@ public class Player extends Character{
 		if(getHealth() <= 0) {
 			
 			setHealth(0) ;
-			setStatus(true);
+			setDead(true);
 			return;
 		}
 	}
@@ -131,11 +133,4 @@ public class Player extends Character{
 		
 	}
 	
-	public boolean isDead() {
-		return getHealth() <= 0;
-	}
-
-	
-	
-
 }

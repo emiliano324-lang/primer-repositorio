@@ -22,10 +22,10 @@ public class Enemy extends Character{
 	@Override
 	public void heal() {
 		if(!isDead()) {
-			if(getHealth()+getHealPoints() > getMaxHealth()) {
+			if(getHealth() + getHealPoints() > getMaxHealth()) {
 				setHealth(getMaxHealth());
 			}else{
-				setHealth(getHealPoints()+getHealth());
+				setHealth(getHealPoints() + getHealth());
 			}	
 		}
 	}
@@ -36,17 +36,19 @@ public class Enemy extends Character{
 			damage -= getBlockPoints();
 			setHealth(getHealth()-damage);
 			setBlocking(false);
+			
 			if(getHealth() <= 0) {
 				setHealth(0) ;
-				setStatus(true);
+				setDead(true);
 				return;
 			}
 		}
 		//dano normal
 		setHealth(getHealth()-damage);
+		
 		if(getHealth() <= 0) {
 			setHealth(0) ;
-			setStatus(true);
+			setDead(true);
 			return;
 		}
 	}
@@ -72,7 +74,4 @@ public class Enemy extends Character{
 		}
 	}
 	*/
-	private boolean isDead() {
-		return getStatus();
-	}
 }

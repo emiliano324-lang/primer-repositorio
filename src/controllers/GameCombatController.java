@@ -22,37 +22,35 @@ import views.GameWindow;
 public class GameCombatController {
 
 	GameWindow window;
-	GameMenuView gameMenuView;
-	GameCombatView gameCombatView;	
+	GameMenuView menuView;
+	GameCombatView combatView;	
 
-	
-	Player player = new Player("",0,0,0,0,0,0,0,false,0,0,null,false,false);
-	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 40, 20, 15,0,false,0,0,false,false);
+	Player player = new Player();
+	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 5, 5, 15,0,false,0,0,false,false);
 
-	int random;
-	
-
-	
+	//int random;
 	
 	public GameCombatController(GameCombatView combatView) {
-		this.gameCombatView = combatView;
+		this.combatView = combatView;
 		
-		
-		player.setTurn(true);
-		
-		registerListeners();
 		try {
 			player = Session.loadCharacter();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		player.setTurn(true);
+		
+		registerListeners();
+		
+		combatView.initializePlayer(player);
 	}
 	
 	public void registerListeners() {
-		mouseListeners(gameCombatView.getAttack());
-		mouseListeners(gameCombatView.getBlock());
-		mouseListeners(gameCombatView.getHeal());
-		mouseListeners(gameCombatView.getAnalyze());
+		mouseListeners(combatView.getAttack());
+		mouseListeners(combatView.getBlock());
+		mouseListeners(combatView.getHeal());
+		mouseListeners(combatView.getAnalyze());
 	}
 	
 	public void mouseListeners(JButton b) {
@@ -76,91 +74,90 @@ public class GameCombatController {
 				String[] actionFramesSelf = new String[4];
 				String[] actionFramesFoe = new String[4];
 				
-				gameCombatView.setSelfFrame(0);
-				gameCombatView.setFoeFrame(0);
+				combatView.setSelfFrame(0);
+				combatView.setFoeFrame(0);
 
-			    gameCombatView.getAnimation().stop();
+			    combatView.getAnimation().stop();
 			    
 			    if(player.getTurn()) {
-				    if(b == gameCombatView.getAttack()) {
+				    if(b == combatView.getAttack()) {
 
-				    	actionFramesSelf = gameCombatView.getAttackFramesSelf();
-					    actionFramesFoe = gameCombatView.getDamageFramesFoe();
+				    	actionFramesSelf = combatView.getAttackFramesSelf();
+					    actionFramesFoe = combatView.getDamageFramesFoe();
 					    
-					    enemy.setHealth(enemy.getHealth()-player.getAttackPoints());
-					    gameCombatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
+					    enemy.getDamage(enemy.getHealth() - player.getAttackPoints());
 					    
-					   
-					    player.setTurn(false);
-				    }else if(b == gameCombatView.getBlock()) {
+					    combatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
+					    
+					   // player.setTurn(false);
+				    }else if(b == combatView.getBlock()) {
 
-				    	actionFramesSelf = gameCombatView.getBlockFramesSelf();
-				    	actionFramesFoe = gameCombatView.getHealFramesFoe();
+				    	actionFramesSelf = combatView.getBlockFramesSelf();
+				    	actionFramesFoe = combatView.getHealFramesFoe();
 
 				    	player.block();
 				    	
-				    	gameCombatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + player.getBlockCharges() + " bloqueos.");
+				    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + player.getBlockCharges() + " bloqueos.");
 					    
-				    }else if(b == gameCombatView.getHeal()) {
+				    }else if(b == combatView.getHeal()) {
 
-				    	actionFramesSelf = gameCombatView.getHealFramesSelf();
-				   		actionFramesFoe = gameCombatView.getBlockFramesFoe();
+				    	actionFramesSelf = combatView.getHealFramesSelf();
+				   		actionFramesFoe = combatView.getBlockFramesFoe();
 				   		player.heal();
 				   		
-				   		gameCombatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + player.getHealCharges() + " curaciones.");
+				   		combatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + player.getHealCharges() + " curaciones.");
 					    
-				    }else if(b == gameCombatView.getAnalyze()) {
+				    }else if(b == combatView.getAnalyze()) {
 				    	
-				    	gameCombatView.topPanelMessage("Vida actual del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
+				    	combatView.topPanelMessage("Vida actual del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
 				   
-				    	actionFramesFoe = gameCombatView.getIdleFramesFoe();
+				    	actionFramesSelf = combatView.getIdleFramesSelf();
+				    	actionFramesFoe = combatView.getIdleFramesFoe();
+				    	
 				    	player.block();
 				    	
-				    	player.setTurn(false);
-				    }else if(b == gameCombatView.getHeal()) {
-				   		actionFramesSelf = gameCombatView.getHealFramesSelf();
-				   		actionFramesFoe = gameCombatView.getIdleFramesFoe();
+				    }else if(b == combatView.getHeal()) {
+				   		
+				    	actionFramesSelf = combatView.getHealFramesSelf();
+				   		actionFramesFoe = combatView.getIdleFramesFoe();
+				   		
 				   		player.heal();
-				   		player.setTurn(false);
 
 				    }else {
-			    		actionFramesSelf = gameCombatView.getDamageFramesSelf();
-			    		actionFramesFoe = gameCombatView.getAttackFramesFoe();
+			    		actionFramesSelf = combatView.getDamageFramesSelf();
+			    		actionFramesFoe = combatView.getAttackFramesFoe();
 				    }
-
 				    
-				    player.setTurn(b == gameCombatView.getAnalyze() ? true : false);
+				    player.setTurn(b == combatView.getAnalyze() ? true : false);
 				    
 
 				}else {
-					//TODO: Accion del enemigo
-					//TODO: Hacer las animaciones de ataque del enemigo y recibir daño del personaje
 					
-
 					if(enemy.getRandomAction() == 1) {
-						
 					
-						actionFramesFoe = gameCombatView.getAttackFramesFoe();
-						actionFramesSelf = gameCombatView.getDamageFramesSelf();
-						player.setTurn(true);
+						player.setHealth(player.getHealth() - enemy.getAttackPoints());
+						
+						combatView.updateHealthBar(player.getHealth());
+						
+						actionFramesFoe = combatView.getAttackFramesFoe();
+						actionFramesSelf = combatView.getDamageFramesSelf();
+						
 					}else if(enemy.getRandomAction() == 2) {
 						
 						enemy.heal();
-						actionFramesFoe = gameCombatView.getHealFramesFoe();
-						actionFramesSelf = gameCombatView.getIdleFramesSelf();
-						player.setTurn(true);
+						actionFramesFoe = combatView.getHealFramesFoe();
+						actionFramesSelf = combatView.getIdleFramesSelf();
+						
 					}else{
 						
 						enemy.block();
-						actionFramesFoe = gameCombatView.getBlockFramesFoe();
-						actionFramesSelf = gameCombatView.getIdleFramesSelf();
-
-						player.setTurn(true);
+						actionFramesFoe = combatView.getBlockFramesFoe();
+						actionFramesSelf = combatView.getIdleFramesSelf();
 					}
 					
 					player.setTurn(true);
 				}
-			    //gameCombatView.animateOnce(actionFramesSelf, actionFramesFoe);
+			    combatView.animateOnce(actionFramesSelf, actionFramesFoe);
 			
 			}
 			public void mouseReleased(MouseEvent e) {

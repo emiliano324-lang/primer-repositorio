@@ -55,6 +55,7 @@ public class LoginController {
 	}
 
 	private boolean validateLogin(User user) {
+		
 		view.resetErrorLabels();
 		boolean valid = true;
 
@@ -90,15 +91,16 @@ public class LoginController {
 		try {
 			Player player = characterRepo.loadPlayer(user.getId());
 			
-			System.out.println(user);
-			System.out.println(player);
+			//System.out.println(user);
+			//System.out.println(player);
 
 
 			user.setPlayer(player);
 
-			System.out.println(user.getPlayer());
+			//System.out.println(user.getPlayer());
 			
 			Session.login(user);
+			
 			JOptionPane.showMessageDialog(view.getWindow(), "Se inició la sesión", "Sesión iniciada",
 					JOptionPane.INFORMATION_MESSAGE);
 
