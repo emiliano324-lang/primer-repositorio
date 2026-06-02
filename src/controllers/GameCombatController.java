@@ -24,16 +24,19 @@ public class GameCombatController {
 	GameWindow window;
 	GameMenuView gameMenuView;
 	GameCombatView gameCombatView;	
-	Random random;
+
 	
 	Player player = new Player("",0,0,0,0,0,0,0,false,0,0,null,false,false);
 	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 40, 20, 15,0,false,0,0,false,false);
+
+	int random;
+	
+
 	
 	
 	public GameCombatController(GameCombatView combatView) {
 		this.gameCombatView = combatView;
 		
-		random = new Random();
 		
 		player.setTurn(true);
 		
@@ -85,9 +88,10 @@ public class GameCombatController {
 					    actionFramesFoe = gameCombatView.getDamageFramesFoe();
 					    
 					    enemy.setHealth(enemy.getHealth()-player.getAttackPoints());
-					    
 					    gameCombatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
 					    
+					   
+					    player.setTurn(false);
 				    }else if(b == gameCombatView.getBlock()) {
 
 				    	actionFramesSelf = gameCombatView.getBlockFramesSelf();
@@ -109,40 +113,56 @@ public class GameCombatController {
 				    	
 				    	gameCombatView.topPanelMessage("Vida actual del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
 				   
+				    	actionFramesFoe = gameCombatView.getIdleFramesFoe();
+				    	player.block();
+				    	
+				    	player.setTurn(false);
+				    }else if(b == gameCombatView.getHeal()) {
+				   		actionFramesSelf = gameCombatView.getHealFramesSelf();
+				   		actionFramesFoe = gameCombatView.getIdleFramesFoe();
+				   		player.heal();
+				   		player.setTurn(false);
+
 				    }else {
 			    		actionFramesSelf = gameCombatView.getDamageFramesSelf();
 			    		actionFramesFoe = gameCombatView.getAttackFramesFoe();
 				    }
+
 				    
 				    player.setTurn(b == gameCombatView.getAnalyze() ? true : false);
 				    
+
 				}else {
 					//TODO: Accion del enemigo
 					//TODO: Hacer las animaciones de ataque del enemigo y recibir daño del personaje
 					
-					enemy.setRandomAction(random.nextInt(3));
-					
-					switch(enemy.getRandomAction()) {
-					
-					case 0:
-						player.getDamage(enemy.getAttackPoints());
+
+					if(enemy.getRandomAction() == 1) {
 						
-						break;
-					case 1:
+					
+						actionFramesFoe = gameCombatView.getAttackFramesFoe();
+						actionFramesSelf = gameCombatView.getDamageFramesSelf();
+						player.setTurn(true);
+					}else if(enemy.getRandomAction() == 2) {
+						
 						enemy.heal();
-						break;
-					case 2:
+						actionFramesFoe = gameCombatView.getHealFramesFoe();
+						actionFramesSelf = gameCombatView.getIdleFramesSelf();
+						player.setTurn(true);
+					}else{
+						
 						enemy.block();
-						break;
-					default:
-						break;
+						actionFramesFoe = gameCombatView.getBlockFramesFoe();
+						actionFramesSelf = gameCombatView.getIdleFramesSelf();
+
+						player.setTurn(true);
 					}
 					
 					player.setTurn(true);
 				}
 			    //gameCombatView.animateOnce(actionFramesSelf, actionFramesFoe);
-			}
 			
+			}
 			public void mouseReleased(MouseEvent e) {
 				b.setForeground(defaultForeground);
 				

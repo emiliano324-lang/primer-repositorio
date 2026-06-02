@@ -8,6 +8,7 @@ public class Player extends Character{
 	private int id;
 	
 	
+	
 	public Player(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int level,
 			int tokens,boolean status,int healCharges,int blockCharges, boolean[] upgrades,boolean turn,boolean blocking) {
 		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,status,healCharges,blockCharges,turn,blocking);
