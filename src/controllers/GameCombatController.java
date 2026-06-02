@@ -28,10 +28,12 @@ public class GameCombatController {
 	Player player = new Player();
 	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 5, 5, 15,0,false,0,0,false,false);
 
-	//int random;
+	Random random;
 	
 	public GameCombatController(GameCombatView combatView) {
 		this.combatView = combatView;
+		
+		random = new Random();
 		
 		try {
 			player = Session.loadCharacter();
@@ -85,11 +87,10 @@ public class GameCombatController {
 				    	actionFramesSelf = combatView.getAttackFramesSelf();
 					    actionFramesFoe = combatView.getDamageFramesFoe();
 					    
-					    enemy.getDamage(enemy.getHealth() - player.getAttackPoints());
+					    enemy.getDamage(player.getAttackPoints());
 					    
 					    combatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
 					    
-					   // player.setTurn(false);
 				    }else if(b == combatView.getBlock()) {
 
 				    	actionFramesSelf = combatView.getBlockFramesSelf();
@@ -103,6 +104,7 @@ public class GameCombatController {
 
 				    	actionFramesSelf = combatView.getHealFramesSelf();
 				   		actionFramesFoe = combatView.getBlockFramesFoe();
+				   		
 				   		player.heal();
 				   		
 				   		combatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + player.getHealCharges() + " curaciones.");
@@ -124,6 +126,7 @@ public class GameCombatController {
 				   		player.heal();
 
 				    }else {
+				    	
 			    		actionFramesSelf = combatView.getDamageFramesSelf();
 			    		actionFramesFoe = combatView.getAttackFramesFoe();
 				    }
@@ -133,9 +136,11 @@ public class GameCombatController {
 
 				}else {
 					
+					enemy.setRandomAction(random.nextInt(3));
+					
 					if(enemy.getRandomAction() == 1) {
 					
-						player.setHealth(player.getHealth() - enemy.getAttackPoints());
+						player.getDamage(enemy.getAttackPoints());
 						
 						combatView.updateHealthBar(player.getHealth());
 						
