@@ -6,9 +6,9 @@ public class Enemy extends Character{
 
 	private int randomAction;
 	
-	public Enemy(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int randomAction,boolean status,
+	public Enemy(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int randomAction,boolean dead,
 			int healCharges,int blockCharges,boolean turn,boolean blocking) {
-		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,status,healCharges,blockCharges,turn,blocking);
+		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,dead,healCharges,blockCharges,turn,blocking);
 		this.randomAction = randomAction;
 		
 	}
@@ -22,11 +22,12 @@ public class Enemy extends Character{
 	@Override
 	public void heal() {
 		if(!isDead()) {
-			if(getHealth() + getHealPoints() > getMaxHealth()) {
-				setHealth(getMaxHealth());
-			}else{
-				setHealth(getHealPoints() + getHealth());
-			}	
+				if(getHealth() + getHealPoints() > getMaxHealth()) {
+					setHealth(getMaxHealth());
+				}else{
+					setHealth(getHealPoints() + getHealth());
+				}
+				setHealCharges(getHealCharges()-1); 
 		}
 	}
 
@@ -53,7 +54,20 @@ public class Enemy extends Character{
 		}
 	}
 	public void block(){
-		if(getBlockCharges() > 0) setBlocking(true);
+		if(getBlockCharges() > 0) {
+			setBlocking(true);
+			setBlockCharges(getBlockCharges() - 1);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Enemy [getName()=" + getName() + ", getMaxHealth()=" + getMaxHealth() + ", getHealth()=" + getHealth()
+				+ ", getAttackPoints()=" + getAttackPoints() + ", getBlockPoints()=" + getBlockPoints()
+				+ ", getHealPoints()=" + getHealPoints() + ", isDead()=" + isDead() + ", getBlockCharges()="
+				+ getBlockCharges() + ", getTurn()=" + getTurn() + ", getHealCharges()=" + getHealCharges()
+				+ ", isBlocking()=" + isBlocking() + ", getClass()=" + getClass() + ", toString()=" + super.toString()
+				+ "]";
 	}
 	
 	
@@ -74,4 +88,13 @@ public class Enemy extends Character{
 		}
 	}
 	*/
+
+	
+	
+	
+	
+	
+	
+	
+	
 }

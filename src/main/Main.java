@@ -19,6 +19,7 @@ public class  Main {
 
 		LoginWindow login = new LoginWindow();
 
+
 		//new RegistrationController(new RegistrationWindow());
 		//RegistrationWindow form = new RegistrationWindow();
 		//RegistrationController formController = new RegistrationController(form);

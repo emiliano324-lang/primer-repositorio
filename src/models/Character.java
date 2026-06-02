@@ -15,11 +15,12 @@ public abstract class Character {
 	private boolean turn;
 	private boolean blocking;
 	
+
 	public Character() {
 		
 	}
 	
-	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints,boolean status,
+	public Character(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints,boolean dead,
 			int healCharges,int blockCharges,boolean turn,boolean blocking) {
 		this.name = name;
 		this.maxHealth = maxHealth;
@@ -83,12 +84,14 @@ public abstract class Character {
 	
 	public abstract void getDamage(int damage);
 
+
+	
 	public boolean isDead() {
 		return dead;
 	}
-
-	public void setDead(boolean dead) {
-		this.dead = dead;
+	
+	public void setDead(boolean status) {
+		this.dead = status;
 	}
 
 	public int getBlockCharges() {

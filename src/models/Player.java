@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Arrays;
+
 public class Player extends Character{
 
 	private boolean[] upgrades = {false,false,false,false,false,false};
@@ -12,8 +14,8 @@ public class Player extends Character{
 	}
 	
 	public Player(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int level,
-			int tokens,boolean status,int healCharges,int blockCharges, boolean[] upgrades,boolean turn,boolean blocking) {
-		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,status,healCharges,blockCharges,turn,blocking);
+			int tokens,boolean dead,int healCharges,int blockCharges, boolean[] upgrades,boolean turn,boolean blocking) {
+		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,dead,healCharges,blockCharges,turn,blocking);
 		
 		this.upgrades = upgrades;
 		this.setLevel(0);
@@ -131,6 +133,16 @@ public class Player extends Character{
 			upgrades[5] = true;
 		}
 		
+	}
+
+	@Override
+	public String toString() {
+		return "Player:  level=" + level + ", tokens=" + tokens + ", id="
+				+ id + ", getName()=" + getName() + ", getMaxHealth()=" + getMaxHealth() + ", getHealth()="
+				+ getHealth() + ", getAttackPoints()=" + getAttackPoints() + ", getBlockPoints()=" + getBlockPoints()
+				+ ", getHealPoints()=" + getHealPoints() + ", isDead()=" + isDead() + ", getBlockCharges()="
+				+ getBlockCharges() + ", getTurn()=" + getTurn() + ", getHealCharges()=" + getHealCharges()
+				+ ", isBlocking()=" + isBlocking() ;
 	}
 	
 }

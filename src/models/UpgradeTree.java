@@ -34,7 +34,7 @@ public class UpgradeTree {
 				} else {
 					addNode(node, root.getChild1());
 				}
-
+				
 			} else if (node.getValue() == root.getValue()) {
 
 				if (root.getChild2() == null) {

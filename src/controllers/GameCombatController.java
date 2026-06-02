@@ -14,6 +14,7 @@ import javax.swing.JButton;
 
 import models.Enemy;
 import models.Player;
+import utils.ScreenManager;
 import utils.Session;
 import views.GameCombatView;
 import views.GameMenuView;
@@ -26,9 +27,9 @@ public class GameCombatController {
 	GameCombatView combatView;	
 
 	Player player = new Player();
-	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 5, 5, 15,0,false,0,0,false,false);
+	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 5, 30, 15,0,false,5,5,false,false);
 
-	//int random;
+	Random random;
 	
 	public GameCombatController(GameCombatView combatView) {
 		this.combatView = combatView;
@@ -85,7 +86,7 @@ public class GameCombatController {
 				    	actionFramesSelf = combatView.getAttackFramesSelf();
 					    actionFramesFoe = combatView.getDamageFramesFoe();
 					    
-					    enemy.getDamage(enemy.getHealth() - player.getAttackPoints());
+					    enemy.getDamage(player.getAttackPoints());
 					    
 					    combatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
 					    
@@ -132,40 +133,61 @@ public class GameCombatController {
 				    
 
 				}else {
+						
+					enemy.setRandomAction((int)(Math.random() * 3) + 1);
 					
-					if(enemy.getRandomAction() == 1) {
 					
-						player.setHealth(player.getHealth() - enemy.getAttackPoints());
+					if(enemy.getRandomAction() == 1 && enemy.getBlockCharges() > 0) {
+					
+						enemy.block();
+						actionFramesFoe = combatView.getBlockFramesFoe();
+						actionFramesSelf = combatView.getIdleFramesSelf();
 						
-						combatView.updateHealthBar(player.getHealth());
 						
-						actionFramesFoe = combatView.getAttackFramesFoe();
-						actionFramesSelf = combatView.getDamageFramesSelf();
-						
-					}else if(enemy.getRandomAction() == 2) {
+					}else if(enemy.getRandomAction() == 2 && enemy.getBlockCharges() > 0) {
 						
 						enemy.heal();
 						actionFramesFoe = combatView.getHealFramesFoe();
 						actionFramesSelf = combatView.getIdleFramesSelf();
 						
-					}else{
+					}else {
 						
-						enemy.block();
-						actionFramesFoe = combatView.getBlockFramesFoe();
-						actionFramesSelf = combatView.getIdleFramesSelf();
+						player.getDamage(enemy.getAttackPoints());
+						
+						combatView.updateHealthBar(player.getHealth());
+						
+						actionFramesFoe = combatView.getAttackFramesFoe();
+						actionFramesSelf = combatView.getDamageFramesSelf();
 					}
 					
 					player.setTurn(true);
 				}
 			    combatView.animateOnce(actionFramesSelf, actionFramesFoe);
-			
+			    
+			    
+			    System.out.println(player.toString());
+			    
+			    
+			    if(player.isDead()) {
+			    	player.setTokens(player.getTokens() + 1);
+			    	
+			    	ScreenManager.showPanel("MENU");
+			    }
+			    
+			    
 			}
+			
+			
+			
+			
+			
 			public void mouseReleased(MouseEvent e) {
 				b.setForeground(defaultForeground);
 				
 			}
 		});
 	}
+	
 	
 	
 	
