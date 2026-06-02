@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import utils.ScreenManager;
 import views.GameMenuView;
 import views.GameWindow;
+import views.LoginWindow;
 import views.MainWindow;
 
 public class GameMenuController {
@@ -31,7 +32,7 @@ public class GameMenuController {
         view.getBtnSkillTree().addActionListener(e ->  ScreenManager.showPanel("SKILLTREE"));
         
         view.getBtnExit().addActionListener(e -> {
-        		new HomeController(new MainWindow());
+        		new LoginWindow();
         		window.dispose();
         });
         

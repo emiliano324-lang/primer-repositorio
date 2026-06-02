@@ -22,6 +22,7 @@ import models.UpgradeNode;
 import models.UpgradeTree;
 import utils.AppFont;
 import utils.CustomJSwing;
+import utils.Session;
 
 public class GameUpgradeTreeView extends JPanel {
 
@@ -101,7 +102,7 @@ public class GameUpgradeTreeView extends JPanel {
 		back.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		back.setBounds(20, screenHeight - 100, 500, 50);
 
-		lblTokens = createLabel("Monedas: 0");
+		lblTokens = createLabel("Monedas: " + Session.getCurrentUser().getPlayer().getTokens());
 		lblTokens.setBounds(screenWidth - 500, screenHeight - 100, 500, 50);
 
 		errorLabelNode = createErrorLabel("");
@@ -305,9 +306,7 @@ public class GameUpgradeTreeView extends JPanel {
 	
 	public void updateTokens(int tokens) {
 
-	    lblTokens.setText(
-	        "Monedas: " + tokens
-	    );
+	    lblTokens.setText("Monedas: " + tokens);
 	}
 	
 	private JLabel createLabel(String text) {

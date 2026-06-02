@@ -31,7 +31,6 @@ public class UserRepository {
 				PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-			;
 
 			pst.setString(1, user.getName());
 			pst.setString(2, hashedPassword);

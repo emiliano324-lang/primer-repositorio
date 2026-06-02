@@ -6,6 +6,9 @@ public class Enemy extends Character{
 
 	private int randomAction;
 	
+	public Enemy() {
+	}
+	
 	public Enemy(String name, int maxHealth, int health, int attackPoints, int blockPoints, int healPoints, int randomAction,boolean dead,
 			int healCharges,int blockCharges,boolean turn,boolean blocking) {
 		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,dead,healCharges,blockCharges,turn,blocking);
@@ -23,12 +26,12 @@ public class Enemy extends Character{
 	@Override
 	public void heal() {
 		if(!isDead()) {
-				if(getHealth() + getHealPoints() > getMaxHealth()) {
-					setHealth(getMaxHealth());
-				}else{
-					setHealth(getHealPoints() + getHealth());
-				}
-				setHealCharges(getHealCharges()-1); 
+			if(getHealth() + getHealPoints() > getMaxHealth()) {
+				setHealth(getMaxHealth());
+			}else{
+				setHealth(getHealPoints() + getHealth());
+			}
+			setHealCharges(getHealCharges()-1); 
 		}
 	}
 
@@ -45,6 +48,7 @@ public class Enemy extends Character{
 				return;
 			}
 		}
+		
 		//dano normal
 		setHealth(getHealth()-damage);
 		

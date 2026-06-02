@@ -12,8 +12,11 @@ import java.util.Random;
 
 import javax.swing.JButton;
 
+import enums.Winner;
 import models.Enemy;
 import models.Player;
+import repository.BattleRepository;
+import repository.CharacterRepository;
 import utils.ScreenManager;
 import utils.Session;
 import views.GameCombatView;
@@ -26,18 +29,28 @@ public class GameCombatController {
 	GameMenuView menuView;
 	GameCombatView combatView;
 
+	BattleRepository battleRepo;
+	CharacterRepository characterRepo;
+	
+	int enemyId = 10;
+	
 	Player player = new Player();
-	Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 5, 30, 15, 0, false, 5, 5, false, false);
+	//Enemy enemy = new Enemy("Segador del Vacío", 200, 200, 5, 30, 15, 0, false, 5, 5, false, false);
+	Enemy enemy = new Enemy();
 
 	Random random;
 
 	public GameCombatController(GameCombatView combatView) {
+		battleRepo = new BattleRepository();
+		characterRepo = new CharacterRepository();
+		
 		this.combatView = combatView;
 
 		random = new Random();
 
 		try {
 			player = Session.loadCharacter();
+			enemy = characterRepo.loadEnemy(enemyId);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +96,8 @@ public class GameCombatController {
 			    combatView.getAnimation().stop();
 			    
 			    if(player.getTurn()) {
-				    if(b == combatView.getAttack()) {
+				   
+			    	if(b == combatView.getAttack()) {
 
 				    	actionFramesSelf = combatView.getAttackFramesSelf();
 					    actionFramesFoe = combatView.getDamageFramesFoe();
@@ -139,17 +153,12 @@ public class GameCombatController {
 						
 					enemy.setRandomAction((int)(Math.random() * 3) + 1);
 					
-
-					
 					if(enemy.getRandomAction() == 1 && enemy.getBlockCharges() > 0) {
 					
 						enemy.block();
 						actionFramesFoe = combatView.getBlockFramesFoe();
 						actionFramesSelf = combatView.getIdleFramesSelf();
 
-					
-						
-						
 					}else if(enemy.getRandomAction() == 2 && enemy.getBlockCharges() > 0) {
 						
 						enemy.heal();
@@ -170,21 +179,33 @@ public class GameCombatController {
 				}
 			    combatView.animateOnce(actionFramesSelf, actionFramesFoe);
 			    
-			    
 			    System.out.println(player.toString());
 			    
-			    
 			    if(player.isDead()) {
-			    	player.setTokens(player.getTokens() + 1);
+			    	battleRepo.saveBattle(player.getId(), enemyId, Winner.Enemy);
 			    	
+			    	player = Session.getCurrentUser().getPlayer();
+			    	
+			    	player.setTokens(player.getTokens() + 1);
+			    				    	
+			    	restartCombat();
 			    	ScreenManager.showPanel("MENU");
-			    }			    
+			    	
+			    	
+			    }else if(enemy.isDead()) {
+			    	
+			    	battleRepo.saveBattle(player.getId(), enemyId, Winner.Player);
+			    	
+			    	player = Session.getCurrentUser().getPlayer();
+			    	
+			    	player.setTokens(player.getTokens() + 2);
+			    	
+			    	restartCombat();
+			    	ScreenManager.showPanel("MENU");
+			    	
+			    }
 			    
-			
-			
 			}
-			
-			
 			
 			public void mouseReleased(MouseEvent e) {
 				b.setForeground(defaultForeground);
@@ -194,6 +215,15 @@ public class GameCombatController {
 	
 		}
 	
+	public void restartCombat() {
 		
+		try {
+			player = Session.loadCharacter();
+			enemy = characterRepo.loadEnemy(enemyId);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

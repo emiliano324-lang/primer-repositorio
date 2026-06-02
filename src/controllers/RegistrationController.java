@@ -17,6 +17,7 @@ import javax.swing.event.DocumentListener;
 import models.Player;
 import models.User;
 import repository.UserRepository;
+import views.LoginView;
 import views.LoginWindow;
 import views.MainWindow;
 import views.RegistrationWindow;				
@@ -159,7 +160,7 @@ public class RegistrationController {
 	    			repository.save(user);
 	    			JOptionPane.showMessageDialog(view, "Registro exitoso");
 	    			
-	    			new HomeController(new MainWindow());
+	    			handleBack();
 	    			view.dispose();
 	    			
 	    		}catch(IOException e) {
@@ -167,8 +168,6 @@ public class RegistrationController {
 	    		}
 	    	}
     }
-    
-
     
     /*private String saveImage() {
     	

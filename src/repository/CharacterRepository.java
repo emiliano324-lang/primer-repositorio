@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import config.DatabaseConnection;
+import models.Enemy;
 import models.Player;
 import models.User;
 
@@ -52,7 +53,7 @@ public class CharacterRepository {
 	}
 
 	// READ
-	public Player loadPlayer(int idCharacter) throws IOException {
+	public Player loadPlayer(int idUser) throws IOException {
 
 		String sql = "SELECT * FROM characters WHERE id_user = ?";
 
@@ -60,13 +61,13 @@ public class CharacterRepository {
 
 				PreparedStatement pst = connection.prepareStatement(sql)) {
 
-			pst.setInt(1, idCharacter);
+			pst.setInt(1, idUser);
 
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
 
-				boolean[] upgrades = loadUpgrades(idCharacter, connection);
+				boolean[] upgrades = loadUpgrades(rs.getInt("id_character"), connection);
 
 				Player player = new Player(
 
@@ -95,8 +96,8 @@ public class CharacterRepository {
 	// UPDATE
 	public boolean updatePlayer(Player player) {
 
-		String sql = "UPDATE characters" + "SET health = ?," + "max_health = ?," + "attack_points = ?,"
-				+ "defense_points = ?," + "heal_points = ?," + "level = ?," + "tokens = ?" + "WHERE id_character = ?";
+		String sql = "UPDATE characters " + "SET health = ?, " + "max_health = ?, " + "attack_points = ?, "
+				+ "defense_points = ?, " + "heal_points = ?, " + "level = ? " + "WHERE id_character = ?";
 
 		try (Connection connection = DatabaseConnection.getConnection();
 
@@ -108,9 +109,8 @@ public class CharacterRepository {
 			pst.setInt(4, player.getBlockPoints());
 			pst.setInt(5, player.getHealPoints());
 			pst.setInt(6, player.getLevel());
-			pst.setInt(7, player.getTokens());
 
-			pst.setInt(8, player.getId());
+			pst.setInt(7, player.getId());
 
 			int affectedRows = pst.executeUpdate();
 
@@ -233,5 +233,42 @@ public class CharacterRepository {
 		}
 
 		return upgrades;
+	}
+	
+	public Enemy loadEnemy(int idEnemy) throws IOException{
+		
+		String sql = "SELECT * FROM enemies WHERE id_enemy = ?";
+		
+		try (Connection connection = DatabaseConnection.getConnection();
+				PreparedStatement pst = connection.prepareStatement(sql)) {
+			
+			pst.setInt(1, idEnemy);
+			
+			ResultSet rs = pst.executeQuery();
+			
+			if(rs.next()) {
+				Enemy enemy = 
+						new Enemy(rs.getString("name"),
+								rs.getInt("max_health"),
+								rs.getInt("health"),
+								rs.getInt("attack_points"), 
+								rs.getInt("defense_points"),
+								rs.getInt("heal_points"), 
+								0,
+								false, 
+								5,
+								5, 
+								false, 
+								false);
+				
+				return enemy;
+			}
+			
+		}catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+			
 	}
 }
