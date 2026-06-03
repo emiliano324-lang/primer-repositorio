@@ -60,6 +60,8 @@ public class GameCombatController {
 		registerListeners();
 
 		combatView.initializePlayer(player);
+		
+		
 	}
 
 	public void registerListeners() {
@@ -105,25 +107,40 @@ public class GameCombatController {
 					    enemy.getDamage(player.getAttackPoints());
 					    
 					    combatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
-					    
+					    player.setTurn(true);
 				    }else if(b == combatView.getBlock()) {
 
-				    	actionFramesSelf = combatView.getBlockFramesSelf();
-				    	actionFramesFoe = combatView.getHealFramesFoe();
-
-				    	player.block();
+				    	if(player.getBlockCharges() > 0) {
+					    	actionFramesSelf = combatView.getBlockFramesSelf();
+					    	actionFramesFoe = combatView.getHealFramesFoe();
+	
+					    	player.block();
+					    	
+					    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + player.getBlockCharges() + " bloqueos.");
+					    	player.setTurn(true);
+				    	}else {
+				    		combatView.topPanelMessage("No tienes cargas de bloqueo : " + player.getBlockCharges() + " bloqueos.");
+				    		actionFramesSelf = combatView.getIdleFramesSelf();	
+				    		actionFramesFoe = combatView.getIdleFramesFoe();				    		
+				    	}
 				    	
-				    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + player.getBlockCharges() + " bloqueos.");
-					    
+				    	
 				    }else if(b == combatView.getHeal()) {
 
-				    	actionFramesSelf = combatView.getHealFramesSelf();
-				   		actionFramesFoe = combatView.getBlockFramesFoe();
-				   		
-				   		player.heal();
-				   		
-				   		combatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + player.getHealCharges() + " curaciones.");
-					    
+				    	if(player.getHealCharges() > 0) {
+					    	actionFramesSelf = combatView.getHealFramesSelf();
+					   		actionFramesFoe = combatView.getIdleFramesFoe();
+					   		
+					   		player.heal();
+					   		
+					   		combatView.updateHealthBar(player.getHealth());
+					   		combatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + player.getHealCharges() + " curaciones.");
+					   		player.setTurn(true);
+				    	}else {
+				    		combatView.topPanelMessage("No tienes cargas de curacion : " + player.getHealCharges() + " curaciones.");
+				    		actionFramesSelf = combatView.getIdleFramesSelf();	
+				    		actionFramesFoe = combatView.getIdleFramesFoe();
+				    	}
 				    }else if(b == combatView.getAnalyze()) {
 				    	
 				    	combatView.topPanelMessage("Vida actual del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
@@ -133,20 +150,13 @@ public class GameCombatController {
 				    	
 				    	player.block();
 				    	
-				    }else if(b == combatView.getHeal()) {
-				   		
-				    	actionFramesSelf = combatView.getHealFramesSelf();
-				   		actionFramesFoe = combatView.getIdleFramesFoe();
-				   		
-				   		player.heal();
-
 				    }else {
 				    	
 			    		actionFramesSelf = combatView.getDamageFramesSelf();
 			    		actionFramesFoe = combatView.getAttackFramesFoe();
 				    }
 				    
-				    player.setTurn(b == combatView.getAnalyze() ? true : false);
+				
 				    
 
 				}else {
@@ -219,6 +229,8 @@ public class GameCombatController {
 		
 		try {
 			player = Session.loadCharacter();
+			combatView.updateHealthBar(player.getHealth());
+			combatView.initializePlayer(player);
 			enemy = characterRepo.loadEnemy(enemyId);
 		} catch (IOException e) {
 			e.printStackTrace();

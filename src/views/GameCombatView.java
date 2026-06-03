@@ -52,6 +52,7 @@ public class GameCombatView extends JPanel {
 	private JLabel characterSelf;
 	private JLabel characterFoe;
 	private JLabel lblTopPanelMessage;
+	
 
 	Image combatBackground;
 
@@ -483,8 +484,8 @@ public class GameCombatView extends JPanel {
 	private JProgressBar createProgressBar() {
 		JProgressBar progressBar = new JProgressBar();
 
-		progressBar.setMaximum(100);
-		progressBar.setMinimum(0);
+		
+		
 		progressBar.setForeground(Color.GREEN);
 		progressBar.setValue(progressBar.getMaximum());
 

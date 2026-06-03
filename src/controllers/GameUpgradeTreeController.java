@@ -36,7 +36,7 @@ public class GameUpgradeTreeController implements ActionListener {
 		initializeLockedNodes();
 
 		loadUnlockedNodes();
-
+		this.view.updateTokens(player.getTokens());
 		registerListeners();
 	}
 

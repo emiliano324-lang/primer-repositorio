@@ -105,11 +105,16 @@ public class Player extends Character{
 		// TODO: Falta aumentar las cargas de heal y Block y aumento de vida maxima.
 		if(nomUpgrade.equalsIgnoreCase("CURACIÓN I") && upgrades[0] == false) {
 			setHealPoints((int)(getHealPoints() + (getHealPoints() * 0.40)));
+			setMaxHealth((int)(getMaxHealth() + (getMaxHealth()* 0.40)));
+			setHealCharges(getHealCharges() + 1);
+			
 			upgrades[0] = true;
 		}
 		
 		if(nomUpgrade.equalsIgnoreCase("CURACIÓN II") && upgrades[1] == false) {
 			setHealPoints((int)(getHealPoints() + (getHealPoints())));
+			setMaxHealth((int)(getMaxHealth()) + (getMaxHealth()));
+			setHealCharges(getHealCharges() + 2);
 			upgrades[1] = true;
 		}
 		
