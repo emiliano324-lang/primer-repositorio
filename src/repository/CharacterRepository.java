@@ -1,4 +1,4 @@
-	package repository;
+package repository;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -80,7 +80,15 @@ public class CharacterRepository {
 
 						rs.getInt("level"), rs.getInt("tokens"),
 
-						false, 3, 3, upgrades, false, false);
+						false,
+						
+						rs.getInt("heal_charges"), rs.getInt("block_charges"),
+						
+						upgrades,
+						
+						false,
+						
+						false);
 
 				player.setId(rs.getInt("id_character"));
 
@@ -97,8 +105,17 @@ public class CharacterRepository {
 	// UPDATE
 	public boolean updatePlayer(Player player) {
 
-		String sql = "UPDATE characters " + "SET health = ?, " + "max_health = ?, " + "attack_points = ?, "
-				+ "defense_points = ?, " + "heal_points = ?, " + "level = ? " + "WHERE id_character = ?";
+		String sql = "UPDATE characters "
+				+ "SET health = ?, " 
+				+ "max_health = ?, " 
+				+ "attack_points = ?, "
+				+ "defense_points = ?, " 
+				+ "heal_points = ?, " 
+				+ "level = ?, "
+				+ "tokens = ?, "
+				+ "heal_charges = ?, "
+				+ "block_charges = ? "
+				+ "WHERE id_character = ?";
 
 		try (Connection connection = DatabaseConnection.getConnection();
 
@@ -110,8 +127,12 @@ public class CharacterRepository {
 			pst.setInt(4, player.getBlockPoints());
 			pst.setInt(5, player.getHealPoints());
 			pst.setInt(6, player.getLevel());
+			pst.setInt(7, player.getTokens());
 
-			pst.setInt(7, player.getId());
+			pst.setInt(8, player.getHealCharges());
+			pst.setInt(9, player.getBlockCharges());
+
+			pst.setInt(10, player.getId());
 
 			int affectedRows = pst.executeUpdate();
 

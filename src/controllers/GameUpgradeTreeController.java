@@ -29,14 +29,19 @@ public class GameUpgradeTreeController implements ActionListener {
 
 		this.view = view;
 
-		this.player = Session.getCurrentUser().getPlayer();
+		player = Session.getPlayer();
 
+		if(player != null) {
+		    view.updateTokens(player.getTokens());
+		}
+		
 		this.repo = new CharacterRepository();
 
 		initializeLockedNodes();
 
 		loadUnlockedNodes();
-		this.view.updateTokens(player.getTokens());
+		
+		
 		registerListeners();
 	}
 
@@ -188,11 +193,12 @@ public class GameUpgradeTreeController implements ActionListener {
 
 		// DESCONTAR TOKENS
 		player.setTokens(player.getTokens() - 1);
+		
 		view.updateTokens(player.getTokens());
-
+		
 		// APLICAR UPGRADE
 		player.upgrade(node.getUpgradeName());
-
+		
 		// GUARDAR EN SQL
 		repo.saveUpgrade(player.getId(), node.getUpgradeName());
 
@@ -208,4 +214,25 @@ public class GameUpgradeTreeController implements ActionListener {
 
 		view.repaint();
 	}
+	
+	public void refresh() {
+
+	    try {
+
+	        player = Session.loadCharacter();
+
+	        Session.setPlayer(player);
+
+	        view.updateTokens(player.getTokens());
+
+	    } catch (Exception e) {
+
+	        e.printStackTrace();
+	    }
+	}
+	
+	public GameUpgradeTreeView getTreeView() {
+		return view;
+	}
+	
 }

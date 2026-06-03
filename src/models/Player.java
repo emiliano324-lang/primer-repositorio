@@ -18,8 +18,9 @@ public class Player extends Character{
 		super(name, maxHealth, health, attackPoints, blockPoints, healPoints,dead,healCharges,blockCharges,turn,blocking);
 		
 		this.upgrades = upgrades;
-		this.setLevel(0);
-		this.setTokens(0);
+		
+		this.level = level;
+		this.tokens = tokens;
 	}
 	
 	
@@ -100,8 +101,49 @@ public class Player extends Character{
 		if(getBlockCharges() > 0) setBlocking(true);
 	}
 	
-	
 	public void upgrade(String nomUpgrade) {
+
+	    switch (nomUpgrade.toUpperCase()) {
+
+	        case "CURACIÓN I":
+	            setHealPoints((int)(getHealPoints() * 1.4));
+	            setMaxHealth((int)(getMaxHealth() * 1.4));
+	            setHealth(getMaxHealth());
+	            setHealCharges(getHealCharges() + 1);
+	            upgrades[0] = true;
+	            break;
+
+	        case "CURACIÓN II":
+	            setHealPoints(getHealPoints() * 2);
+	            setMaxHealth(getMaxHealth() * 2);
+	            setHealth(getMaxHealth());
+	            setHealCharges(getHealCharges() + 2);
+	            upgrades[1] = true;
+	            break;
+
+	        case "DAÑO I":
+	            setAttackPoints((int)(getAttackPoints() * 1.4));
+	            upgrades[2] = true;
+	            break;
+
+	        case "DAÑO II":
+	            setAttackPoints(getAttackPoints() * 2);
+	            upgrades[3] = true;
+	            break;
+
+	        case "BLOQUEO I":
+	            setBlockPoints((int)(getBlockPoints() * 1.3));
+	            upgrades[4] = true;
+	            break;
+
+	        case "BLOQUEO II":
+	            setBlockPoints((int)(getBlockPoints() * 1.6));
+	            upgrades[5] = true;
+	            break;
+	    }
+	}
+	
+	/*public void upgrade(String nomUpgrade) {
 		// TODO: Falta aumentar las cargas de heal y Block y aumento de vida maxima.
 		if(nomUpgrade.equalsIgnoreCase("CURACIÓN I") && upgrades[0] == false) {
 			setHealPoints((int)(getHealPoints() + (getHealPoints() * 0.40)));
@@ -140,7 +182,7 @@ public class Player extends Character{
 			upgrades[5] = true;
 		}
 		
-	}
+	}*/
 
 	@Override
 	public String toString() {

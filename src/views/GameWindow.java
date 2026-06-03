@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controllers.GameMenuController;
+import controllers.GameResultController;
 import controllers.GameCombatController;
 import controllers.GameCreditsController;
 import controllers.GameUpgradeTreeController;
@@ -26,6 +27,7 @@ public class GameWindow extends JFrame{
     private JPanel container;
     
    private GameCombatController combatController;
+   private GameUpgradeTreeController treeController;
 
 	public GameWindow() {
 		
@@ -57,22 +59,31 @@ public class GameWindow extends JFrame{
         GameCombatView gameLoopView = new GameCombatView();
         GameUpgradeTreeView gameUpgradeTreeView = new GameUpgradeTreeView();
 		GameCreditsView creditsView = new GameCreditsView();
+		GameResultView resultView = new GameResultView();
+		
         
         container.add(menuView, "MENU");
         container.add(gameLoopView, "GAME");
         container.add(gameUpgradeTreeView, "SKILLTREE");
         container.add(creditsView, "CREDITS");
+        container.add(resultView,"RESULT");
         
         new GameMenuController(menuView,this);
         combatController = new GameCombatController(gameLoopView);
-        new GameUpgradeTreeController(gameUpgradeTreeView);
+        treeController= new GameUpgradeTreeController(gameUpgradeTreeView);
         new GameCreditsController(creditsView);
-       
+        new GameResultController(resultView);
+        
+        
         ScreenManager.showPanel("MENU");
 		setVisible(true);
 	}
 	
 	public GameCombatController getCombatController() {
 	    return combatController;
-	} 
+	}
+
+	public GameUpgradeTreeController getUpgradeTreeController() {
+		return treeController;
+	}
 }

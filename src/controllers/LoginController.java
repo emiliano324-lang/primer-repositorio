@@ -97,7 +97,7 @@ public class LoginController {
 
 			user.setPlayer(player);
 
-			//System.out.println(user.getPlayer());
+			Session.setPlayer(player);
 			
 			Session.login(user);
 			
