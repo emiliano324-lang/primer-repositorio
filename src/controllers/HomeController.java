@@ -11,9 +11,11 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
+import models.Player;
 import models.User;
 import repository.UserRepository;
 import tablemodels.UserTableModel;
+import utils.Session;
 import views.GameMenuView;
 import views.GameWindow;
 import views.LoginWindow;
@@ -88,6 +90,17 @@ public class HomeController {
 		view.btnHome.setEnabled(!viewName.equals(MainWindow.HOME));
 	}
 	private void handlePlay() {
+		
+		
+		Player player;
+		try {
+			player = new Session().loadCharacter();
+			Session.setPlayer(player);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		new GameWindow();
 		System.out.println("Se abrio la ventana");
 		view.dispose();

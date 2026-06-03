@@ -12,6 +12,7 @@ import repository.UserRepository;
 public class Session {
 	
 	private static User currentUser;
+	private static Player currentPlayer;
 	
 	public static void login(User user) {
 		currentUser = user;
@@ -29,6 +30,14 @@ public class Session {
 		return currentUser != null;
 	}
 	
+	public static void setPlayer(Player player) {
+	     currentPlayer = player;
+	}
+	
+	public static Player getPlayer() {
+		return currentPlayer;
+	}
+	
 	public static void saveCharacter(Player player) {
 		if(currentUser == null) 
 			return;
@@ -37,9 +46,6 @@ public class Session {
 		repo.updatePlayer(currentUser.getPlayer());
 	}
 	
-	public static void saveCharacter(Enemy enemy) {
-		
-	}
 	
 	public static Player loadCharacter() throws IOException {
 
@@ -54,15 +60,6 @@ public class Session {
 	    player = repo.loadPlayer(currentUser.getId()); 
 	    
 	    return player;
-	    
-	    /*
-	    int playerId = repo.loadPlayer(player.getId());
-
-	    if(playerId == -1) {
-	    	return;
-	    }
-	    
-	    player.setId(playerId);*/
 	}
 	
 	public static void loadEnemy(Enemy enemy) {

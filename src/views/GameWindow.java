@@ -21,8 +21,11 @@ import controllers.LoginController;
 import utils.ScreenManager;
 
 public class GameWindow extends JFrame{
+	
 	private CardLayout layout;
     private JPanel container;
+    
+   private GameCombatController combatController;
 
 	public GameWindow() {
 		
@@ -47,7 +50,9 @@ public class GameWindow extends JFrame{
 		container = new JPanel(layout);
 
         add(container);
+        
         ScreenManager.initialize(layout, container);    
+        
         GameMenuView menuView = new GameMenuView();
         GameCombatView gameLoopView = new GameCombatView();
         GameUpgradeTreeView gameUpgradeTreeView = new GameUpgradeTreeView();
@@ -59,11 +64,15 @@ public class GameWindow extends JFrame{
         container.add(creditsView, "CREDITS");
         
         new GameMenuController(menuView,this);
-        new GameCombatController(gameLoopView);
+        combatController = new GameCombatController(gameLoopView);
         new GameUpgradeTreeController(gameUpgradeTreeView);
         new GameCreditsController(creditsView);
        
         ScreenManager.showPanel("MENU");
 		setVisible(true);
 	}
+	
+	public GameCombatController getCombatController() {
+	    return combatController;
+	} 
 }

@@ -446,10 +446,16 @@ public class GameCombatView extends JPanel {
 
 	public void initializePlayer(Player player) {
 
+		//Player player = Session.getPlayer();
+		
 	    healthBar.setMaximum(player.getMaxHealth());
-	    healthBar.setValue(player.getHealth());
+	    
+	    healthBar.setValue(healthBar.getMaximum());
 
 	    updateHealthBar(player.getHealth());
+	    
+	    this.revalidate();
+	    this.repaint();
 	}
 	
 	public void updateHealthBar(int currentHealth) {

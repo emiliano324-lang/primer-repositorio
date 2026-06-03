@@ -28,6 +28,8 @@ public abstract class Character {
 		this.attackPoints = attackPoints;
 		this.blockPoints = blockPoints;
 		this.healPoints = healPoints;
+		this.healCharges = healCharges;
+		this.blockCharges = blockCharges;
 		this.dead = false;
 		
 	}

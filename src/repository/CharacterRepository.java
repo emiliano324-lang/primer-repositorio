@@ -17,24 +17,25 @@ public class CharacterRepository {
 	// CREATE
 	public void createPlayer(User user) {
 
-		String sql = "INSERT INTO characters (id_user, name, level, health, max_health, attack_points, defense_points, heal_points, tokens)"
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO characters (id_character, id_user, name, level, health, max_health, attack_points, defense_points, heal_points, tokens)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection connection = DatabaseConnection.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			pst.setInt(1, user.getId());
-			pst.setString(2, user.getName());
+			pst.setInt(2, user.getId());
+			pst.setString(3, user.getName());
 
-			pst.setInt(3, 1);
-			pst.setInt(4, 100);
+			pst.setInt(4, 1);
 			pst.setInt(5, 100);
+			pst.setInt(6, 100);
 
-			pst.setInt(6, 10);
-			pst.setInt(7, 5);
-			pst.setInt(8, 15);
+			pst.setInt(7, 10);
+			pst.setInt(8, 5);
+			pst.setInt(9, 15);
 
-			pst.setInt(9, 0);
+			pst.setInt(10, 0);
 
 			pst.executeUpdate();
 
@@ -123,6 +124,33 @@ public class CharacterRepository {
 		return false;
 	}
 
+	// DELETE
+		public boolean deletePlayer(int idUser) {
+
+			String sql = "DELETE FROM characters WHERE id_user = ?";
+
+			try (Connection connection = DatabaseConnection.getConnection();
+
+					PreparedStatement pst = connection.prepareStatement(sql)) {
+
+				pst.setInt(1, idUser);
+
+				int affectedRows = pst.executeUpdate();
+
+				if (affectedRows > 0) {
+
+					System.out.println("Player eliminado");
+
+					return true;
+				}
+
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+
+			return false;
+		}
+	
 	public void saveUpgrade(int idCharacter, String upgradeName) {
 		String findUpgradeSql = "SELECT id_upgrade FROM upgrades WHERE name = ?";
 
@@ -155,22 +183,19 @@ public class CharacterRepository {
 		}
 	}
 
-	// DELETE
-	public boolean deletePlayer(int idUser) {
+	public boolean deleteUpgrades(int idCharacter) {
 
-		String sql = "DELETE FROM characters WHERE id_user = ?";
+		String sql = "DELETE FROM character_has_upgrades WHERE id_character = ?";
 
 		try (Connection connection = DatabaseConnection.getConnection();
 
 				PreparedStatement pst = connection.prepareStatement(sql)) {
 
-			pst.setInt(1, idUser);
+			pst.setInt(1, idCharacter);
 
 			int affectedRows = pst.executeUpdate();
 
 			if (affectedRows > 0) {
-
-				System.out.println("Player eliminado");
 
 				return true;
 			}

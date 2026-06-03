@@ -106,6 +106,7 @@ public class Player extends Character{
 		if(nomUpgrade.equalsIgnoreCase("CURACIÓN I") && upgrades[0] == false) {
 			setHealPoints((int)(getHealPoints() + (getHealPoints() * 0.40)));
 			setMaxHealth((int)(getMaxHealth() + (getMaxHealth()* 0.40)));
+			setHealth(getMaxHealth());
 			setHealCharges(getHealCharges() + 1);
 			
 			upgrades[0] = true;
@@ -114,6 +115,7 @@ public class Player extends Character{
 		if(nomUpgrade.equalsIgnoreCase("CURACIÓN II") && upgrades[1] == false) {
 			setHealPoints((int)(getHealPoints() + (getHealPoints())));
 			setMaxHealth((int)(getMaxHealth()) + (getMaxHealth()));
+			setHealth(getMaxHealth());
 			setHealCharges(getHealCharges() + 2);
 			upgrades[1] = true;
 		}

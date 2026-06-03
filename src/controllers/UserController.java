@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import models.User;
+import repository.BattleRepository;
 import repository.CharacterRepository;
 import repository.UserRepository;
 import services.PDFExporter;
@@ -21,6 +22,7 @@ public class UserController {
 	private UsersView view;
 	private UserRepository userRepo;
 	private CharacterRepository characterRepo;
+	private BattleRepository battleRepo;
 	private UserTableModel model;
 	private PDFExporter pdfExporter;
 	
@@ -61,9 +63,18 @@ public class UserController {
 
 		    User user = model.getUserAt(row);
 
+		    System.out.println(user.getPlayer());
+		    
 		    try {
-
+		    	battleRepo = new BattleRepository();
+		    	characterRepo = new CharacterRepository();
+		    	
+		    	characterRepo.deleteUpgrades(user.getId());
+		    	
+		    	battleRepo.deleteBattle(user.getId());
+		    	
 		        characterRepo.deletePlayer(user.getId());
+		        
 		        boolean deleted = userRepo.delete(user.getId());
 
 		        if(deleted) {

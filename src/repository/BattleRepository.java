@@ -28,5 +28,31 @@ public class BattleRepository {
 			ex.printStackTrace();
 		}
 	}
+	
+	public boolean deleteBattle(int idCharacter) {
+		
+		String sql = "DELETE FROM battles WHERE id_character = ?";
+		
+		try (Connection connection = DatabaseConnection.getConnection();
+
+				PreparedStatement pst = connection.prepareStatement(sql)) {
+
+			pst.setInt(1, idCharacter);
+
+			int affectedRows = pst.executeUpdate();
+
+			if (affectedRows > 0) {
+
+				System.out.println("Player eliminado");
+
+				return true;
+			}
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+
+		return false;
+	}
 
 }

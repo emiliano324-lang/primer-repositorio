@@ -26,7 +26,10 @@ public class GameCreditsView extends JPanel{
 		setLayout(new BorderLayout());
 		
 		loadImage();
-		initializeComponents();
+		
+		back = CustomJSwing.createJButton("Regresar");
+		add(back, BorderLayout.SOUTH);
+		
 	}
 	
 	private void loadImage() {
@@ -38,14 +41,6 @@ public class GameCreditsView extends JPanel{
 		}
 	}
 	
-	private void initializeComponents() {
-		
-		back = CustomJSwing.createJButton("Regresar");
-		
-		add(back, BorderLayout.SOUTH);
-		
-	}
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 
@@ -53,10 +48,7 @@ public class GameCreditsView extends JPanel{
 
 		Graphics2D g2 = (Graphics2D) g;
 
-		// NUEVO
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,	RenderingHints.VALUE_ANTIALIAS_ON);
-
-		// NUEVO
 		g2.drawImage(credits, 0, 0, getWidth(), getHeight(), null);
 	}
 }

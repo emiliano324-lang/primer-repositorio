@@ -198,6 +198,8 @@ public class GameUpgradeTreeController implements ActionListener {
 
 		// ACTUALIZAR PLAYER SQL
 		repo.updatePlayer(player);
+		
+		Session.setPlayer(player);
 
 		// CAMBIO VISUAL
 		node.setUnlocked(true);
