@@ -107,7 +107,7 @@ public class GameCombatController {
 					    enemy.getDamage(player.getAttackPoints());
 					    
 					    combatView.topPanelMessage("El enemigo ha recibido " + player.getAttackPoints() + " pts de daño.");
-					    player.setTurn(true);
+					    player.setTurn(false);
 				    }else if(b == combatView.getBlock()) {
 
 				    	if(player.getBlockCharges() > 0) {
@@ -117,7 +117,7 @@ public class GameCombatController {
 					    	player.block();
 					    	
 					    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + player.getBlockCharges() + " bloqueos.");
-					    	player.setTurn(true);
+					    	player.setTurn(false);
 				    	}else {
 				    		combatView.topPanelMessage("No tienes cargas de bloqueo : " + player.getBlockCharges() + " bloqueos.");
 				    		actionFramesSelf = combatView.getIdleFramesSelf();	
@@ -135,7 +135,7 @@ public class GameCombatController {
 					   		
 					   		combatView.updateHealthBar(player.getHealth());
 					   		combatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + player.getHealCharges() + " curaciones.");
-					   		player.setTurn(true);
+					   		player.setTurn(false);
 				    	}else {
 				    		combatView.topPanelMessage("No tienes cargas de curacion : " + player.getHealCharges() + " curaciones.");
 				    		actionFramesSelf = combatView.getIdleFramesSelf();	
@@ -199,7 +199,7 @@ public class GameCombatController {
 			    	player.setTokens(player.getTokens() + 1);
 			    				    	
 			    	restartCombat();
-			    	ScreenManager.showPanel("MENU");
+			    	ScreenManager.showPanel("RESULT");
 			    	
 			    	
 			    }else if(enemy.isDead()) {
@@ -211,7 +211,7 @@ public class GameCombatController {
 			    	player.setTokens(player.getTokens() + 2);
 			    	
 			    	restartCombat();
-			    	ScreenManager.showPanel("MENU");
+			    	ScreenManager.showPanel("RESULT");
 			    	
 			    }
 			    
