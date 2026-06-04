@@ -157,8 +157,12 @@ public class RegistrationController {
 	    	if(validateRegistration(user)) {
 	    		
 	    		try {
-	    			repository.save(user);
-	    			JOptionPane.showMessageDialog(view, "Registro exitoso");
+	    			if(repository.save(user)) {
+	    				JOptionPane.showMessageDialog(view, "Registro exitoso");
+	    			}else {
+	    				JOptionPane.showMessageDialog(view, "Ya existe un usuario con el mismo nombre o correo");
+	    				return;
+	    			}
 	    			
 	    			handleBack();
 	    			view.dispose();

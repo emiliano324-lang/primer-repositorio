@@ -75,11 +75,14 @@ public class LoginController {
 
 	private void handleLogin() {
 
-		if (!validateLogin(new User(view.getUsername(), view.getPassword()))) {
+		/*if (!validateLogin(new User(view.getUsername(), view.getPassword()))) {
+			return;
+		}*/
+
+		if (!validateLogin(new User(view.getEmail(), view.getPassword()))) {
 			return;
 		}
-
-		User user = repository.login(view.getUsername(), view.getPassword());
+		User user = repository.login(view.getEmail(), view.getPassword());
 
 		if (user == null) {
 			view.showLblErrorPassword("Credenciales incorrectas");

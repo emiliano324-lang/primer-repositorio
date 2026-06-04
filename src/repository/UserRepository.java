@@ -20,9 +20,12 @@ import models.User;
 
 public class UserRepository {
 	
+	public boolean save(User user) throws IOException {
 
-	public void save(User user) throws IOException {
-
+		if(searchUser(user.getName(), user.getEmail()) != null) {
+			return false;
+		}
+		
 		List<User> users = getUsers();
 
 		String sql = "INSERT INTO users (name, password, email, sex, role) VALUES (?,?,?,?,?)";
@@ -37,7 +40,6 @@ public class UserRepository {
 			pst.setString(3, user.getEmail());
 			pst.setString(4, user.getSex().name());
 			pst.setString(5, user.getRole().name());
-			// pst.setString(5, user.getImagePath());
 
 			int affectedRows = pst.executeUpdate();
 
@@ -51,21 +53,18 @@ public class UserRepository {
 
 					user.setId(generatedId);
 
-					System.out.println("Usuario guardado con ID: " + generatedId);
-
 					CharacterRepository characterRepo = new CharacterRepository();
 					characterRepo.createPlayer(user);				
 				}
 
 				users.add(user);
-				System.out.println("Nuevo usuario guardado");
 			}
-
-			System.out.println("Filas modificadas: " + affectedRows);
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		
+		return true;
 	}
 
 	public List<User> getUsers() throws IOException {
@@ -124,7 +123,6 @@ public class UserRepository {
 				PreparedStatement pst = connection.prepareStatement(sql)) {
 
 			String hashedPassword = BCrypt.hashpw(updatedUser.getPassword(), BCrypt.gensalt());
-			;
 
 			pst.setString(1, updatedUser.getName());
 			pst.setString(2, hashedPassword);
@@ -146,24 +144,36 @@ public class UserRepository {
 		}
 		return false;
 	}
-
-	public void updateEnemy(Enemy enemy) {
-
-		String sql = """
-				    UPDATE enemy
-				    SET
-					    id_enemy = ?
-					    name = ?
-				        health = ?,
-				        attackPoints = ?,
-				        blockPoints = ?,
-				        healPoints = ?,
-				        level = ?,
-				        tokens = ?
-				    WHERE id_character = ?
-				""";
+	
+	public User searchUser(String name, String email) {
+		
+		String sql = "SELECT * FROM users WHERE name = ? OR email = ?";
+		
+		try (Connection connection = DatabaseConnection.getConnection();
+				PreparedStatement pst = connection.prepareStatement(sql)){
+			
+			pst.setString(1, name);
+			pst.setString(2, email);
+			
+			ResultSet rs = pst.executeQuery();
+			
+			if(rs.next()) {
+				
+				User user = new User(
+						rs.getString("name"),
+						rs.getString("email"),
+						Sex.valueOf(rs.getString("sex")),
+						Role.valueOf(rs.getString("role"))
+						);
+				return user;
+			}
+			
+		}catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return null;
 	}
-
 
 	/*public void createPlayer(User user) {
 

@@ -19,13 +19,14 @@ public class LoginView extends JPanel {
 	Font font;
 	
 	private JLabel lblWelcome;
-	private JLabel lblUser;
-	
-	private JTextField txtFieldUser;
-	private JLabel lblErrorUser;
+	private JLabel lblEmail;
 	private JLabel lblPassword;
-	private JPasswordField pwdFieldPassword;
+	private JLabel lblErrorUser;
 	private JLabel lblErrorPassword;
+	
+	private JTextField txtFieldEmail;
+	private JPasswordField pwdFieldPassword;
+
 	private JButton btnLogin;
 	private JButton btnSignIn;
 	
@@ -33,8 +34,8 @@ public class LoginView extends JPanel {
 		return window;
 	}
 	
-	public JTextField getTxtFieldUser() {
-		return txtFieldUser;
+	public JTextField getTxtFieldEmail() {
+		return txtFieldEmail;
 	}
 
 	public JLabel getLblErrorUser() {
@@ -61,8 +62,8 @@ public class LoginView extends JPanel {
 		return btnSignIn;
 	}
 	
-	public String getUsername() {
-		return txtFieldUser.getText();
+	public String getEmail() {
+		return txtFieldEmail.getText();
 	}
 	
 	public String getPassword() {
@@ -99,9 +100,9 @@ public class LoginView extends JPanel {
         add(lblWelcome, c);
 
         // Usuario
-        lblUser = new JLabel("Usuario");
-        lblUser.setForeground(new Color(254, 252, 251));
-        lblUser.setFont(font);
+        lblEmail = new JLabel("Correo");
+        lblEmail.setForeground(new Color(254, 252, 251));
+        lblEmail.setFont(font);
 
         c.gridx = 0;
         c.gridy = 1;
@@ -109,17 +110,17 @@ public class LoginView extends JPanel {
         c.anchor = GridBagConstraints.EAST;
         c.weightx = 0;
         c.fill = GridBagConstraints.NONE;
-        add(lblUser, c);
+        add(lblEmail, c);
 
         // Campo usuario
-        txtFieldUser = new JTextField(15);
-        txtFieldUser.setFont(font);
-        txtFieldUser.setBackground(Color.WHITE);
+        txtFieldEmail = new JTextField(15);
+        txtFieldEmail.setFont(font);
+        txtFieldEmail.setBackground(Color.WHITE);
 
         c.gridx = 1;
         c.weightx = 1.0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        add(txtFieldUser, c);
+        add(txtFieldEmail, c);
 
         // Error usuario
         lblErrorUser = new JLabel("Error: Este campo es obligatorio");
