@@ -103,10 +103,11 @@ public class CharacterRepository {
 	}
 
 	// UPDATE
-	public boolean updatePlayer(Player player) {
+	public boolean updatePlayer(Player player, String userName) {
 
 		String sql = "UPDATE characters "
-				+ "SET health = ?, " 
+				+ "SET name = ?, "
+				+ "health = ?, " 
 				+ "max_health = ?, " 
 				+ "attack_points = ?, "
 				+ "defense_points = ?, " 
@@ -121,18 +122,19 @@ public class CharacterRepository {
 
 				PreparedStatement pst = connection.prepareStatement(sql)) {
 
-			pst.setInt(1, player.getHealth());
-			pst.setInt(2, player.getMaxHealth());
-			pst.setInt(3, player.getAttackPoints());
-			pst.setInt(4, player.getBlockPoints());
-			pst.setInt(5, player.getHealPoints());
-			pst.setInt(6, player.getLevel());
-			pst.setInt(7, player.getTokens());
+			pst.setString(1, userName);
+			pst.setInt(2, player.getHealth());
+			pst.setInt(3, player.getMaxHealth());
+			pst.setInt(4, player.getAttackPoints());
+			pst.setInt(5, player.getBlockPoints());
+			pst.setInt(6, player.getHealPoints());
+			pst.setInt(7, player.getLevel());
+			pst.setInt(8, player.getTokens());
 
-			pst.setInt(8, player.getHealCharges());
-			pst.setInt(9, player.getBlockCharges());
+			pst.setInt(9, player.getHealCharges());
+			pst.setInt(10, player.getBlockCharges());
 
-			pst.setInt(10, player.getId());
+			pst.setInt(11, player.getId());
 
 			int affectedRows = pst.executeUpdate();
 

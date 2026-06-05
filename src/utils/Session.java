@@ -43,7 +43,7 @@ public class Session {
 			return;
 		
 		CharacterRepository repo = new CharacterRepository();
-		repo.updatePlayer(player);
+		repo.updatePlayer(player, player.getName());
 	}
 	
 	

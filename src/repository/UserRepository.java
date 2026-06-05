@@ -20,6 +20,8 @@ import models.User;
 
 public class UserRepository {
 	
+	CharacterRepository characterRepo = new CharacterRepository();
+	
 	public boolean save(User user) throws IOException {
 
 		if(searchUser(user.getName(), user.getEmail()) != null) {
@@ -53,7 +55,6 @@ public class UserRepository {
 
 					user.setId(generatedId);
 
-					CharacterRepository characterRepo = new CharacterRepository();
 					characterRepo.createPlayer(user);				
 				}
 
@@ -117,7 +118,7 @@ public class UserRepository {
 
 	public boolean update(int index, User updatedUser) throws IOException {
 
-		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ? WHERE id_user = ?";
+		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ?, role = ? WHERE id_user = ?";
 
 		try (Connection connection = DatabaseConnection.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -136,6 +137,8 @@ public class UserRepository {
 			System.out.println("Filas modificadas: " + affectedRows);
 
 			if (affectedRows > 0) {
+				
+				characterRepo.updatePlayer(characterRepo.loadPlayer(updatedUser.getId()), updatedUser.getName());
 				return true;
 			}
 

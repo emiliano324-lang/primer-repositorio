@@ -201,7 +201,7 @@ public class GameUpgradeTreeController implements ActionListener {
 		repo.saveUpgrade(player.getId(), node.getUpgradeName());
 
 		// ACTUALIZAR PLAYER SQL
-		repo.updatePlayer(player);
+		repo.updatePlayer(player, player.getName());
 		
 		Session.setPlayer(player);
 
