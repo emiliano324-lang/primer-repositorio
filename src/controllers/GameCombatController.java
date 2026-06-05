@@ -129,6 +129,7 @@ public class GameCombatController implements ActionListener {
 				    	actionFramesFoe = combatView.getHealFramesFoe();
 	
 				    	player.block();
+				    	playerBlocks--;
 				    	
 				    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + playerBlocks + " bloqueos.");
 			    	}else {
@@ -144,7 +145,6 @@ public class GameCombatController implements ActionListener {
 			   		actionFramesFoe = combatView.getIdleFramesFoe();
 			   		
 			   		player.heal();
-			   		
 			   		playerHeals--;
 			   		
 			   		combatView.updateHealthBar(player.getHealth());
@@ -157,7 +157,8 @@ public class GameCombatController implements ActionListener {
 			    	
 			    }else if(b == combatView.getAnalyze()) {
 			    	
-			    		combatView.topPanelMessage("Vida actual del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
+			    		combatView.topPanelMessage("Vida del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+			    								+ " | " + enemyBlocks + " bloqueos | " + enemyHeals + " curaciones");
 				   
 				    	actionFramesSelf = combatView.getIdleFramesSelf();
 				    	actionFramesFoe = combatView.getIdleFramesFoe();
@@ -166,8 +167,8 @@ public class GameCombatController implements ActionListener {
 				    	
 			    }else {
 			    	
-			    		actionFramesSelf = combatView.getDamageFramesSelf();
-			    		actionFramesFoe = combatView.getAttackFramesFoe();
+		    		actionFramesSelf = combatView.getDamageFramesSelf();
+		    		actionFramesFoe = combatView.getAttackFramesFoe();
 			    }
 			
 		    	if(b == combatView.getAnalyze()) {
@@ -186,7 +187,7 @@ public class GameCombatController implements ActionListener {
 				actionFramesFoe = combatView.getBlockFramesFoe();
 				actionFramesSelf = combatView.getIdleFramesSelf();
 				
-				combatView.topPanelMessage("El enemigo se cubrió");
+				combatView.topPanelMessage("El enemigo se cubrió" );
 				
 			}else if(enemy.getRandomAction() == 2 && enemyHeals > 0) {
 				
@@ -197,7 +198,7 @@ public class GameCombatController implements ActionListener {
 				actionFramesFoe = combatView.getHealFramesFoe();
 				actionFramesSelf = combatView.getIdleFramesSelf();
 				
-				combatView.topPanelMessage("El enemigo se ha recibido " + enemy.getHealPoints());
+				combatView.topPanelMessage("El enemigo se ha recibido " + enemy.getHealPoints() + " pts de curación");
 				
 			}else {
 				
@@ -281,7 +282,6 @@ public class GameCombatController implements ActionListener {
 			Session.setPlayer(player);
 			
 			combatView.updateHealthBar(player.getHealth());
-			
 			combatView.initializePlayer(player);
 			
 			enemy = characterRepo.loadEnemy(enemyId);
