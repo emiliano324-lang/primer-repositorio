@@ -21,7 +21,6 @@ public class UpgradeTree {
 		if (root == null) {
 			this.setRoot(root);
 			root.setParentNode(null);
-			;
 
 		} else {
 

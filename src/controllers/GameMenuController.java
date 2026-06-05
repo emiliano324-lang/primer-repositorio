@@ -31,17 +31,20 @@ public class GameMenuController {
 
         view.getBtnPlay().addActionListener(e -> {
         	
-        	window.getCombatController().refreshPlayer();
-        	
-        	ScreenManager.showPanel("GAME");
-        
+	        	window.getCombatController().refreshPlayer();
+	        	window.getCombatController().restartCharges();
+	        	
+	        	ScreenManager.showPanel("GAME");
+
         });
+        
         view.getBtnSkillTree().addActionListener(e ->  {
         	
-        	window.getTreeController().refresh();
-        	
-        	ScreenManager.showPanel("SKILLTREE");	
+	        	window.getTreeController().refresh();
+	        	
+	        	ScreenManager.showPanel("SKILLTREE");	
         });
+        
         view.getBtnCredits().addActionListener(e ->  ScreenManager.showPanel("CREDITS"));
         
         view.getBtnExit().addActionListener(e -> {

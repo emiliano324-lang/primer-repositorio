@@ -294,6 +294,13 @@ public class GameCombatController implements ActionListener {
 		
 	}
 	
+	public void restartCharges() {
+		playerHeals = player.getHealCharges();
+		playerBlocks = player.getBlockCharges();
+		enemyHeals = enemy.getHealCharges();
+		enemyBlocks = enemy.getBlockCharges();
+	}
+	
 	public void refreshPlayer() {
 
 	    try {
