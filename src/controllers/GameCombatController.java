@@ -125,9 +125,6 @@ public class GameCombatController implements ActionListener {
 			    }
 			    enemy.getDamage(player.getAttackPoints());
 			    
-			   
-			    
-			    
 			    combatView.topPanelMessage("El enemigo ha recibido " + damage + " pts de daño.");
 		    
 			    player.setTurn(false);

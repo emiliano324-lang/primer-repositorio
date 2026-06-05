@@ -308,7 +308,7 @@ public class GameCombatView extends JPanel {
 		block = CustomJSwing.createJButton("Bloquear");
 		heal = CustomJSwing.createJButton("Curarse");
 		analyze = CustomJSwing.createJButton("Analizar");
-		switchTurn = CustomJSwing.createJButton("Terminar Truno");
+		switchTurn = CustomJSwing.createJButton("Terminar Turno");
 		
 
 		actionsPanel.add(healthBar);
