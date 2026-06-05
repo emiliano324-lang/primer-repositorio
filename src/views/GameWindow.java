@@ -21,69 +21,82 @@ import controllers.GameUpgradeTreeController;
 import controllers.LoginController;
 import utils.ScreenManager;
 
-public class GameWindow extends JFrame{
-	
+public class GameWindow extends JFrame {
+
 	private CardLayout layout;
-    private JPanel container;
-    
-   private GameCombatController combatController;
-   private GameUpgradeTreeController treeController;
+	private JPanel container;
+
+	private GameCombatController combatController;
+	private GameMenuController menuController;
+	private GameUpgradeTreeController treeController;
+	private GameCreditsController creditsController;
+	private GameResultController resultController;
 
 	public GameWindow() {
-		
+
 		Toolkit tk = Toolkit.getDefaultToolkit();
-		
+
 		setUndecorated(true); // Quita bordes y barra
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
 		gd.setFullScreenWindow(this);
-	
+
 		Image icon = tk.getImage("src/img/logo_uabcs.png");
 		setIconImage(icon);
-		
+
 		ImageIcon iconCursor = new ImageIcon("src/img/cursor.png");
 		Cursor cursor = tk.createCustomCursor(iconCursor.getImage(), new Point(0, 0), "Mi Cursor");
 		setCursor(cursor);
-		
+
 		layout = new CardLayout();
 
 		container = new JPanel(layout);
 
-        add(container);
-        
-        ScreenManager.initialize(layout, container);    
-        
-        GameMenuView menuView = new GameMenuView();
-        GameCombatView gameLoopView = new GameCombatView();
-        GameUpgradeTreeView gameUpgradeTreeView = new GameUpgradeTreeView();
+		add(container);
+
+		ScreenManager.initialize(layout, container);
+
+		GameMenuView menuView = new GameMenuView();
+		GameCombatView gameLoopView = new GameCombatView();
+		GameUpgradeTreeView gameUpgradeTreeView = new GameUpgradeTreeView();
 		GameCreditsView creditsView = new GameCreditsView();
 		GameResultView resultView = new GameResultView();
-		
-        
-        container.add(menuView, "MENU");
-        container.add(gameLoopView, "GAME");
-        container.add(gameUpgradeTreeView, "SKILLTREE");
-        container.add(creditsView, "CREDITS");
-        container.add(resultView,"RESULT");
-        
-        new GameMenuController(menuView,this);
-        combatController = new GameCombatController(gameLoopView);
-        treeController= new GameUpgradeTreeController(gameUpgradeTreeView);
-        new GameCreditsController(creditsView);
-        new GameResultController(resultView);
-        
-        
-        ScreenManager.showPanel("MENU");
+
+		container.add(menuView, "MENU");
+		container.add(gameLoopView, "GAME");
+		container.add(gameUpgradeTreeView, "SKILLTREE");
+		container.add(creditsView, "CREDITS");
+		container.add(resultView, "RESULT");
+
+		menuController = new GameMenuController(menuView, this);
+		combatController = new GameCombatController(gameLoopView, this);
+		treeController = new GameUpgradeTreeController(gameUpgradeTreeView);
+		creditsController = new GameCreditsController(creditsView);
+		resultController = new GameResultController(resultView);
+
+		ScreenManager.showPanel("MENU");
 		setVisible(true);
+	}
+
+	public GameMenuController getMenuController() {
+		return menuController;
 	}
 	
 	public GameCombatController getCombatController() {
-	    return combatController;
+		return combatController;
 	}
 
-	public GameUpgradeTreeController getUpgradeTreeController() {
+	public GameUpgradeTreeController getTreeController() {
 		return treeController;
+	}
+	
+	public GameCreditsController getCreditsController() {
+		return creditsController;
+	}
+	
+	public GameResultController getResultController() {
+		return resultController;
 	}
 }

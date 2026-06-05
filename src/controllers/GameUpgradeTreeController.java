@@ -47,7 +47,13 @@ public class GameUpgradeTreeController implements ActionListener {
 
 	private void registerListeners() {
 
-		view.getBack().addActionListener(e -> ScreenManager.showPanel("MENU"));
+		view.getBack().addActionListener(e ->{
+
+			view.resetErrorLabel();
+			ScreenManager.showPanel("MENU");
+			
+		});
+			
 
 		view.getRootNode().addActionListener(this);
 
@@ -126,24 +132,19 @@ public class GameUpgradeTreeController implements ActionListener {
 		String defaultText = b.getText();
 
 		b.addMouseListener(new MouseAdapter() {
-
 			public void mouseEntered(MouseEvent e) {
-
 				b.setText("-> " + defaultText + " <-");
 			}
 
 			public void mouseExited(MouseEvent e) {
-
 				b.setText(defaultText);
 			}
 
 			public void mousePressed(MouseEvent e) {
-
 				b.setForeground(Color.LIGHT_GRAY);
 			}
 
 			public void mouseReleased(MouseEvent e) {
-
 				b.setForeground(defaultForeground);
 			}
 		});
@@ -163,7 +164,6 @@ public class GameUpgradeTreeController implements ActionListener {
 		if (node.isUnlocked()) {
 
 			view.setErrorMessage("YA DESBLOQUEADO");
-
 			view.showErrorLabel();
 
 			return;
@@ -173,7 +173,6 @@ public class GameUpgradeTreeController implements ActionListener {
 		if (node.getParentNode() != null && !node.getParentNode().isUnlocked()) {
 
 			view.setErrorMessage("DESBLOQUEA EL ANTERIOR");
-
 			view.showErrorLabel();
 
 			return;
@@ -183,7 +182,6 @@ public class GameUpgradeTreeController implements ActionListener {
 		if (player.getTokens() < 1) {
 
 			view.setErrorMessage("SIN TOKENS");
-
 			view.showErrorLabel();
 
 			return;

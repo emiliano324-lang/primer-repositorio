@@ -38,7 +38,7 @@ public class GameMenuController {
         });
         view.getBtnSkillTree().addActionListener(e ->  {
         	
-        	window.getUpgradeTreeController().refresh();
+        	window.getTreeController().refresh();
         	
         	ScreenManager.showPanel("SKILLTREE");	
         });

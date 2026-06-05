@@ -1,9 +1,9 @@
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import utils.AppFont;
 import utils.CustomJSwing;
 
 public class GameResultView extends JPanel{
@@ -30,13 +31,21 @@ public class GameResultView extends JPanel{
 	}
 	
 	private void initializeComponents() {
-		setLayout(new GridBagLayout());
+		setLayout(new BorderLayout());
+		showResult();
 		createButton();
 		
 	}
 	
 	public void showResult() {
-		
+
+		lblResult = new JLabel("", JLabel.CENTER);
+
+		lblResult.setFont(AppFont.title());
+
+		//lblResult.setForeground(new Color(254, 252, 251));
+	
+		add(lblResult, BorderLayout.CENTER);
 	}
 	
 	public JButton getBtnExit() {
@@ -48,16 +57,17 @@ public class GameResultView extends JPanel{
 	}
 	
 	public void createButton() {
-		GridBagConstraints c = new GridBagConstraints();
+		/*GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.weightx = 1.0;
 		c.anchor = GridBagConstraints.SOUTH;
 		c.insets = new Insets(10, 20, 10, 20);
 		c.fill = GridBagConstraints.NONE;
 		
-		c.gridy = 1;
+		c.gridy = 1;*/
 		btnExit = CustomJSwing.createMenuButton("Salir");
-		add(btnExit, c);
+		
+		add(btnExit, BorderLayout.SOUTH);
 		
 	}
 	
@@ -69,6 +79,7 @@ public class GameResultView extends JPanel{
 			System.out.println("La imagen no existe");
 		}
 	}
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -76,4 +87,13 @@ public class GameResultView extends JPanel{
 		g2.drawImage(resultBackgrown, 0, 0, getWidth(), getHeight(), null);
 	}
 	
+	public void updateResult(String text) {
+		if(text.equalsIgnoreCase("DERROTA")) {
+			lblResult.setForeground(Color.RED);
+		}else {
+			lblResult.setForeground(new Color(254, 252, 251));
+		}
+		
+		lblResult.setText(text);
+	}
 }

@@ -5,7 +5,7 @@ import views.GameResultView;
 
 public class GameResultController {
 	
-	GameResultView view;
+	private GameResultView view;
 	
 	public GameResultController(GameResultView view) {
 		this.view = view;
@@ -15,6 +15,10 @@ public class GameResultController {
 
 	public void registerListeners() {
 		view.getBtnExit().addActionListener(e -> ScreenManager.showPanel("MENU"));
+	}
+	
+	public GameResultView getView() {
+		return view;
 	}
 	
 }

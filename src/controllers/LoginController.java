@@ -59,7 +59,7 @@ public class LoginController {
 		view.resetErrorLabels();
 		boolean valid = true;
 
-		if (user.getName().trim().isEmpty()) {
+		if (user.getEmail().trim().isEmpty()) {
 			view.showLblErrorUser();
 			valid = false;
 		}
