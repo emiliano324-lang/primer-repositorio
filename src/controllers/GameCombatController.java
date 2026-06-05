@@ -84,11 +84,18 @@ public class GameCombatController implements ActionListener {
 		combatView.getBlock().addActionListener(this);
 		combatView.getHeal().addActionListener(this);
 		combatView.getAnalyze().addActionListener(this);
+		combatView.getSwichTurn().addActionListener(this);
 
 		mouseListeners(combatView.getAttack());
 		mouseListeners(combatView.getBlock());
 		mouseListeners(combatView.getHeal());
 		mouseListeners(combatView.getAnalyze());
+		mouseListeners(combatView.getSwichTurn());
+		
+		
+		
+		
+				
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -103,45 +110,47 @@ public class GameCombatController implements ActionListener {
 
 	    combatView.getAnimation().stop();
 	    
-	    if(player.getTurn()) {
-		   
+		if(player.getTurn()) {
+			   
 		    	if(b == combatView.getAttack()) {
-	
-			    	actionFramesSelf = combatView.getAttackFramesSelf();
+		
+			    actionFramesSelf = combatView.getAttackFramesSelf();
 			    actionFramesFoe = combatView.getDamageFramesFoe();
-			    
-			    enemy.getDamage(player.getAttackPoints());
-			    
 			    int damage;
 			    
 			    if(enemy.isBlocking()) {
-			    		damage = Math.abs(enemy.getBlockPoints() - player.getAttackPoints());
+			    	damage = Math.abs(enemy.getBlockPoints() - player.getAttackPoints());
 			    }else {
-			    		damage = player.getAttackPoints();
+			    	damage = player.getAttackPoints();
 			    }
+			    enemy.getDamage(player.getAttackPoints());
+			    
+			   
+			    
 			    
 			    combatView.topPanelMessage("El enemigo ha recibido " + damage + " pts de daño.");
 		    
-		    	}else if(b == combatView.getBlock()) {
-	
-			    	if(playerBlocks > 0) {
-				    	actionFramesSelf = combatView.getBlockFramesSelf();
-				    	actionFramesFoe = combatView.getHealFramesFoe();
-	
-				    	player.block();
-				    	playerBlocks--;
-				    	
-				    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + playerBlocks + " bloqueos.");
-			    	}else {
-			    		combatView.topPanelMessage("No tienes cargas de bloqueo : " + playerBlocks + " bloqueos.");
-			    		actionFramesSelf = combatView.getIdleFramesSelf();	
-			    		actionFramesFoe = combatView.getIdleFramesFoe();				    		
-			    	}
+			    player.setTurn(false);
+	    	}else if(b == combatView.getBlock()) {
+
+		    	if(playerBlocks > 0) {
+			    	actionFramesSelf = combatView.getBlockFramesSelf();
+			    	actionFramesFoe = combatView.getHealFramesFoe();
+
+			    	player.block();
+			    	playerBlocks--;
 			    	
+			    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + playerBlocks + " bloqueos.");
+		    	}else {
+		    		combatView.topPanelMessage("No tienes cargas de bloqueo : " + playerBlocks + " bloqueos.");
+		    		actionFramesSelf = combatView.getIdleFramesSelf();	
+		    		actionFramesFoe = combatView.getIdleFramesFoe();				    		
+		    	}
+		    	player.setTurn(false);	
 		    }else if(b == combatView.getHeal()) {
 	
 			    	if(playerHeals > 0) {
-				    	actionFramesSelf = combatView.getHealFramesSelf();
+				    actionFramesSelf = combatView.getHealFramesSelf();
 			   		actionFramesFoe = combatView.getIdleFramesFoe();
 			   		
 			   		player.heal();
@@ -154,30 +163,30 @@ public class GameCombatController implements ActionListener {
 			    		actionFramesSelf = combatView.getIdleFramesSelf();	
 			    		actionFramesFoe = combatView.getIdleFramesFoe();
 			    	}
-			    	
-			    }else if(b == combatView.getAnalyze()) {
-			    	
-			    		combatView.topPanelMessage("Vida del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
-			    								+ " | " + enemyBlocks + " bloqueos | " + enemyHeals + " curaciones");
-				   
-				    	actionFramesSelf = combatView.getIdleFramesSelf();
-				    	actionFramesFoe = combatView.getIdleFramesFoe();
-				    	
-				    	player.block();
-				    	
-			    }else {
-			    	
-		    		actionFramesSelf = combatView.getDamageFramesSelf();
-		    		actionFramesFoe = combatView.getAttackFramesFoe();
-			    }
-			
-		    	if(b == combatView.getAnalyze()) {
-		    		player.setTurn(true);
-		    	}else {
-		    		player.setTurn(false);
-		    	}
-	    		
+			    	player.setTurn(false);
+		   }
+		   
+		
+		    	
 		}else {
+			combatView.topPanelMessage("Cambia de turno");
+			actionFramesSelf = combatView.getIdleFramesSelf();
+	    	actionFramesFoe = combatView.getIdleFramesFoe();
+		}
+		if(b == combatView.getAnalyze()) {
+	    	
+	    	combatView.topPanelMessage("Vida del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+									+ " | " + enemyBlocks + " bloqueos | " + enemyHeals + " curaciones");
+	    	actionFramesSelf = combatView.getIdleFramesSelf();
+	    	actionFramesFoe = combatView.getIdleFramesFoe();
+	    	
+	    	player.block();
+				
+		}
+		    
+		    
+	     
+	    if(b == combatView.getSwichTurn() && player.getTurn() == false){
 				
 			enemy.setRandomAction((int)(Math.random() * 3) + 1);
 			
@@ -202,9 +211,7 @@ public class GameCombatController implements ActionListener {
 				
 			}else {
 				
-				player.getDamage(enemy.getAttackPoints());
 				
-				combatView.updateHealthBar(player.getHealth());
 				
 				actionFramesFoe = combatView.getAttackFramesFoe();
 				actionFramesSelf = combatView.getDamageFramesSelf();
@@ -217,11 +224,18 @@ public class GameCombatController implements ActionListener {
 			    		damage = enemy.getAttackPoints();
 			    }
 				
+			    player.getDamage(enemy.getAttackPoints());
+			    combatView.updateHealthBar(player.getHealth());
 				combatView.topPanelMessage(player.getName() + " ha recibido " + damage + " pts de daño");
 			}
 			
 			player.setTurn(true);
+		}else{
+			actionFramesSelf = combatView.getIdleFramesSelf();
+	    	actionFramesFoe = combatView.getIdleFramesFoe();
+				
 		}
+	    
 	    
 	    combatView.animateOnce(actionFramesSelf, actionFramesFoe);
 	    

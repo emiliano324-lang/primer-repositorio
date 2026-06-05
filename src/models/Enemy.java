@@ -47,6 +47,7 @@ public class Enemy extends Character{
 				setDead(true);
 				return;
 			}
+			return;
 		}
 		
 		//dano normal

@@ -48,6 +48,9 @@ public class GameCombatView extends JPanel {
 	private JButton analyze;
 
 	private JButton back;
+	private JButton switchTurn;
+	
+	
 
 	private JLabel characterSelf;
 	private JLabel characterFoe;
@@ -141,7 +144,10 @@ public class GameCombatView extends JPanel {
 	public JButton getAnalyze() {
 		return analyze;
 	}
-
+	public JButton getSwichTurn(){
+		return switchTurn;
+	}
+	
 	public GameWindow getWindow() {
 		return window;
 	}
@@ -302,12 +308,15 @@ public class GameCombatView extends JPanel {
 		block = CustomJSwing.createJButton("Bloquear");
 		heal = CustomJSwing.createJButton("Curarse");
 		analyze = CustomJSwing.createJButton("Analizar");
+		switchTurn = CustomJSwing.createJButton("Terminar Truno");
+		
 
 		actionsPanel.add(healthBar);
 		actionsPanel.add(attack);
 		actionsPanel.add(block);
 		actionsPanel.add(heal);
 		actionsPanel.add(analyze);
+		actionsPanel.add(switchTurn);
 
 		return actionsPanel;
 	}

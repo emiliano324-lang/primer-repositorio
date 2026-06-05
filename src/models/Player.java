@@ -85,6 +85,7 @@ public class Player extends Character{
 				setDead(true);
 				return;
 			}
+			return;
 		}
 		
 		//Daño normal
