@@ -51,13 +51,13 @@ public class PDFExporter {
 
 			doc.add(new Paragraph("").setMarginTop(30));
 
-			float[] columnsWidth = { 1, 4, 4, 3 };
+			float[] columnsWidth = { 1, 4, 3, 2, 2 };
 
 			Table table = new Table(UnitValue.createPercentArray(columnsWidth)).useAllAvailableWidth();
 
 			PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 
-			Cell cell = new Cell(1, 4).add(new Paragraph("Usuarios del sistema")).setFont(font).setFontSize(14)
+			Cell cell = new Cell(1, 5).add(new Paragraph("Usuarios del sistema")).setFont(font).setFontSize(14)
 					.setFontColor(DeviceGray.WHITE).setBackgroundColor(new DeviceRgb(45, 111, 164))
 					.setTextAlignment(TextAlignment.CENTER);
 
@@ -76,7 +76,10 @@ public class PDFExporter {
 								.setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Email")),
 
 						new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f))
-								.setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Sexo"))};
+								.setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Sexo")),
+				
+						new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f))
+								.setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Rol"))};
 
 				for (Cell celda : headerFooter) {
 					if (i == 0) {

@@ -3,12 +3,8 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Random;
 
@@ -17,7 +13,6 @@ import javax.swing.JButton;
 import enums.Winner;
 import models.Enemy;
 import models.Player;
-import models.UpgradeNode;
 import repository.BattleRepository;
 import repository.CharacterRepository;
 import utils.ScreenManager;
@@ -65,9 +60,7 @@ public class GameCombatController implements ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		player.setTurn(true);
-
+		
 		registerListeners();
 
 		combatView.initializePlayer(Session.getPlayer());
@@ -84,18 +77,13 @@ public class GameCombatController implements ActionListener {
 		combatView.getBlock().addActionListener(this);
 		combatView.getHeal().addActionListener(this);
 		combatView.getAnalyze().addActionListener(this);
-		combatView.getSwichTurn().addActionListener(this);
+		combatView.getSwitchTurn().addActionListener(this);
 
 		mouseListeners(combatView.getAttack());
 		mouseListeners(combatView.getBlock());
 		mouseListeners(combatView.getHeal());
 		mouseListeners(combatView.getAnalyze());
-		mouseListeners(combatView.getSwichTurn());
-		
-		
-		
-		
-				
+		mouseListeners(combatView.getSwitchTurn());
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -110,43 +98,50 @@ public class GameCombatController implements ActionListener {
 
 	    combatView.getAnimation().stop();
 	    
+	    System.out.println(player.getTurn());
+	    
 		if(player.getTurn()) {
 			   
-		    	if(b == combatView.getAttack()) {
+	    		if(b == combatView.getAttack()) {
 		
 			    actionFramesSelf = combatView.getAttackFramesSelf();
 			    actionFramesFoe = combatView.getDamageFramesFoe();
+			    
 			    int damage;
 			    
 			    if(enemy.isBlocking()) {
-			    	damage = Math.abs(enemy.getBlockPoints() - player.getAttackPoints());
+			    		damage = Math.abs(enemy.getBlockPoints() - player.getAttackPoints());
 			    }else {
-			    	damage = player.getAttackPoints();
+			    		damage = player.getAttackPoints();
 			    }
 			    enemy.getDamage(player.getAttackPoints());
 			    
 			    combatView.topPanelMessage("El enemigo ha recibido " + damage + " pts de daño.");
 		    
 			    player.setTurn(false);
-	    	}else if(b == combatView.getBlock()) {
+			    
+	    		}else if(b == combatView.getBlock()) {
 
-		    	if(playerBlocks > 0) {
-			    	actionFramesSelf = combatView.getBlockFramesSelf();
-			    	actionFramesFoe = combatView.getHealFramesFoe();
-
-			    	player.block();
-			    	playerBlocks--;
-			    	
-			    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + playerBlocks + " bloqueos.");
-		    	}else {
-		    		combatView.topPanelMessage("No tienes cargas de bloqueo : " + playerBlocks + " bloqueos.");
-		    		actionFramesSelf = combatView.getIdleFramesSelf();	
-		    		actionFramesFoe = combatView.getIdleFramesFoe();				    		
-		    	}
-		    	player.setTurn(false);	
-		    }else if(b == combatView.getHeal()) {
+		    		if(playerBlocks > 0) {
+				    	actionFramesSelf = combatView.getBlockFramesSelf();
+				    	actionFramesFoe = combatView.getHealFramesFoe();
 	
-			    	if(playerHeals > 0) {
+				    	player.block();
+				    	playerBlocks--;
+				    	
+				    	combatView.topPanelMessage(player.getName() + " se cubrió. Le quedan " + playerBlocks + " bloqueos.");
+			    
+		    		}else {
+			    		combatView.topPanelMessage("No tienes cargas de bloqueo : " + playerBlocks + " bloqueos.");
+			    		actionFramesSelf = combatView.getIdleFramesSelf();	
+			    		actionFramesFoe = combatView.getIdleFramesFoe();				    		
+			    	}
+			    	
+		    		player.setTurn(false);
+			    	
+		    }else if(b == combatView.getHeal()) {
+		
+		    		if(playerHeals > 0) {
 				    actionFramesSelf = combatView.getHealFramesSelf();
 			   		actionFramesFoe = combatView.getIdleFramesFoe();
 			   		
@@ -155,41 +150,43 @@ public class GameCombatController implements ActionListener {
 			   		
 			   		combatView.updateHealthBar(player.getHealth());
 			   		combatView.topPanelMessage(player.getName() + " ha recibido "+ player.getHealPoints() + " pts de salud. Le quedan " + playerHeals + " curaciones.");
-			    	}else {
+			    	
+		    		}else {
 			    		combatView.topPanelMessage("No tienes cargas de curacion : " + playerHeals + " curaciones.");
 			    		actionFramesSelf = combatView.getIdleFramesSelf();	
 			    		actionFramesFoe = combatView.getIdleFramesFoe();
 			    	}
-			    	player.setTurn(false);
+			    	
+		    		player.setTurn(false);
+			    	
+		   }else if(b == combatView.getSwitchTurn()) {
+			   
+			   actionFramesSelf = combatView.getIdleFramesSelf();	
+			   actionFramesFoe = combatView.getIdleFramesFoe();
+			   combatView.topPanelMessage("Es tu turno de atacar.");
 		   }
 		   
-		
-		    	
 		}else {
 			combatView.topPanelMessage("Cambia de turno");
 			actionFramesSelf = combatView.getIdleFramesSelf();
-	    	actionFramesFoe = combatView.getIdleFramesFoe();
+			actionFramesFoe = combatView.getIdleFramesFoe();
 		}
 		if(b == combatView.getAnalyze()) {
 	    	
-	    	combatView.topPanelMessage("Vida del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
-									+ " | " + enemyBlocks + " bloqueos | " + enemyHeals + " curaciones");
-	    	actionFramesSelf = combatView.getIdleFramesSelf();
-	    	actionFramesFoe = combatView.getIdleFramesFoe();
-	    	
-	    	player.block();
-				
+			combatView.topPanelMessage("Vida del enemigo: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+										+ " | " + enemyBlocks + " bloqueos | " + enemyHeals + " curaciones");
+		    	actionFramesSelf = combatView.getIdleFramesSelf();
+		    	actionFramesFoe = combatView.getIdleFramesFoe();
 		}
-		    
-		    
 	     
-	    if(b == combatView.getSwichTurn() && player.getTurn() == false){
+	    if(b == combatView.getSwitchTurn() && !player.getTurn()){
 				
 			enemy.setRandomAction((int)(Math.random() * 3) + 1);
 			
 			if(enemy.getRandomAction() == 1 && enemy.getBlockCharges() > 0) {
 			
 				enemy.block();
+				
 				actionFramesFoe = combatView.getBlockFramesFoe();
 				actionFramesSelf = combatView.getIdleFramesSelf();
 				
@@ -208,8 +205,6 @@ public class GameCombatController implements ActionListener {
 				
 			}else {
 				
-				
-				
 				actionFramesFoe = combatView.getAttackFramesFoe();
 				actionFramesSelf = combatView.getDamageFramesSelf();
 				
@@ -227,12 +222,7 @@ public class GameCombatController implements ActionListener {
 			}
 			
 			player.setTurn(true);
-		}else{
-			actionFramesSelf = combatView.getIdleFramesSelf();
-	    	actionFramesFoe = combatView.getIdleFramesFoe();
-				
-		}
-	    
+	    }
 	    
 	    combatView.animateOnce(actionFramesSelf, actionFramesFoe);
 	    
@@ -323,9 +313,10 @@ public class GameCombatController implements ActionListener {
 	        combatView.initializePlayer(player);
 
 	        combatView.updateHealthBar(player.getHealth());
+	        
+	        player.setTurn(true);
 
 	    } catch (IOException e) {
-
 	        e.printStackTrace();
 	    }
 	}

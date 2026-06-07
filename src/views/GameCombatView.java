@@ -49,8 +49,6 @@ public class GameCombatView extends JPanel {
 
 	private JButton back;
 	private JButton switchTurn;
-	
-	
 
 	private JLabel characterSelf;
 	private JLabel characterFoe;
@@ -144,7 +142,7 @@ public class GameCombatView extends JPanel {
 	public JButton getAnalyze() {
 		return analyze;
 	}
-	public JButton getSwichTurn(){
+	public JButton getSwitchTurn(){
 		return switchTurn;
 	}
 	
