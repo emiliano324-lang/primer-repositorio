@@ -25,9 +25,21 @@ import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 
 import models.User;
-
+/**
+ * Servicio encargado de la generación y exportación de documentos en formato PDF.
+ * Utiliza la librería iText para estructurar y dar diseño a los reportes.
+ * @author Hugo 
+ * @author Emiliano 
+ * @version 1.0
+ */
 public class PDFExporter {
-
+	/**
+	 * Exporta una lista de usuarios a un archivo PDF con orientación horizontal (Landscape).
+	 * Incluye un logotipo institucional, un título de reporte y una tabla con diseño estructurado.
+	 * * @param users Lista de objetos con la información a plasmar en el reporte.
+	 * @param file  Archivo de destino donde se guardará el documento PDF generado.
+	 * @throws IOException Si ocurre un error al leer el recurso de la imagen o al escribir el archivo.
+	 */
 	public void exportUsers(List<User> users, File file) throws IOException {
 
 		try (PdfDocument pdfDoc = new PdfDocument(new PdfWriter(file));

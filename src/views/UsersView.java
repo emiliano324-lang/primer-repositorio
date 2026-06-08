@@ -20,7 +20,10 @@ import javax.swing.table.JTableHeader;
 import config.Config;
 import tablemodels.UserTableModel;
 import utils.AppFont;
-
+/**
+ * Vista principal para la gestión de usuarios.
+ * Muestra una tabla con los usuarios y botones para realizar acciones.
+ */
 public class UsersView extends JPanel {
 	
 	private JTable table;
@@ -28,23 +31,29 @@ public class UsersView extends JPanel {
 	private JButton btnAdd;
 	private JButton btnDelete;
 	private JButton btnPdf;
-	
+	/** @return Botón para editar usuario. */
 	public JButton getBtnEdit() {
 		return btnEdit;
 	}
+	/** @return Botón para agregar usuario. */
 	public JButton getBtnAdd() {
 		return btnAdd;
 	}
+	/** @return Botón para eliminar usuario. */
 	public JButton getBtnDelete() {
 		return btnDelete;
 	}
+	/** @return Botón para exportar a PDF. */
 	public JButton getBtnPdf() {
 		return btnPdf;
 	}
+	/** @return Índice de la fila seleccionada, o -1 si no hay selección. */
 	public int getSelectedRow() {
 		return table.getSelectedRow();
 	}
-	
+	/**
+	 * Constructor. Inicializa los componentes, botones y la tabla de usuarios.
+	 */
 	public UsersView() {
 		setLayout(new BorderLayout());
 		table = new JTable();
@@ -69,7 +78,10 @@ public class UsersView extends JPanel {
         panelButtons.add(btnPdf);
         add(panelButtons, BorderLayout.NORTH);
 	}
-
+	/**
+	 * Muestra una ventana para elegir dónde guardar el archivo PDF.
+	 * * @return El archivo seleccionado pdf, u null si se cancela.
+	 */
 	public File selectPdfFile() {
 		
 		String path = Config.get("users.export.pdf", System.getProperty("user.home"));
@@ -99,7 +111,9 @@ public class UsersView extends JPanel {
 		
 		return file;
 	}
-	
+	/**
+	 * Aplica el diseño visual a la tabla (colores, fuentes, filas intercaladas y selección unica).
+	 */
 	public void styleTable() {
 		table.setRowHeight(35);
 		table.setShowGrid(true);
@@ -161,11 +175,14 @@ public class UsersView extends JPanel {
 			}
 		});
 	}
-	
+	/**
+	 * Asigna el modelo de datos a la tabla.
+	 * * @param model Modelo con los datos de los usuarios.
+	 */
 	public void setTableModel(UserTableModel model) {
 		table.setModel(model);
 	}
-
+	/** @return Componente JTable de usuarios. */
 	public JTable getTable() {
 		return table;
 	}

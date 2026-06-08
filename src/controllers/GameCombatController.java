@@ -20,7 +20,14 @@ import utils.Session;
 import views.GameCombatView;
 import views.GameMenuView;
 import views.GameWindow;
-
+/**
+ * Controlador encargado de gestionar la logica de un combate por turnos entre el jugador y un enemigo.
+ * Administra las acciones de ataque, bloqueo, curación, el flujo de turnos, las animaciones y el fin de la partida.
+ * 
+ * @author Hugo 
+ * @author Emiliano 
+ * @version 1.0
+ */
 public class GameCombatController implements ActionListener {
 
 	GameWindow window;
@@ -40,7 +47,14 @@ public class GameCombatController implements ActionListener {
 	Enemy enemy = new Enemy();
 
 	Random random;
-
+	
+	/**
+	 * Constructor del controlador de combate.
+	 * Inicializa los repositorios, carga el personaje del jugador desde la sesión, el enemigo base,
+	 * registra los componentes y establece las cargas de habilidades.
+	 * * @param combatView vista de la interfaz grafica del combate.
+	 * @param window ventana principal del juego que contiene los subcontroladores.
+	 */
 	public GameCombatController(GameCombatView combatView, GameWindow window) {
 		
 		this.window = window;
@@ -70,7 +84,12 @@ public class GameCombatController implements ActionListener {
 		playerBlocks = player.getBlockCharges();
 		enemyBlocks = enemy.getBlockCharges();
 	}
-
+	
+	/**
+	 * Registra los listeners de eventos 
+	 * para los botones de interacción de la vista de combate.
+	 */
+	
 	public void registerListeners() {
 
 		combatView.getAttack().addActionListener(this);
@@ -85,7 +104,12 @@ public class GameCombatController implements ActionListener {
 		mouseListeners(combatView.getAnalyze());
 		mouseListeners(combatView.getSwitchTurn());
 	}
-
+	/**
+	 * Controla las acciones del jugador y la IA del enemigo.
+	 * Evalua el boton presionado, calcula mitigaciones por bloqueo, consume cargas, actualiza la interfaz
+	 * y verifica de forma constante si alguna entidad ha muerto para finalizar el encuentro.
+	 * * @param e Evento de accion .
+	 */
 	public void actionPerformed(ActionEvent e) {
 
 		Object b = e.getSource();
@@ -249,7 +273,11 @@ public class GameCombatController implements ActionListener {
 		    	restartCombat();
 	    }
 	}
-
+	/**
+	 * Agrega efectos visuales interactivos a los botones al pasar o presionar el raton.
+	 * Modifica dinamicamente el texto agregando flechas de selección e intercambia colores de fuente.
+	 * * @param b bl componente al que se le aplicaran los efectos visuales.
+	 */
 	public void mouseListeners(JButton b) {
 		Color defaultForeground = b.getForeground();
 		String defaultText = b.getText();
@@ -273,7 +301,10 @@ public class GameCombatController implements ActionListener {
 			}
 		});
 	}
-	
+	/**
+	 * Restablece las condiciones iniciales del combate, recargando el estado del jugador 
+	 * desde el repositorio y generando un nuevo enemigo para un proximo encuentro.
+	 */
 	public void restartCombat() {
 		
 		try {
@@ -293,14 +324,20 @@ public class GameCombatController implements ActionListener {
 		}
 		
 	}
-	
+	/**
+	 * Sincroniza y restablece las cargas maximas de curación y bloqueo de ambas entidades 
+	 * segun sus estadísticas actuales de juego.
+	 */
 	public void restartCharges() {
 		playerHeals = player.getHealCharges();
 		playerBlocks = player.getBlockCharges();
 		enemyHeals = enemy.getHealCharges();
 		enemyBlocks = enemy.getBlockCharges();
 	}
-	
+	/**
+	 * Vuelve a cargar el personaje de la sesion para actualizar posibles cambios en sus estadisticas 
+	 * y refresca la barra de salud visual.
+	 */
 	public void refreshPlayer() {
 
 	    try {

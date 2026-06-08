@@ -11,10 +11,20 @@ import config.DatabaseConnection;
 import models.Enemy;
 import models.Player;
 import models.User;
-
+/**
+ * Repositorio encargado de la persistencia y gestión de datos de los personajes
+ * y enemigos en la base de datos, incluyendo el control de sus estadisticas y mejoras activas.
+ * @author Hugo 
+ * @author Emiliano 
+ * @version 1.0
+ */
 public class CharacterRepository {
 
 	// CREATE
+	/**
+	 * Crea un nuevo personaje con estadísticas base asociándolo al usuario registrado.
+	 * * @param user el objeto dueño del personaje del cual se tomara el ID y el nombre.
+	 */
 	public void createPlayer(User user) {
 
 		String sql = "INSERT INTO characters (id_character, id_user, name, level, health, max_health, attack_points, defense_points, heal_points, tokens)"
@@ -54,6 +64,13 @@ public class CharacterRepository {
 	}
 
 	// READ
+	/**
+	 * Carga un personaje desde la base de datos según el identificador del usuario.
+	 * Recupera tanto sus atributos basicos como su arreglo de mejoras.
+	 * * @param idUser Identificador del usuario dueño del personaje.
+	 * @return Un objeto mapeado con sus datos actuales, o null si no se encuentra.
+	 * @throws IOException Si ocurre un error en la lectura o mapeo de datos.
+	 */
 	public Player loadPlayer(int idUser) throws IOException {
 
 		String sql = "SELECT * FROM characters WHERE id_user = ?";
@@ -103,6 +120,12 @@ public class CharacterRepository {
 	}
 
 	// UPDATE
+	/**
+	 * Actualiza las estadisticas, nivel, fichas y cargas del personaje en la base de datos.
+	 * * @param player El objeto con los datos de juego actualizados.
+	 * @param userName Nombre de usuario actualizado que se le asignará al personaje.
+	 * @return true si la actualizacion fue exitosa en la base de datos; false en caso contrario.
+	 */
 	public boolean updatePlayer(Player player, String userName) {
 
 		String sql = "UPDATE characters "
@@ -148,32 +171,41 @@ public class CharacterRepository {
 	}
 
 	// DELETE
-		public boolean deletePlayer(int idUser) {
+	/**
+	 * Elimina un personaje del sistema utilizando el identificador de su usuario.
+	 * * @param idUser Identificador del usuario cuyo personaje será removido.
+	 * @return true si el personaje se eliminó correctamente; false en caso contrario.
+	 */
+	public boolean deletePlayer(int idUser) {
 
-			String sql = "DELETE FROM characters WHERE id_user = ?";
+		String sql = "DELETE FROM characters WHERE id_user = ?";
 
-			try (Connection connection = DatabaseConnection.getConnection();
+		try (Connection connection = DatabaseConnection.getConnection();
 
-					PreparedStatement pst = connection.prepareStatement(sql)) {
+				PreparedStatement pst = connection.prepareStatement(sql)) {
 
-				pst.setInt(1, idUser);
+			pst.setInt(1, idUser);
 
-				int affectedRows = pst.executeUpdate();
+			int affectedRows = pst.executeUpdate();
 
-				if (affectedRows > 0) {
+			if (affectedRows > 0) {
 
-					System.out.println("Player eliminado");
+				System.out.println("Player eliminado");
 
-					return true;
-				}
-
-			} catch (SQLException ex) {
-				ex.printStackTrace();
+				return true;
 			}
 
-			return false;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 		}
-	
+
+		return false;
+	}
+	/**
+	 * Vincula una mejora específica a un personaje insertando un registro en la tabla relacional.
+	 * * @param idCharacter id del personaje.
+	 * @param upgradeName eombre de la mejora que se desea buscar e implementar.
+	 */
 	public void saveUpgrade(int idCharacter, String upgradeName) {
 		String findUpgradeSql = "SELECT id_upgrade FROM upgrades WHERE name = ?";
 
@@ -205,7 +237,11 @@ public class CharacterRepository {
 			ex.printStackTrace();
 		}
 	}
-
+	/**
+	 * Elimina todas las mejoras adquiridas por un personaje especifico.
+	 * * @param idCharacter Identificador único del personaje.
+	 * @return true si se borró con éxito al menos una mejora; false de lo contrario.
+	 */
 	public boolean deleteUpgrades(int idCharacter) {
 
 		String sql = "DELETE FROM character_has_upgrades WHERE id_character = ?";
@@ -229,7 +265,13 @@ public class CharacterRepository {
 
 		return false;
 	}
-
+	/**
+	 * Metodo privado auxiliar encargado de mapear las mejoras activas de la base de datos 
+	 * a un arreglo de booleanos estructurado para el Player.
+	 * * @param idCharacter El identificador unico del personaje.
+	 * @param connection  La conexión SQL activa para optimizar la consulta.
+	 * @return Un arreglo de 6 posiciones booleanas indicando el estado de cada mejora.
+	 */
 	private boolean[] loadUpgrades(int idCharacter, Connection connection) {
 
 		boolean[] upgrades = { false, false, false, false, false, false };
@@ -282,7 +324,12 @@ public class CharacterRepository {
 
 		return upgrades;
 	}
-	
+	/**
+	 * Carga un enemigo desde la base de datos utilizando su id.
+	 * * @param idEnemy Identificador del enemigo en la base de datos.
+	 * @return Un objeto inicializado con sus estadísticas correspondientes, o null si no existe.
+	 * @throws IOException Si ocurre un error de E/S al procesar los datos.
+	 */
 	public Enemy loadEnemy(int idEnemy) throws IOException{
 		
 		String sql = "SELECT * FROM enemies WHERE id_enemy = ?";

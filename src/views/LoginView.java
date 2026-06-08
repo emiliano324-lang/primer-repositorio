@@ -11,7 +11,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
+/**
+ * Vista de inicio de sesion de la aplicacion.
+ *
+ * <p>Esta clase proporciona la interfaz grafica que permite a los
+ * usuarios autenticarse mediante correo electrónico y contraseña.
+ * También muestra mensajes de error cuando los datos ingresados
+ * son inválidos o incompletos.</p>
+ *
+ * @author Hugo 
+ * @author Emiliano
+ * @version 1.0
+ */
 public class LoginView extends JPanel {
 
 	private LoginWindow window;
@@ -29,53 +40,103 @@ public class LoginView extends JPanel {
 
 	private JButton btnLogin;
 	private JButton btnSignIn;
-	
+	/**
+	 * Obtiene la ventana asociada a esta vista.
+	 *
+	 * @return ventana de inicio de sesión.
+	 */
 	public LoginWindow getWindow() {
 		return window;
 	}
-	
+	/**
+	 * Obtiene el campo de texto del correo electrónico.
+	 *
+	 * @return campo de correo electrónico.
+	 */
 	public JTextField getTxtFieldEmail() {
 		return txtFieldEmail;
 	}
-
+	/**
+	 * Obtiene la etiqueta de error asociada al correo electrónico.
+	 *
+	 * @return etiqueta de error del correo.
+	 */
 	public JLabel getLblErrorUser() {
 		return lblErrorUser;
 	}
-
+	/**
+	 * Obtiene la etiqueta correspondiente a la contraseña.
+	 *
+	 * @return etiqueta de contraseña.
+	 */
 	public JLabel getLblPassword() {
 		return lblPassword;
 	}
-
+	/**
+	 * Obtiene el campo de contraseña.
+	 *
+	 * @return campo de contraseña.
+	 */
 	public JPasswordField getPwdFieldPassword() {
 		return pwdFieldPassword;
 	}
-
+	/**
+	 * Obtiene la etiqueta utilizada para mostrar errores relacionados
+	 * con la contraseña.
+	 *
+	 * @return etiqueta de error de contraseña.
+	 */
 	public JLabel getLblErrorPassword() {
 		return lblErrorPassword;
 	}
-
+	/**
+	 * Obtiene el boton para iniciar sesión.
+	 *
+	 * @return botón de inicio de sesión.
+	 */
 	public JButton getBtnLogin() {
 		return btnLogin;
 	}
-
+	/**
+	 * Obtiene el boton para registrarse.
+	 *
+	 * @return boton de registro.
+	 */
 	public JButton getBtnSignIn() {
 		return btnSignIn;
 	}
-	
+	/**
+	 * Obtiene el correo electronico ingresado por el usuario.
+	 *
+	 * @return correo electronico escrito en el formulario.
+	 */
 	public String getEmail() {
 		return txtFieldEmail.getText();
 	}
-	
+	/**
+	 * Obtiene la contraseña ingresada por el usuario.
+	 *
+	 * @return contraseña escrita en el formulario.
+	 */
 	public String getPassword() {
 		return String.valueOf(pwdFieldPassword.getPassword());
 	}
-	
+	/**
+	 * Crea e inicializa la vista de inicio de sesion.
+	 *
+	 * @param window ventana que contiene esta vista.
+	 */
 	public LoginView(LoginWindow window) {
 		this.window = window;		
 		initializeComponents();
 		
     }
-    
+	/**
+	 * Inicializa y configura todos los componentes graficos de la vista.
+	 *
+	 * <p>Este metodo crea las etiquetas, campos de texto, botones y
+	 * mensajes de error necesarios para el proceso de autenticación.</p>
+	 */
 	private void initializeComponents() {
 		
 		font = new Font("Verdana", Font.BOLD, 18);
@@ -190,16 +251,27 @@ public class LoginView extends JPanel {
         
         add(btnSignIn, c);
 	}
-	
+	/**
+	 * Oculta todas las etiquetas de error mostradas en la interfaz.
+	 *
+	 * <p>Se utiliza normalmente antes de realizar una nueva validación
+	 * de los datos ingresados por el usuario.</p>
+	 */
 	public void resetErrorLabels() {
 		lblErrorUser.setVisible(false);
 		lblErrorPassword.setVisible(false);
 	}
-	
+	/**
+	 * Muestra el mensaje de error asociado al campo de correo electrónico.
+	 */
 	public void showLblErrorUser() {
 		lblErrorUser.setVisible(true);
 	}
-	
+	/**
+	 * Muestra un mensaje de error relacionado con la contraseña.
+	 *
+	 * @param message mensaje de error que se mostrará al usuario.
+	 */
 	public void showLblErrorPassword(String message) {
 		lblErrorPassword.setText(message);
 		lblErrorPassword.setVisible(true);

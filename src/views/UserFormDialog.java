@@ -30,7 +30,20 @@ import config.Config;
 import enums.Role;
 import enums.Sex;
 
-
+/**
+ * Cuadro de dialogo para crear o editar usuarios.
+ *
+ * <p>Esta ventana modal permite capturar y modificar la informacion
+ * de un usuario mediante un formulario que incluye datos personales,
+ * credenciales de acceso, sexo y rol dentro del sistema.</p>
+ *
+ * <p>Tambien proporciona componentes para mostrar mensajes de error
+ * durante la validación de los datos ingresados.</p>
+ *
+ * @author Hugo 
+ * @author Emiliano
+ * @version 1.0
+ */
 public class UserFormDialog extends JDialog {
 
     private JTextField txtFieldName;
@@ -55,13 +68,17 @@ public class UserFormDialog extends JDialog {
 	private JRadioButton rbAdmin;
 	private JRadioButton rbClient;
     
-    //private String selectedImagePath;
+ 
     
     private JButton btnSave;
     private JButton btnCancel;
-	//private JButton btnSelectImage;
 
     // GETTERS
+    /**
+     * Obtiene el sexo seleccionado en el formulario.
+     *
+     * @return sexo seleccionado por el usuario.
+     */
 	public Sex getSex() {
 
         if(rbMan.isSelected()) {
@@ -74,7 +91,11 @@ public class UserFormDialog extends JDialog {
 
         return Sex.OTHER;
     }
-	
+	/**
+	 * Obtiene el rol seleccionado en el formulario.
+	 *
+	 * @return rol asignado al usuario.
+	 */
 	public Role getRole() {
 		if(rbAdmin.isSelected()) {
 			return Role.ADMIN;
@@ -82,91 +103,164 @@ public class UserFormDialog extends JDialog {
 		
 		return Role.CLIENT;
 	}
-	
+	/**
+     * Obtiene la etiqueta utilizada para la vista previa de la imagen de perfil.
+     *
+     * @return Componente JLabel de la vista previa de la imagen.
+     */
 	public JLabel getLblImagePreview() {
 		return lblImagePreview;
 	}
-
+	/**
+     * Obtiene la etiqueta que despliega el nombre del archivo de imagen cargado.
+     *
+     * @return Componente JLabel con el nombre de la imagen.
+     *
+     */
 	public JLabel getLblImageName() {
 		return lblImageName;
 	}
-
+	/**
+     * Obtiene la etiqueta de error vinculada a la carga de la imagen.
+     *
+     * @return Componente JLabel para errores de imagen.
+     */
 	public JLabel getLblErrorImage() {
 		return lblErrorImage;
 	}
-
-	/*public String getSelectedImagePath() {
-		return selectedImagePath;
-	}
-
-	public JButton getBtnSelectImage() {
-		return btnSelectImage;
-	}*/
-
+	/**
+	 * Obtiene el campo de texto del nombre de usuario.
+	 *
+	 * @return campo de nombre.
+	 */
 	public JTextField getTxtFieldName() {
 		return txtFieldName;
 	}
-
+	/**
+     * Establece el campo de texto del nombre de usuario.
+     *
+     * @param txtFieldName Nuevo campo de texto para el nombre.
+     */
 	public void setTxtFieldName(JTextField txtFieldName) {
 		this.txtFieldName = txtFieldName;
 	}
-
+	/**
+	 * Obtiene el campo de texto del correo electrónico.
+	 *
+	 * @return campo de correo electrónico.
+	 */
 	public JTextField getTxtFieldEmail() {
 		return txtFieldEmail;
 	}
-
+	/**
+     * Establece el campo de texto del correo electrónico.
+     *
+     * @param txtFieldEmail Nuevo campo de texto para el email.
+     */
 	public void setTxtFieldEmail(JTextField txtFieldEmail) {
 		this.txtFieldEmail = txtFieldEmail;
 	}
-
+	/**
+	 * Obtiene la contraseña ingresada.
+	 *
+	 * @return contraseña del usuario.
+	 */
 	public String getPwdPassword() {
 		return String.valueOf(pwdPassword.getPassword());
 	}
-
+	/**
+     * Establece el componente para capturar la contraseña.
+     *
+     * @param pwdPassword Nuevo componente JPasswordField para la contraseña.
+     */
 	public void setPwdPassword(JPasswordField pwdPassword) {
 		this.pwdPassword = pwdPassword;
 	}
-	
+	/**
+     * Obtiene la confirmacion de la contraseña ingresada.
+     *
+     * @return Confirmación de la contraseña del usuario.
+     */
 	public String getPwdConfirmPassword() {
 		return String.valueOf(pwdConfirmPassword.getPassword());
 	}
-
+	/**
+     * Establece el componente para capturar la confirmacion de la contraseña.
+     *
+     * @param Nuevo componente JPasswordField para confirmar la contraseña.
+     */
 	public void setPwdConfirmPassword(JPasswordField pwdConfirmPassword) {
 		this.pwdConfirmPassword = pwdConfirmPassword;
 	}
-
+	/**
+     * Obtiene la etiqueta encargada de mostrar errores de validacion en el nombre.
+     *
+     * @return JLabel de error para el nombre.
+     */
 	public JLabel getLblErrorFieldName() {
 		return lblErrorFieldName;
 	}
-
+	/**
+     * Establece la etiqueta para los errores de validación del nombre.
+     *
+     * @param nuevo JLabel de error para el nombre.
+     */
 	public void setLblErrorFieldName(JLabel lblErrorFieldName) {
 		this.lblErrorFieldName = lblErrorFieldName;
 	}
-
+	/**
+     * Obtiene la etiqueta encargada de mostrar errores de validación en el email.
+     *
+     * @return JLabel de error para el email.
+     */
 	public JLabel getLblErrorFieldEmail() {
 		return lblErrorFieldEmail;
 	}
-
+	/**
+     * Establece la etiqueta para los errores de validación del email.
+     *
+     * @param lblErrorFieldEmail Nuevo JLabel de error para el email.
+     */
 	public void setLblErrorFieldEmail(JLabel lblErrorFieldEmail) {
 		this.lblErrorFieldEmail = lblErrorFieldEmail;
 	}
-
+	/**
+     * Obtiene la etiqueta encargada de mostrar errores de validación en la contraseña.
+     *
+     * @return JLabel de error para la contraseña.
+     */
 	public JLabel getLblErrorFieldPassword() {
 		return lblErrorFieldPassword;
 	}
-
+	/**
+     * Establece la etiqueta para los errores de validación de la contraseña.
+     *
+     * @param JLabel de error para la contraseña.
+     */
 	public void setLblErrorFieldPassword(JLabel lblErrorFieldPassword) {
 		this.lblErrorFieldPassword = lblErrorFieldPassword;
 	}
-
+	/**
+     * Obtiene la etiqueta encargada de mostrar errores en la confirmación de contraseña.
+     *
+     * @return JLabel de error para la confirmación de contraseña.
+     */
 	public JLabel getLblErrorFieldConfirmPassword() {
 		return lblErrorFieldConfirmPassword;
 	}
-
+	/**
+     * Establece la etiqueta para los errores de validación de confirmación de contraseña.
+     *
+     * @param lblErrorFieldConfirmPassword nuevo JLabel de error para la confirmación.
+     */
 	public void setLblErrorFieldConfirmPassword(JLabel lblErrorFieldConfirmPassword) {
 		this.lblErrorFieldConfirmPassword = lblErrorFieldConfirmPassword;
 	}
-
+	/**
+	 * Obtiene el boton para guardar la informacion del usuario.
+	 *
+	 * @return botón guardar.
+	 */
 	public JButton getBtnSave() {
 		return btnSave;
 	}
@@ -174,35 +268,67 @@ public class UserFormDialog extends JDialog {
 	public void setBtnSave(JButton btnSave) {
 		this.btnSave = btnSave;
 	}
-
+	/**
+	 * Obtiene el boton para cancelar la operacion actual.
+	 *
+	 * @return botón cancelar.
+	 */
 	public JButton getBtnCancel() {
 		return btnCancel;
 	}
-
+	/**
+     * Establece el botón para cancelar la operación actual.
+     *
+     * @param btnCancel Nuevo botón para la acción de cancelar.
+     */
 	public void setBtnCancel(JButton btnCancel) {
 		this.btnCancel = btnCancel;
 	}
-
+	/**
+     * Establece el grupo de botones que gestiona las opciones de sexo.
+     *
+     * @param grpSexes Nuevo ButtonGroup para las opciones de sexo.
+     */
 	public void setGrpSexes(ButtonGroup grpSexes) {
 		this.grpSexes = grpSexes;
 	}
-
+	/**
+     * Establece el botón de opción para el sexo masculino.
+     *
+     * @param rbMan JRadioButton para la opción de Hombre.
+     */
 	public void setRbMan(JRadioButton rbMan) {
 		this.rbMan = rbMan;
 	}
-
+	/**
+     * Establece el botón de opción para el sexo femenino.
+     *
+     * @param rbWoman JRadioButton para la opción de Mujer.
+     */
 	public void setRbWoman(JRadioButton rbWoman) {
 		this.rbWoman = rbWoman;
 	}
-
+	/**
+     * Establece el botón de opción para no especificar sexo.
+     *
+     * @param rbDoNotSay JRadioButton para la opción "Prefiero no decir".
+     */
 	public void setRbDoNotSay(JRadioButton rbDoNotSay) {
 		this.rbDoNotSay = rbDoNotSay;
 	}
-
+	/**
+     * Obtiene el grupo de botones encargado de las opciones de sexo.
+     *
+     * @return El objeto ButtonGroup con las opciones de sexo.
+     */
 	public ButtonGroup getGrpSexes() {
 		return grpSexes;
 	}
-
+	/**
+	 * Crea e inicializa el formulario de usuario.
+	 *
+	 * @param parent ventana padre que contiene este cuadro de dialogo.
+	 */
 	public UserFormDialog(JFrame parent) {
         super(parent, true);
 
@@ -214,7 +340,12 @@ public class UserFormDialog extends JDialog {
 
         add(initializeComponents());
     }
-
+	/**
+     * Inicializa, diseña y ensambla de manera interna todos los componentes de la interfaz.
+     * Crea secciones para datos importantes, sexo, roles, términos legales y acciones finales.
+     *
+     * @return Un panel con scroll que contiene toda la interfaz construida.
+     */
     private JScrollPane initializeComponents() {
     	Color customBlue = new Color(0, 31, 84);
 		Font subtitleFont = new Font("Verdana", Font.BOLD, 16);
@@ -312,34 +443,6 @@ public class UserFormDialog extends JDialog {
 		rbAdmin = createRadio("Administrador", grpRoles, roleFlowPanel);
 		rbClient = createRadio("Cliente", grpRoles, roleFlowPanel);
 		
-		// PANEL DE IMAGEN
-		/*JPanel imageSection = new JPanel(alignToCenter);
-		
-		imageSection.setOpaque(false);
-		imageSection.add(createLabel("Foto", subtitleFont));
-		
-		btnSelectImage = new JButton("Seleccionar imagen");
-
-		lblImageName = new JLabel("Ninguna imagen seleccionada");
-
-		lblImagePreview = new JLabel();
-		lblImagePreview.setPreferredSize(new Dimension(120,120));
-		lblImagePreview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
-		lblErrorImage = createErrorLabel(componentsPanel);
-
-		JPanel imagePanel = new JPanel();
-		imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.Y_AXIS));
-
-		btnSelectImage.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblImagePreview.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblImageName.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		imagePanel.add(lblImagePreview);
-		imagePanel.add(btnSelectImage);
-		imagePanel.add(lblImageName);*/
-
-		
 		// APARTADO DE PRIVACIDAD
 		JPanel privacySection = new JPanel(alignToCenter);
 		
@@ -382,8 +485,7 @@ public class UserFormDialog extends JDialog {
 
 		
 		// AÑADIR APARTADO FOTO
-		/*componentsPanel.add(imageSection);
-		componentsPanel.add(imagePanel);*/
+	
 		
 		// AÑADIR APARTADO DE PRIVACIDAD
 		componentsPanel.add(privacySection);
@@ -397,35 +499,11 @@ public class UserFormDialog extends JDialog {
 		return scroll;
     }
 
-    /*public void chooseImage() {
-		String lastDirectory = Config.get("registration.image.last.directory", System.getProperty("user.home"));
-		
-		JFileChooser chooser = new JFileChooser(lastDirectory);
-		chooser.setDialogTitle("Seleccionar imagen");
-		
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png");
-		chooser.setFileFilter(filter);
-		
-		int option = chooser.showOpenDialog(this);
-		
-		if(option == JFileChooser.APPROVE_OPTION) {
-			File file = chooser.getSelectedFile();
-			
-			selectedImagePath = file.getAbsolutePath();
-			lastDirectory = file.getParent();
-			
-			Config.set("registration.image.last.directory", lastDirectory);
-			
-			lblImageName.setText(file.getName());
-			
-			ImageIcon icon = new ImageIcon(selectedImagePath);
-			Image img = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-			
-			lblImagePreview.setIcon(new ImageIcon(img));
-		}
-		
-	}*/
-    
+    /**
+     * Genera un panel con un título predefinido.
+     *
+     * @return JPanel con estilo azul y texto centrado.
+     */
     private JPanel createTitlePanel() {
 
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -439,7 +517,13 @@ public class UserFormDialog extends JDialog {
 
         return panel;
     }
-    
+    /**
+     *Generador de JLabels con color y tamaño personalizado.
+     *
+     * @param lblText Texto a desplegar en la etiqueta.
+     * @param font    Fuente a aplicar.
+     * @return Jlabel personalizado.
+     */
     private JLabel createLabel(String lblText, Font font) {
 	
 		JLabel label = new JLabel(lblText);
@@ -451,21 +535,36 @@ public class UserFormDialog extends JDialog {
 		
 		return label;
     }
-    
+    /**
+     * Genera cueadros de texto con color y tamaño personalizado.
+     *
+     * @param panel Panel contenedor donde se incrustara el campo creado.
+     * @return cuadro de texto personalizado.
+     */
     private JTextField createTextField(JPanel panel) {
         JTextField field = new JTextField();
         field.setFont(new Font("Verdana", Font.BOLD, 12));
         panel.add(field);
         return field;
     }
-
+    /**
+     *Genera cuadros de texto para contraseñas perosnalizados.
+     *
+     * @param panel Panel contenedor donde se incrustara el campo de contraseña.
+     * @return JpassowrdField personalizado.
+     */
     private JPasswordField createPasswordField(JPanel panel) {
         JPasswordField field = new JPasswordField();
         field.setFont(new Font("Verdana", Font.BOLD, 12));
         panel.add(field);
         return field;
     }
-
+    /**
+     * Generador de radio button personalizado
+     *
+     * @param text  texto del Radio Button.
+     * @return JRadioButton personalizado.
+     */
     private JRadioButton createRadio(String text, ButtonGroup group, JPanel panel) {
         JRadioButton rb = new JRadioButton(text);
         rb.setOpaque(false);
@@ -482,14 +581,26 @@ public class UserFormDialog extends JDialog {
         
         return rb;
     }
-
+    /**
+     * Generador de botones con colores y tamaño personalizado.
+     *
+     * @param text  texto del boton.
+     * @param font  fuente tipográfica a aplicar.
+     * @param panel panel de destino para agregar el boton.
+     * @return boton personalizado.
+     */
     private JButton createButton(String text, Font font, JPanel panel) {
         JButton btn = new JButton(text);
         btn.setFont(font);
         panel.add(btn);
         return btn;
     }
-    
+    /**
+     * Generador de etiquetas de texto de error visibles.
+     *
+     * @param panel Panel contenedor donde se añade la etiqueta.
+     * @return JLabel personalizada.
+     */
     private JLabel createErrorLabel(JPanel panel) {
 		
 		JLabel errorLabel = new JLabel();

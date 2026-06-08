@@ -15,7 +15,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import utils.CustomJSwing;
-
+/**
+ * Vista principal del menu del juego.
+ *
+ * <p>Esta clase representa la pantalla inicial de la aplicación,
+ * permitiendo al usuario iniciar una partida, acceder al arbol
+ * de mejoras, visualizar los créditos o salir del juego.</p>
+ *
+ *
+ * @author Hugo 
+ *@author Emiliano
+ * @version 1.0
+ */
 public class GameMenuView extends JPanel{
 	
 	private GameWindow window;
@@ -28,39 +39,75 @@ public class GameMenuView extends JPanel{
 	//private JButton btnSettings;
 	
 	Image mainMenuBackground;
-	
+	/**
+	 * Crea e inicializa la vista del menu principal.
+	 *
+	 * <p>Carga los recursos graficos necesarios y configura todos los
+	 * componentes de la interfaz.</p>
+	 */
 	public GameMenuView() {
 		loadImage();
 		initializeComponents();
 	}
-	
+	/**
+	 * Obtiene la ventana principal asociada al menu.
+	 *
+	 * @return ventana principal del juego.
+	 */
 	public GameWindow getWindow() {
 		return window;
 	}
-
+	/**
+	 * Obtiene el boton para iniciar una partida.
+	 *
+	 * @return boton de jugar.
+	 */
 	public JButton getBtnPlay() {
 		return btnPlay;
 	}
-
+	/**
+	 * Obtiene el boton para acceder al árbol de mejoras.
+	 *
+	 * @return boton de mejoras.
+	 */
 	public JButton getBtnSkillTree() {
 		return btnSkillTree;
 	}
-	
+	/**
+	 * Obtiene el boton para visualizar los créditos.
+	 *
+	 * @return botón de creditos.
+	 */
 	public JButton getBtnCredits() {
 		return btnCredits;
 	}
-
+	/**
+	 * Obtiene el botun para salir del juego.
+	 *
+	 * @return boton de salida.
+	 */
 	public JButton getBtnExit() {
 		return btnExit;
 	}
-	
+	/**
+	 * Inicializa los componentes graficos del menu principal.
+	 *
+	 * <p>Configura el diseño de la vista y crea los elementos visuales
+	 * necesarios, como el título y los botones del menú.</p>
+	 */
 	private void initializeComponents() {
 		setLayout(new GridBagLayout());
 		
 		createIcon();
 		createButtons();
 	}
-
+	/**
+	 * Crea y posiciona los botones del menu principal.
+	 *
+	 * <p>Los botones permiten acceder a las principales funcionalidades
+	 * del juego, como iniciar una partida, gestionar mejoras,
+	 * o salir de la aplicación.</p>
+	 */
 	private void createButtons() {
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -77,13 +124,7 @@ public class GameMenuView extends JPanel{
 		c.gridy = 2;
 		btnSkillTree = CustomJSwing.createMenuButton("MEJORAS");
 		add(btnSkillTree, c);
-		
-		//TODO: poner un label de cuantas mejoras tienes disponibles.
-		/*
-		c.gridy = 3;
-		lblavailable = createButton("");
-		add(lblavailable, c);
-		*/
+
 		c.gridy = 4;
 		btnCredits = CustomJSwing.createMenuButton("CREDITOS");
 		add(btnCredits, c);
@@ -92,7 +133,12 @@ public class GameMenuView extends JPanel{
 		btnExit = CustomJSwing.createMenuButton("SALIR");
 		add(btnExit, c);
 	}
-	
+	/**
+	 * Crea y posiciona el título grafico del juego.
+	 *
+	 * <p>La imagen del titulo se carga desde los recursos del proyecto
+	 * y se muestra en la parte superior del menú principal.</p>
+	 */
 	private void createIcon() {
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -114,14 +160,28 @@ public class GameMenuView extends JPanel{
 
 	    add(lblTitle, c);
 	}
-	
+	/**
+	 *  Dibuja los componentes graficos personalizados de la vista.
+	 * 
+	 * Este método se encarga de renderizar la imagen de fondo del combate
+	 * ajustándola al tamaño actual del panel.</p>
+	 * 
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.drawImage(mainMenuBackground, 0, 0, getWidth(), getHeight(), null);
 	}
-	
+	/**
+	 * Crea una imagen desde los recursos del proyecto.
+	 * 
+	 * <p>La imagen se obtiene desde los recursos del proyecto y se almacena
+	 * para ser renderizada posteriormente en la interfaz grafica.</p>
+	 * 
+	 *  <p>Si la imagen no puede cargarse, se mostrara un mensaje de error
+	 * en la consola.</p>
+	 */
 	private void loadImage() {
 		
 		try {
@@ -131,6 +191,17 @@ public class GameMenuView extends JPanel{
 		}
 	}
 	
+	/**
+	 * Carga una imagen desde los recursos del proyecto.
+	 * 
+	 *  <p>La imagen cargada se utiliza para representar personajes,
+	 * animaciones u otros elementos gráficos de la interfaz.</p>
+	 * 
+	 * @param path ruta de la imagen	
+	 * @param w anchura de la imagen
+	 * @param h altura de la imagen
+	 * @return ImageIcon con la imagen deseada o null si ocurre un error.
+	 */
 	private ImageIcon loadIcon(String path, int w, int h) {
 
 		try {

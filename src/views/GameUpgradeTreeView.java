@@ -23,7 +23,20 @@ import models.UpgradeTree;
 import utils.AppFont;
 import utils.CustomJSwing;
 import utils.Session;
-
+/**
+ * Vista del árbol de mejoras del juego.
+ *
+ * <p>Esta clase permite al jugador visualizar y desbloquear mejoras
+ * relacionadas con curacion, daño y bloqueo mediante una estructura
+ * de arbol de habilidades. Tambien muestra la cantidad de monedas
+ * disponibles y mensajes de error cuando una mejora no puede ser
+ * adquirida.</p>
+ *
+ *
+ * @author Hugo 
+ * @author Emiliano
+ * @version 1.0
+ */
 public class GameUpgradeTreeView extends JPanel {
 
 	private GameWindow window;
@@ -46,7 +59,13 @@ public class GameUpgradeTreeView extends JPanel {
 
 	private UpgradeNode block1;
 	private UpgradeNode block2;
-	
+	/**
+	 * Crea e inicializa la vista del arbol de mejoras.
+	 *
+	 * <p>Carga los recursos graficos, construye la estructura del arbol,
+	 * configura los componentes de la interfaz y posiciona los nodos
+	 * de mejora en pantalla.</p>
+	 */
 	public GameUpgradeTreeView() {
 
 		setLayout(null);
@@ -58,7 +77,12 @@ public class GameUpgradeTreeView extends JPanel {
 		initializeComponents();
 		initializeNodes();
 	}
-
+	/**
+	 * Construye la estructura logica del arbol de mejoras.
+	 *
+	 * <p>Define los nodos raiz y las mejoras disponibles para curación,
+	 * daño y bloqueo, estableciendo las relaciones padre hijo entre ellas.</p>
+	 */
 	private void initializeTree() {
 
 		tree = new UpgradeTree(50, "ROOT");
@@ -90,7 +114,12 @@ public class GameUpgradeTreeView extends JPanel {
 		block1.setChild2(block2);
 		block2.setParentNode(block1);
 	}
-
+	/**
+	 * Inicializa los componentes graficos principales de la vista.
+	 *
+	 * <p>Crea los controles de navegación, etiquetas informativas y
+	 * mensajes de error necesarios para la interacción del usuario.</p>
+	 */
 	private void initializeComponents() {
 
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -115,7 +144,12 @@ public class GameUpgradeTreeView extends JPanel {
 		add(lblTokens);
 		add(errorLabelNode);
 	}
-
+	/**
+	 * Configura y posiciona los nodos del arbol de mejoras.
+	 *
+	 * <p>Asigna coordenadas, colores y propiedades visuales a cada nodo
+	 * antes de agregarlos a la interfaz.</p>
+	 */
 	private void initializeNodes() {
 
 		root.setBounds(170, 430, 80, 80);
@@ -152,6 +186,12 @@ public class GameUpgradeTreeView extends JPanel {
 		add(block1);
 		add(block2);
 	}
+	/**
+	 * Configura la apariencia visual de un nodo de mejora.
+	 *
+	 * @param node nodo que sera configurado.
+	 * @param color color representativo del tipo de mejora.
+	 */
 	private void configureNode(UpgradeNode node, Color color) {
 		
 		node.setFocusPainted(false);
@@ -166,6 +206,14 @@ public class GameUpgradeTreeView extends JPanel {
 		
 		node.setText("");
 	}
+	/**
+	 * Dibuja los elementos graficos personalizados del arbol de mejoras.
+	 *
+	 * <p>Renderiza la imagen de fondo, las conexiones entre nodos,
+	 * los nodos de mejora y sus respectivas etiquetas descriptivas.</p>
+	 *
+	 * @param g contexto grafico utilizado para realizar el dibujo.
+	 */
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -259,7 +307,17 @@ public class GameUpgradeTreeView extends JPanel {
 		g2.drawString("BLOQUEO I", block1X - 70, block1Y - 20);
 		g2.drawString("BLOQUEO II", block2X - 80, block2Y - 20);
 	}
-
+	/**
+	 * Dibuja un nodo del arbol de mejoras.
+	 *
+	 * <p>La apariencia del nodo varía segun su estado de desbloqueo.</p>
+	 *
+	 * @param g2 utilizado para dibujar.
+	 * @param x posicion horizontal del nodo.
+	 * @param y posicion vertical del nodo.
+	 * @param borderColor color exterior del nodo.
+	 * @param node nodo que será representado.
+	 */
 	private void drawNode(Graphics2D g2, int x, int y, Color borderColor, UpgradeNode node) {
 
 		g2.setColor(borderColor);
@@ -273,7 +331,12 @@ public class GameUpgradeTreeView extends JPanel {
 		}
 		g2.fillOval(x + 12, y + 12, 56, 56);
 	}
-
+	/**
+	 * Carga la imagen de fondo utilizada por la vista del arbol de mejoras.
+	 *
+	 * <p>La imagen se obtiene desde los recursos del proyecto y se utiliza
+	 * como fondo durante el renderizado de la interfaz.</p>
+	 */
 	private void loadImage() {
 
 		try {
@@ -285,7 +348,14 @@ public class GameUpgradeTreeView extends JPanel {
 			System.out.println("La imagen no existe");
 		}
 	}
-
+	/**
+	 * Carga una imagen desde los recursos y la redimensiona.
+	 *
+	 * @param path ruta de la imagen.
+	 * @param w ancho deseado.
+	 * @param h alto deseado.
+	 * @return icono cargado y escalado, o null si ocurre un error.
+	 */
 	private ImageIcon loadIcon(String path, int w, int h) {
 
 		try {
@@ -303,7 +373,11 @@ public class GameUpgradeTreeView extends JPanel {
 
 		return null;
 	}
-	
+	/**
+	 * Actualiza la cantidad de monedas mostrada en pantalla.
+	 *
+	 * @param tokens cantidad actual de monedas del jugador.
+	 */
 	public void updateTokens(int tokens) {
 		
 	    lblTokens.setText("Monedas: " + tokens);
@@ -311,7 +385,12 @@ public class GameUpgradeTreeView extends JPanel {
 	    this.revalidate();
 	    this.repaint();
 	}
-	
+	/**
+	 * Crea una etiqueta con el estilo visual estandar de la interfaz.
+	 *
+	 * @param text texto inicial de la etiqueta.
+	 * @return etiqueta configurada.
+	 */
 	private JLabel createLabel(String text) {
 
 		JLabel label = new JLabel(text);
@@ -322,7 +401,12 @@ public class GameUpgradeTreeView extends JPanel {
 
 		return label;
 	}
-
+	/**
+	 * Crea una etiqueta para mostrar mensajes de error.
+	 *
+	 * @param text texto inicial de la etiqueta.
+	 * @return etiqueta configurada para mostrar errores.
+	 */
 	private JLabel createErrorLabel(String text) {
 
 		JLabel label = new JLabel(text);
@@ -333,7 +417,13 @@ public class GameUpgradeTreeView extends JPanel {
 
 		return label;
 	}
-	
+	/**
+	 * Establece y muestra un mensaje de error en la interfaz.
+	 *
+	 * <p>El mensaje se centra horizontalmente dentro de la vista.</p>
+	 *
+	 * @param message mensaje de error que se mostrará.
+	 */
 	public void setErrorMessage(String message) {
 
 		errorLabelNode.setText(message);
@@ -346,51 +436,96 @@ public class GameUpgradeTreeView extends JPanel {
 
 		errorLabelNode.setVisible(true);
 	}
-	
+	/**
+	 * Hace visible la etiqueta de mensajes de error.
+	 */
 	public void showErrorLabel() {
 		errorLabelNode.setVisible(true);
 	}
-	
+	/**
+	 * Oculta la etiqueta de mensajes de error.
+	 */
 	public void resetErrorLabel() {
 		errorLabelNode.setVisible(false);
 	}
-	
+	/**
+	 * Obtiene el boton para regresar al menu anterior.
+	 *
+	 * @return boton de regreso.
+	 */
 	public JButton getBack() {
 		return back;
 	}
+	/**
+	 * Obtiene el arbol de mejoras.
+	 *
+	 * @return arbol de mejoras.
+	 */
 
 	public UpgradeTree getTree() {
 		return tree;
 	}
-
+	/**
+	 * Obtiene el nodo raiz del arbol de mejoras.
+	 *
+	 * @return nodo raiz.
+	 */
 	public UpgradeNode getRootNode() {
 		return root;
 	}
-
+	/**
+	 * Obtiene el primer nodo de curación.
+	 *
+	 * @return mejora Curación I.
+	 */
 	public UpgradeNode getHeal1() {
 		return heal1;
 	}
-
+	/**
+	 * Obtiene el segundo nodo de curación.
+	 *
+	 * @return mejora Curación II.
+	 */
 	public UpgradeNode getHeal2() {
 		return heal2;
 	}
-
+	/**
+	 * Obtiene el primer nodo de daño.
+	 *
+	 * @return mejora Daño I.
+	 */
 	public UpgradeNode getDamage1() {
 		return damage1;
 	}
-
+	/**
+	 * Obtiene el segundo nodo de daño.
+	 *
+	 * @return mejora Daño II.
+	 */
 	public UpgradeNode getDamage2() {
 		return damage2;
 	}
-
+	/**
+	 * Obtiene el primer nodo de bloqueo.
+	 *
+	 * @return mejora Bloqueo I.
+	 */
 	public UpgradeNode getBlock1() {
 		return block1;
 	}
-
+	/**
+	 * Obtiene el segundo nodo de bloqueo.
+	 *
+	 * @return mejora Bloqueo II.
+	 */
 	public UpgradeNode getBlock2() {
 		return block2;
 	}
-	
+	/**
+	 * Obtiene la etiqueta utilizada para mostrar mensajes de error.
+	 *
+	 * @return etiqueta de error.
+	 */
 	public JLabel getErrorLabelNode() {
 		return errorLabelNode;
 	}

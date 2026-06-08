@@ -16,7 +16,15 @@ import utils.ScreenManager;
 import utils.Session;
 
 import views.GameUpgradeTreeView;
-
+/**
+ * Controlador encargado de gestionar la lógica del árbol de habilidades y mejoras del personaje.
+ * Administra las reglas de desbloqueo, actualiza los estados visuales en la interfaz grafica 
+ * y persiste el progreso en la base de datos.
+ * 
+ * @author Hugo 
+ * @author Emiliano 
+ * @version 1.0
+ */
 public class GameUpgradeTreeController implements ActionListener {
 
 	private GameUpgradeTreeView view;
@@ -24,7 +32,12 @@ public class GameUpgradeTreeController implements ActionListener {
 	private Player player;
 
 	private CharacterRepository repo;
-
+	/**
+	 * Constructor del controlador del arbol de mejoras.
+	 * Sincroniza el personaje actual de la sesion, inicializa el estado de los nodos, 
+	 * carga los desbloqueos previos desde la base de datos y registra los listeners de eventos.
+	 * * @param view vista grafica que representa el arbol de habilidades en la interfaz.
+	 */
 	public GameUpgradeTreeController(GameUpgradeTreeView view) {
 
 		this.view = view;
@@ -44,7 +57,9 @@ public class GameUpgradeTreeController implements ActionListener {
 		
 		registerListeners();
 	}
-
+	/**
+	 * Registra los listeners de eventos para el boton de regreso y todos los nodos de mejora pertenecientes al arbol.
+	 */
 	private void registerListeners() {
 
 		view.getBack().addActionListener(e ->{
@@ -71,7 +86,9 @@ public class GameUpgradeTreeController implements ActionListener {
 
 		mouseListeners(view.getBack());
 	}
-
+	/**
+	 * Habilita por defecto la interactividad de todos los componentes de tipo nodo en la vista.
+	 */
 	private void initializeLockedNodes() {
 
 		view.getRootNode().setEnabled(true);
@@ -87,6 +104,10 @@ public class GameUpgradeTreeController implements ActionListener {
 	}
 
 	// CARGAR DESBLOQUEOS DESDE SQL
+	/**
+	 * Mapea el arreglo de mejoras booleanas obtenido del personaje para 
+	 * reflejar visualmente en el arbol los nodos que ya han sido desbloqueados.
+	 */
 	private void loadUnlockedNodes() {
 
 		boolean[] upgrades = player.getUpgrades();
@@ -115,7 +136,11 @@ public class GameUpgradeTreeController implements ActionListener {
 			unlockVisual(view.getBlock2());
 		}
 	}
-
+	/**
+	 * Aplica los cambios esteticos correspondientes a un nodo para marcarlo como desbloqueado.
+	 * Modifica su estado interno, altera su color de relleno a blanco y fuerza el repintado de la vista.
+	 * * @param node El componente que se actualizara visualmente.
+	 */
 	private void unlockVisual(UpgradeNode node) {
 
 		node.setUnlocked(true);
@@ -124,7 +149,10 @@ public class GameUpgradeTreeController implements ActionListener {
 
 		view.repaint();
 	}
-
+	/**
+	 * Agrega efectos visuales interactivos al boton de regreso cuando el usuario interactua con el raton.
+	 * * @param b el componente  al que se le aplicaran los efectos visuales.
+	 */
 	private void mouseListeners(JButton b) {
 
 		Color defaultForeground = b.getForeground();
@@ -149,7 +177,10 @@ public class GameUpgradeTreeController implements ActionListener {
 			}
 		});
 	}
-
+	/**
+	 * Captura el nodo que disparo el evento de clic y procede a evaluar su desbloqueo.
+	 * * @param e evento de accion del componente modificado.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -157,7 +188,15 @@ public class GameUpgradeTreeController implements ActionListener {
 
 		unlockNode(node);
 	}
-
+	/**
+	 * Procesa la logica de negocio para desbloquear una habilidad en el arbol.
+	 * 
+	 * <p>Valida de forma secuencial que el nodo no este previamente desbloqueado, 
+	 * que el nodo padre se encuentre activo y que el jugador disponga de tokens suficientes.
+	 * Si cumple los requisitos, descuenta el token, aplica la bonificación al personaje, guarda la nueva 
+	 * relación en la base de datos y actualiza la visualización del nodo.</p>
+	 * * @param node El nodo sobre el cual se intenta realizar la compra de mejora.
+	 */
 	private void unlockNode(UpgradeNode node) {
 
 		// YA DESBLOQUEADO
@@ -212,7 +251,10 @@ public class GameUpgradeTreeController implements ActionListener {
 
 		view.repaint();
 	}
-	
+	/**
+	 * Vuelve a cargar los datos del personaje desde el repositorio para mantener sincronizados 
+	 * los tokens y el estado del arbol con los ultimos cambios del juego.
+	 */
 	public void refresh() {
 
 	    try {
@@ -228,7 +270,10 @@ public class GameUpgradeTreeController implements ActionListener {
 	        e.printStackTrace();
 	    }
 	}
-	
+	/**
+	 * Obtiene la vista del arbol de mejoras vinculada a este controlador.
+	 * * @return La instancia actual de  GameUpgradeTreeView.
+	 */
 	public GameUpgradeTreeView getTreeView() {
 		return view;
 	}

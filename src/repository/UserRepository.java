@@ -17,11 +17,23 @@ import enums.Sex;
 import models.Enemy;
 import models.Player;
 import models.User;
-
+/**
+ * Repositorio encargado de gestionar la persistencia y operaciones CRUD de los usuarios en la base de datos.
+ * 
+ * @author Hugo 
+ * @author Emiliano 
+ * @version 1.0
+ */
 public class UserRepository {
 	
 	CharacterRepository characterRepo = new CharacterRepository();
-	
+	/**
+	 * Guarda un nuevo usuario en la base de datos si no existe uno con el mismo nombre o email.
+	 * Encripta la contraseña con BCrypt y crea automáticamente su personaje asociado.
+	 * * @param user El objeto con la información a registrar.
+	 * @return true si el usuario se registró con éxito; false si ya existe o hubo un problema.
+	 * @throws IOException Si ocurre un error en la comunicación con los repositorios.
+	 */
 	public boolean save(User user) throws IOException {
 
 		if(searchUser(user.getName(), user.getEmail()) != null) {
@@ -67,7 +79,11 @@ public class UserRepository {
 		
 		return true;
 	}
-
+	/**
+	 * Obtiene la lista completa de usuarios registrados en el sistema.
+	 * * @return Una lista de objetos.
+	 * @throws IOException Si ocurre un error al procesar el mapeo de datos.
+	 */
 	public List<User> getUsers() throws IOException {
 
 		List<User> users = new ArrayList<User>();
@@ -94,7 +110,11 @@ public class UserRepository {
 		}
 		return users;
 	}
-
+	/**
+	 * Elimina un usuario de la base de datos utilizando su ID.
+	 * * @param id identificador del usuario a eliminar (id_user).
+	 * @return true si se eliminó correctamente; false en caso contrario.
+	 */
 	public boolean delete(int id) {
 
 		String sql = "DELETE FROM users WHERE id_user = ?";
@@ -115,7 +135,13 @@ public class UserRepository {
 
 		return false;
 	}
-
+	/**
+	 * Actualiza los datos de un usuario existente en la base de datos y sincroniza su personaje.
+	 * * @param index Índice de referencia en el flujo de la aplicación.
+	 * @param updatedUser Objeto {@link User} modificado con los nuevos valores.
+	 * @return true si la actualización en base de datos fue exitosa; false de lo contrario.
+	 * @throws IOException Si ocurre un error al sincronizar con el repositorio de personajes.
+	 */
 	public boolean update(int index, User updatedUser) throws IOException {
 
 		String sql = "UPDATE users SET name = ?, password = ?, email = ?, sex = ?, role = ? WHERE id_user = ?";
@@ -147,7 +173,12 @@ public class UserRepository {
 		}
 		return false;
 	}
-	
+	/**
+	 * Busca un usuario en la base de datos que coincida con el nombre o el email proporcionados.
+	 * * @param name Nombre de usuario a buscar.
+	 * @param email Correo electrónico a buscar.
+	 * @return Un objeto {@link User} si se encuentra coincidencia; null en caso contrario.
+	 */
 	public User searchUser(String name, String email) {
 		
 		String sql = "SELECT * FROM users WHERE name = ? OR email = ?";
@@ -177,7 +208,14 @@ public class UserRepository {
 		
 		return null;
 	}
-
+	/**
+	 * Verifica si las credenciales (nombre o email) pertenecen a otro usuario diferente al actual.
+	 * Útil para evitar duplicados durante el proceso de edición de perfiles.
+	 * * @param name Nombre de usuario que se desea validar.
+	 * @param email Correo electrónico que se desea validar.
+	 * @param currentUserId Identificador del usuario actual que está realizando la edición.
+	 * @return true si existe otro registro con ese nombre o email; false de lo contrario.
+	 */
 	public boolean existsOtherUser(String name, String email, int currentUserId) {
 
 	    String sql = "SELECT id_user FROM users WHERE (name = ? OR email = ?)  AND id_user <> ? ";

@@ -9,9 +9,23 @@ import config.DatabaseConnection;
 import enums.Role;
 import models.User;
 import utils.PasswordUtils;
-
+/**
+ * Repositorio encargado de gestionar la autenticación de usuarios en el sistema.
+ * Consulta las credenciales en la base de datos y valida la seguridad de los accesos.
+ * @author Hugo 
+ * @author Emiliano 
+ * @version 1.0
+ */
 public class LoginRepository {
-	
+	/**
+	 * Realiza la validación de credenciales para el inicio de sesión de un usuario.
+	 * <p>Busca al usuario mediante su correo electrónico (mapeado en el parámetro 'name') y, 
+	 * si existe, compara la contraseña en texto plano con el hash almacenado utilizando </p>
+	 * 
+	 *  @param name el correo electrónico introducido por el usuario para identificarse.
+	 * @param password La contraseña en texto plano que se va a verificar.
+	 * @return Un objeto completamente cargado si las credenciales son válidas; si el usuario no existe o si la contraseña es incorrecta.
+	 */
 	public User login(String name, String password) {
 		
 		String sql = "SELECT id_user, name, email, password, role FROM users WHERE email = ?";

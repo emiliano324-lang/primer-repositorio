@@ -67,6 +67,7 @@ public class Player extends Character{
 			}else{
 				setHealth(getHealPoints()+getHealth());
 			}	
+			setHealCharges(getHealCharges()-1); 
 		}
 	}
 	

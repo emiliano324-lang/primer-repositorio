@@ -36,7 +36,20 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import config.Config;
 import enums.Role;
 import enums.Sex;
-
+/**
+ * Ventana de registro de usuarios.
+ *
+ * <p>Esta clase proporciona una interfaz grafica que permite crear
+ * nuevas cuentas dentro del sistema. El formulario recopila información
+ * personal, credenciales de acceso y preferencias del usuario.</p>
+ *
+ * <p>Incluye validaciones visuales mediante etiquetas de error y
+ * controles para la selección de sexo y rol.</p>
+ *
+ * @author Hugo 
+ * @author Emilinano
+ * @version 1.0
+ */
 public class RegistrationWindow extends JFrame {
 
 	LoginWindow window;
@@ -63,22 +76,16 @@ public class RegistrationWindow extends JFrame {
 	private JRadioButton rbAdmin;
 	private JRadioButton rbClient;
 
-	/*
-	 * private JButton btnSelectImage; private JLabel lblImagePreview; private
-	 * JLabel lblImageName; private String selectedImagePath; private JLabel
-	 * lblErrorImage;
-	 */
+	
 
 	public ButtonGroup getGrpSexes() {
 		return grpSexes;
 	}
 
-	/*
-	 * public JButton getBtnSelectImage() { return btnSelectImage; } public JLabel
-	 * getLblImagePreview() { return lblImagePreview; } public JLabel
-	 * getLblImageName() { return lblImageName; } public String
-	 * getSelectedImagePath() { return selectedImagePath; } public JLabel
-	 * getLblErrorImage() { return lblErrorImage; }
+	/**
+	 * Obtiene el botón para regresar a la ventana anterior.
+	 *
+	 * @return botón de regreso.
 	 */
 	public JButton getBtnExit() {
 		return btnExit;
@@ -91,59 +98,121 @@ public class RegistrationWindow extends JFrame {
 	public void setWindow(LoginWindow window) {
 		this.window = window;
 	}
-
+	/**
+	 * Obtiene el botón utilizado para registrar un nuevo usuario.
+	 *
+	 * @return botón de registro.
+	 */
 	public JButton getBtnRegistrate() {
 		return btnRegistrate;
 	}
-
+	/**
+	 * Obtiene el la etiqueta de error del nombre.
+	 *
+	 * @return boton de registro.
+	 */
 	public JLabel getLblErrorFieldName() {
 		return lblErrorFieldName;
 	}
-
+	/**
+	 * Obtiene la campo de texto de nombre.
+	 * 
+	 * @return campo de texto nombre.
+	 */
 	public JTextField getTxtFieldName() {
 		return txtFieldName;
 	}
 
+	/**
+	 * Obtiene la etiquete de error de email.
+	 * 
+	 * @return etiqueta de error de email.
+	 */
 	public JLabel getLblErrorFieldEmail() {
 		return lblErrorFieldEmail;
 	}
 
+	/**
+	 * Obtene el campo de texto del email.
+	 * 
+	 * @return campo de texto de email.
+	 */
 	public JTextField getTxtFieldEmail() {
 		return txtFieldEmail;
 	}
-
+	
+	/**
+	 *  Obtnene el campo de texto de la contraseña.
+	 *  
+	 * @return campo de texto de la contraseña.
+	 */
 	public String getPwdPassword() {
 		return String.valueOf(pwdPassword.getPassword());
 	}
 
+	/**
+	 *  Obtnene el campo de texto de confirmacion de  contraseña
+	 *  
+	 * @return campo de texto de la confirmacion de contraseña.
+	 */
 	public String getPwdConfirmPassword() {
 		return String.valueOf(pwdConfirmPassword.getPassword());
 	}
 
+	/**
+	 * Obtiene la etiqueta de error de la contraseña.
+	 * 
+	 * @return etiqueta de error de contraseña.
+	 */
 	public JLabel getLblErrorFieldPassword() {
 		return lblErrorFieldPassword;
 	}
-
+	/**
+	 * Obtiene la etiqueta de error de la confirmacion de lacontraseña.
+	 * 
+	 * @return etiqueta de error de confirmacion de contraseña.
+	 */
 	public JLabel getLblErrorFieldConfirmPassword() {
 		return lblErrorFieldConfirmPassword;
 	}
-
+	/**
+	 * Obtiene el nombre de usuario ingresado.
+	 *
+	 * @return nombre de usuario.
+	 */
 	public String getName() {
 		return txtFieldName.getText();
 	}
-
+	/**
+	 * Obtiene el correo electrónico ingresado.
+	 *
+	 * @return correo electrónico.
+	 */
 	public String getEmail() {
 		return txtFieldEmail.getText();
 	}
-
+	/**
+	 * Obtiene la contraseña ingresada.
+	 *
+	 * @return contraseña del usuario.
+	 */
 	public String getPassword() {
 		return String.valueOf(pwdPassword.getPassword());
 	}
+	/**
+	 * Obtiene la contraseña de confirmación ingresada.
+	 *
+	 * @return contraseña de confirmación.
+	 */
 
 	public String getConfirmPassword() {
 		return String.valueOf(pwdConfirmPassword.getPassword());
 	}
-
+	/**
+	 * Obtiene el sexo seleccionado por el usuario.
+	 *
+	 * @return valor del enum correspondiente a la opción seleccionada.
+	 */
 	public Sex getSex() {
 
 		if (rbMan.isSelected()) {
@@ -155,7 +224,11 @@ public class RegistrationWindow extends JFrame {
 
 		return Sex.OTHER;
 	}
-	
+	/**
+	 * Obtiene el rol seleccionado para el usuario.
+	 *
+	 * @return rol seleccionado.
+	 */
 	public Role getRole() {
 		if(rbAdmin.isSelected()) {
 			return Role.ADMIN;
@@ -163,7 +236,12 @@ public class RegistrationWindow extends JFrame {
 		
 		return Role.CLIENT;
 	}
-
+	/**
+	 * Crea e inicializa la ventana de registro.
+	 *
+	 * <p>Configura las propiedades principales de la ventana y genera
+	 * todos los componentes necesarios para completar el proceso de registro.</p>
+	 */
 	public RegistrationWindow() {
 
 		setSize(450, 450);
@@ -187,7 +265,13 @@ public class RegistrationWindow extends JFrame {
 
 		setVisible(true);
 	}
-
+	/**
+	 * Inicializa y organiza todos los componentes graficos del formulario.
+	 *
+	 * <p>Este metodo crea las secciones de datos personales, sexo,
+	 * rol, privacidad y botones de accion necesarios para el registro
+	 * de usuarios.</p>
+	 */
 	public void initializeComponents() {
 
 		Color customBlue = new Color(0, 31, 84);
@@ -286,27 +370,7 @@ public class RegistrationWindow extends JFrame {
 		rbAdmin = createJRadioButton("Administrador", grpRoles, roleFlowPanel);
 		rbClient = createJRadioButton("Cliente", grpRoles, roleFlowPanel);
 
-		/*
-		 * btnSelectImage = new JButton("Seleccionar imagen");
-		 * 
-		 * lblImageName = new JLabel("Ninguna imagen seleccionada");
-		 * 
-		 * lblImagePreview = new JLabel(); lblImagePreview.setPreferredSize(new
-		 * Dimension(120,120));
-		 * lblImagePreview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		 * 
-		 * lblErrorImage = createErrorLabel(componentsPanel);
-		 * 
-		 * JPanel imagePanel = new JPanel(); imagePanel.setLayout(new
-		 * BoxLayout(imagePanel, BoxLayout.Y_AXIS));
-		 * 
-		 * btnSelectImage.setAlignmentX(Component.CENTER_ALIGNMENT);
-		 * lblImagePreview.setAlignmentX(Component.CENTER_ALIGNMENT);
-		 * lblImageName.setAlignmentX(Component.CENTER_ALIGNMENT);
-		 * 
-		 * imagePanel.add(lblImagePreview); imagePanel.add(btnSelectImage);
-		 * imagePanel.add(lblImageName);
-		 */
+		
 
 		// APARTADO DE PRIVACIDAD
 		JPanel privacySection = new JPanel(alignToCenter);
@@ -349,11 +413,6 @@ public class RegistrationWindow extends JFrame {
 		componentsPanel.add(roleSection);
 		componentsPanel.add(roleFlowPanel);
 
-		// AÑADIR APARTADO FOTO
-		/*
-		 * componentsPanel.add(imageSection); componentsPanel.add(imagePanel);
-		 */
-
 		// AÑADIR APARTADO DE PRIVACIDAD
 		componentsPanel.add(privacySection);
 		componentsPanel.add(termsAndConditionsPanel);
@@ -364,38 +423,15 @@ public class RegistrationWindow extends JFrame {
 		componentsPanel.add(exitAndRegisterButtons);
 	}
 
-	// IMAGEN
-	/*
-	 * public void chooseImage() { String lastDirectory =
-	 * Config.get("registration.image.last.directory",
-	 * System.getProperty("user.home"));
-	 * 
-	 * JFileChooser chooser = new JFileChooser(lastDirectory);
-	 * chooser.setDialogTitle("Seleccionar imagen");
-	 * 
-	 * FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes",
-	 * "jpg", "jpeg", "png"); chooser.setFileFilter(filter);
-	 * 
-	 * int option = chooser.showOpenDialog(this);
-	 * 
-	 * if(option == JFileChooser.APPROVE_OPTION) { File file =
-	 * chooser.getSelectedFile();
-	 * 
-	 * selectedImagePath = file.getAbsolutePath(); lastDirectory = file.getParent();
-	 * 
-	 * Config.set("registration.image.last.directory", lastDirectory);
-	 * 
-	 * lblImageName.setText(file.getName());
-	 * 
-	 * ImageIcon icon = new ImageIcon(selectedImagePath); Image img =
-	 * icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-	 * 
-	 * lblImagePreview.setIcon(new ImageIcon(img)); }
-	 * 
-	 * }
-	 */
-
+	
 	// CREAR COMPONENTES
+	/**
+	 * Crea una etiqueta personalizada.
+	 *
+	 * @param lblText texto que mostrara la etiqueta.
+	 * @param font fuente utilizada para mostrar el texto.
+	 * @return etiqueta configurada.
+	 */
 	private JLabel createLabel(String lblText, Font font /* JPanel panel */) {
 
 		JLabel label = new JLabel(lblText);
@@ -407,7 +443,12 @@ public class RegistrationWindow extends JFrame {
 
 		return label;
 	}
-
+	/**
+	 * Crea un campo de texto y lo agrega al panel indicado.
+	 *
+	 * @param panel panel donde se agregara el componente.
+	 * @return campo de texto creado.
+	 */
 	private JTextField createTextField(JPanel panel) {
 
 		JTextField textField = new JTextField();
@@ -418,7 +459,12 @@ public class RegistrationWindow extends JFrame {
 
 		return textField;
 	}
-
+	/**
+	 * Crea un campo de contraseña y lo agrega al panel indicado.
+	 *
+	 * @param panel panel donde se agregara el componente.
+	 * @return campo de contraseña creado.
+	 */
 	private JPasswordField createPasswordField(JPanel panel) {
 
 		JPasswordField passwordField = new JPasswordField();
@@ -429,7 +475,14 @@ public class RegistrationWindow extends JFrame {
 
 		return passwordField;
 	}
-
+	/**
+	 * Crea un boton personalizado con efectos visuales al pasar el cursor.
+	 *
+	 * @param lblText texto del boton.
+	 * @param font fuente utilizada.
+	 * @param panel panel donde se agregara el boton.
+	 * @return boton configurado.
+	 */
 	private JButton createJButton(String lblText, Font font, JPanel panel) {
 
 		JButton button = new JButton(lblText);
@@ -454,7 +507,14 @@ public class RegistrationWindow extends JFrame {
 
 		return button;
 	}
-
+	/**
+	 * Crea un botón de opción y lo registra en un grupo si se proporciona.
+	 *
+	 * @param lblText texto mostrado en el boton.
+	 * @param grpButtons grupo de botones al que pertenece.
+	 * @param panel panel donde sera agregado.
+	 * @return boton de opción configurado.
+	 */
 	private JRadioButton createJRadioButton(String lblText, ButtonGroup grpButtons, JPanel panel) {
 
 		JRadioButton button = new JRadioButton(lblText);
@@ -473,7 +533,12 @@ public class RegistrationWindow extends JFrame {
 
 		return button;
 	}
-
+	/**
+	 * Crea una etiqueta para mostrar mensajes de error.
+	 *
+	 * @param panel panel donde se agregara la etiqueta.
+	 * @return etiqueta de error creada.
+	 */
 	private JLabel createErrorLabel(JPanel panel) {
 
 		JLabel errorLabel = new JLabel();
@@ -488,16 +553,32 @@ public class RegistrationWindow extends JFrame {
 	}
 
 	// CAMBIO DE FONDO
+	/**
+	 * Cambia temporalmente los colores de un componente cuando el cursor
+	 * se posiciona sobre el.
+	 *
+	 * @param c componente a modificar.
+	 */
 	private void changeBackground(JComponent c) {
 		c.setBackground(Color.BLACK);
 		c.setForeground(Color.WHITE);
 	}
-
+	/**
+	 * Restaura los colores originales de un componente.
+	 *
+	 * @param c componente a restaurar.
+	 * @param defaultButtonColor color original del componente.
+	 */
 	private void resetBackground(JComponent c, Color defaultButtonColor) {
 		c.setBackground(defaultButtonColor);
 		c.setForeground(Color.BLACK);
 	}
-
+	/**
+	 * Oculta todas las etiquetas de error del formulario.
+	 *
+	 * <p>Se utiliza antes de realizar una nueva validación de los datos
+	 * ingresados por el usuario.</p>
+	 */
 	public void resetErrorLabels() {
 		lblErrorFieldName.setVisible(false);
 		lblErrorFieldEmail.setVisible(false);

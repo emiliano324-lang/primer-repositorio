@@ -21,18 +21,31 @@ import views.LoginView;
 import views.LoginWindow;
 import views.MainWindow;
 import views.RegistrationWindow;				
-
+/**
+ * Controlador encargado de gestionar el proceso de registro para nuevos usuarios en la aplicacion.
+ * Administra las validaciones de campos en tiempo real, el control de contraseñas coincidentes,
+ * la persistencia en el repositorio y la navegación de retorno.
+ * @author Hugo 
+ * @author Emiliano 
+ * @version 1.0
+ */
 public class RegistrationController {
 
     private RegistrationWindow view;
     private UserRepository repository;
-
+    /**
+     * Constructor del controlador de registro.
+     * Vincula la ventana correspondiente, inicializa el acceso a datos y activa los escuchadores de eventos.
+     * * @param view Vista de la interfaz gráfica de registro RegistrationWindow.
+     */
     public RegistrationController(RegistrationWindow view) {
         this.view = view;
         this.repository = new UserRepository();
         registrationListener();
     }
-
+    /**
+     * Registra los listeners de eventos para los componentes interactivos de la vista.
+     */
     private void registrationListener() {
 
         // NOMBRE
@@ -70,7 +83,12 @@ public class RegistrationController {
     }
 
     // VALIDACIONES
-
+    /**
+     * Realiza una validación exhaustiva de los atributos de un usuario antes de proceder a guardarlo.
+     * Verifica campos vacíos, formato básico de correo electrónico y la coincidencia exacta de contraseñas.
+     * * @param user El objeto temporal con los datos capturados en la interfaz.
+     * @return true si todos los campos cumplen con los criterios de aceptacion; false en caso de detectar fallos.
+     */
     private boolean validateRegistration(User user) {
     	
 		boolean errorFound = false;
@@ -117,7 +135,9 @@ public class RegistrationController {
 
 		return !errorFound;
     }
-    
+    /**
+     * Evalúa de forma aislada el cuadro de texto del nombre para ocultar o mostrar el mensaje de error.
+     */
     private void validateName() {
         JTextField txt = view.getTxtFieldName();
         JLabel error = view.getLblErrorFieldName();
@@ -129,7 +149,9 @@ public class RegistrationController {
         	error.setVisible(false);
         }
     }
-
+    /**
+     * Evalúa de forma aislada el cuadro de texto del correo electrónico para validar su formato y estado.
+     */
     private void validateEmail() {
         JTextField txt = view.getTxtFieldEmail();
         JLabel error = view.getLblErrorFieldEmail();
@@ -146,7 +168,12 @@ public class RegistrationController {
     }
 
     // REGISTRO
-
+    /**
+     * Procesa el flujo de envio del formulario de registro.
+     * <p>Limpia etiquetas de advertencia previas, construye una instancia de usuario con los datos de la vista 
+     * y, si supera las validaciones de negocio, intenta guardarlo mediante el repositorio. Notifica el resultado 
+     * al usuario a través de un cuadro de dialogo y, en caso de exito, destruye la vista redirigiendo al Login.</p>
+     */
     private void register() {
 
 	    	view.resetErrorLabels();
@@ -172,46 +199,18 @@ public class RegistrationController {
 	    		}
 	    	}
     }
-    
-    /*private String saveImage() {
-    	
-	    	try {
-	    		String original = view.getSelectedImagePath();
-	    		
-	    		if(original == null)
-	    			return null;
-	    		
-	    		File source = new File(original);
-	    		
-	    		String extension = original.substring(original.lastIndexOf("."));
-	    		
-	    		String newName = UUID.randomUUID() + extension;
-	    		
-	    		String folder = "." + File.separator + "images";
-	    		
-	    		File directory = new File(folder);
-	    		
-	    		if(!directory.exists()) {
-	    			directory.mkdir();
-	    		}
-	    		
-	    		Path destination = Paths.get(folder, newName);
-	    		
-	    		Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
-	    		
-	    		return destination.toString();
-	    		
-	    	}catch(Exception ex) {
-	    		ex.printStackTrace();
-	    		return null;
-	    	}
-    }*/
-    
+    /**
+     * Retorna al usuario al flujo inicial abriendo una nueva ventana de inicio de sesion 
+     * y destruyendo el formulario actual.
+     */
     private void handleBack() {
         new LoginWindow();
         view.dispose();
     }
-
+    /**
+     * Muestra un cuadro de confirmación gráfico para interceptar intenciones de salida total.
+     * Si el usuario selecciona afirmativamente, se aborta la ejecución completa del hilo de la aplicacion.
+     */
     public void handleClose() {
         int option = JOptionPane.showConfirmDialog(view, "Seguro que quieres salir?");
         if (option == JOptionPane.YES_OPTION) {
