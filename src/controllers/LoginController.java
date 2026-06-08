@@ -75,10 +75,6 @@ public class LoginController {
 
 	private void handleLogin() {
 
-		/*if (!validateLogin(new User(view.getUsername(), view.getPassword()))) {
-			return;
-		}*/
-
 		if (!validateLogin(new User(view.getEmail(), view.getPassword()))) {
 			return;
 		}
@@ -94,10 +90,6 @@ public class LoginController {
 		try {
 			Player player = characterRepo.loadPlayer(user.getId());
 			
-			//System.out.println(user);
-			//System.out.println(player);
-
-
 			user.setPlayer(player);
 
 			Session.setPlayer(player);

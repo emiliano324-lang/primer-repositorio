@@ -90,9 +90,9 @@ public class HomeController {
 		view.btnHome.setEnabled(!viewName.equals(MainWindow.HOME));
 	}
 	private void handlePlay() {
-		
-		
+
 		Player player;
+		
 		try {
 			player = new Session().loadCharacter();
 			Session.setPlayer(player);

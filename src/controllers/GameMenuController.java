@@ -7,12 +7,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 
 import utils.ScreenManager;
-import utils.Session;
-import views.GameCombatView;
+//import utils.Session;
+//import views.GameCombatView;
 import views.GameMenuView;
 import views.GameWindow;
 import views.LoginWindow;
-import views.MainWindow;
+//import views.MainWindow;
 
 public class GameMenuController {
 

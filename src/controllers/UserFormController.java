@@ -1,6 +1,9 @@
 package controllers;
 
+import javax.swing.JOptionPane;
+
 import models.User;
+import repository.UserRepository;
 import views.UserFormDialog;
 
 public class UserFormController {
@@ -22,7 +25,6 @@ public class UserFormController {
 
     private void registerListeners() {
 
-    	//view.getBtnSelectImage().addActionListener(e -> view.chooseImage());
         view.getBtnSave().addActionListener(e -> handleSave());
         view.getBtnCancel().addActionListener(e -> handleCancel());
     }
@@ -45,8 +47,7 @@ public class UserFormController {
 
         if(user.getName().trim().isEmpty()) {
 
-            view.getLblErrorFieldName()
-                    .setVisible(true);
+            view.getLblErrorFieldName().setVisible(true);
 
             valid = false;
         }
@@ -97,20 +98,47 @@ public class UserFormController {
 
         if(validateForm(formUser)) {
 
-            if(user == null) {
+            try {
 
-                user = formUser;
+                UserRepository userRepo = new UserRepository();
 
-            } else {
-                user.setName(formUser.getName());
-                user.setEmail(formUser.getEmail());
-                user.setPassword(formUser.getPassword());
-                user.setSex(formUser.getSex());
+                if(user == null) {
+
+                    if(userRepo.searchUser( formUser.getName(), formUser.getEmail()) != null) {
+
+                        JOptionPane.showMessageDialog(
+                        		view,
+                        		"El nombre o correo ya está registrado."
+                        		);
+                        return;
+                    }
+
+                    user = formUser;
+                }
+                
+                else {
+
+                    if(userRepo.existsOtherUser(formUser.getName(), formUser.getEmail(), user.getId())) {
+
+                        JOptionPane.showMessageDialog(
+                                view,
+                                "El nombre o correo ya está registrado."
+                                );
+                        return;
+                    }
+
+                    user.setName(formUser.getName());
+                    user.setEmail(formUser.getEmail());
+                    user.setPassword(formUser.getPassword());
+                    user.setSex(formUser.getSex());
+                }
+
+                saved = true;
+                view.dispose();
+
+            } catch(Exception ex) {
+                ex.printStackTrace();
             }
-
-            saved = true;
-            
-            view.dispose();
         }
     }
 

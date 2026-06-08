@@ -13,7 +13,8 @@ import repository.CharacterRepository;
 import repository.UserRepository;
 import services.PDFExporter;
 import tablemodels.UserTableModel;
-import views.GameMenuView;
+import utils.Session;
+//import views.GameMenuView;
 import views.UserFormDialog;
 import views.UsersView;
 
@@ -28,7 +29,9 @@ public class UserController {
 	
 	
 	public UserController(UsersView view) {
+		
 		this.view = view;
+		
 		userRepo = new UserRepository();
 		pdfExporter = new PDFExporter();
 		
@@ -38,6 +41,7 @@ public class UserController {
 		
 		this.view.getBtnEdit().addActionListener(e -> {
 			int row = view.getSelectedRow();
+			
 			if(row == -1) {
 				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
 				return;
@@ -52,26 +56,28 @@ public class UserController {
 		    int row = view.getSelectedRow();
 
 		    if(row == -1) {
-
-		        JOptionPane.showMessageDialog(
-		            view,
-		            "Selecciona un usuario"
-		        );
-
+		        JOptionPane.showMessageDialog(view, "Selecciona un usuario");
 		        return;
 		    }
 
 		    User user = model.getUserAt(row);
 
-		    System.out.println(user.getPlayer());
+		    if(user.getId() == Session.getCurrentUser().getId()) {
+		        JOptionPane.showMessageDialog(
+		                view,
+		                "No puedes eliminar tu propio usuario mientras tienes la sesión iniciada.",
+		                "Operación no permitida",
+		                JOptionPane.WARNING_MESSAGE);
+		        return;
+		    }
 		    
 		    try {
-		    	battleRepo = new BattleRepository();
-		    	characterRepo = new CharacterRepository();
-		    	
-		    	characterRepo.deleteUpgrades(user.getId());
-		    	
-		    	battleRepo.deleteBattle(user.getId());
+			    	battleRepo = new BattleRepository();
+			    	characterRepo = new CharacterRepository();
+			    	
+			    	characterRepo.deleteUpgrades(user.getId());
+			    	
+			    	battleRepo.deleteBattle(user.getId());
 		    	
 		        characterRepo.deletePlayer(user.getId());
 		        
@@ -82,11 +88,10 @@ public class UserController {
 		            model.removeRow(row);
 
 		            JOptionPane.showMessageDialog(
-		                view,
-		                "Se eliminó al usuario y su personaje",
-		                "Usuario eliminado",
-		                JOptionPane.INFORMATION_MESSAGE
-		            );
+		            		view, 
+		            		"Se eliminó al usuario y su personaje",
+		            		"Usuario eliminado",
+		            		JOptionPane.INFORMATION_MESSAGE);
 
 		            loadUsers();
 		        }
@@ -95,48 +100,15 @@ public class UserController {
 
 		        ex.printStackTrace();
 
-		        JOptionPane.showMessageDialog(
-		            view,
-		            "Error al eliminar usuario"
-		        );
+		        JOptionPane.showMessageDialog(view,"Error al eliminar usuario");
 		    }
 		});
 		
-		/*
-		view.getBtnDelete().addActionListener(e ->{
-			
-			boolean deleted = repo.delete(model.getUserAt(view.getSelectedRow()).getId());
-			
-			if(deleted) {
-				model.removeRow(view.getSelectedRow());
-			}
-			
-			int row = view.getSelectedRow();
-			if(row == -1) {
-				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
-				return;
-			}
-			System.out.println("...");
-			
-			try {
-	            JOptionPane.showMessageDialog(view, "Se eliminó al usuario", "Usuario eliminado", JOptionPane.INFORMATION_MESSAGE);
-				
-	            //TODO: Eliminar con conexion a base de datos
-	            //System.out.println("se removio");
-				//repo.delete(row, model.getUserAt(row));
-				loadUsers();
-			}catch(Exception ex) {
-				
-			}
-		});
-		*/
 		 view.getBtnPdf().addActionListener(e -> generatePdf());
-		
 	}
 	
 	public void loadUsers() {	
 		
-		//System.out.println("Carga usuarios");
 		try {
 			List<User> users = userRepo.getUsers();
 			
@@ -187,6 +159,7 @@ public class UserController {
 		}
 		try {
 			pdfExporter.exportUsers(userRepo.getUsers(), file);
+			
 			if(Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().open(file);
 			}

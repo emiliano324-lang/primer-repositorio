@@ -220,7 +220,6 @@ public class GameCombatController implements ActionListener {
 			    combatView.updateHealthBar(player.getHealth());
 				combatView.topPanelMessage(player.getName() + " ha recibido " + damage + " pts de daño");
 			}
-			
 			player.setTurn(true);
 	    }
 	    

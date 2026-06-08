@@ -69,7 +69,7 @@ public class RegistrationController {
         
     }
 
-    // ================= VALIDACIONES =================
+    // VALIDACIONES
 
     private boolean validateRegistration(User user) {
     	
@@ -145,7 +145,7 @@ public class RegistrationController {
         }
     }
 
-    // ================= REGISTRO =================
+    // REGISTRO
 
     private void register() {
 

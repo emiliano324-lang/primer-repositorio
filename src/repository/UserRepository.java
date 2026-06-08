@@ -178,83 +178,25 @@ public class UserRepository {
 		return null;
 	}
 
-	/*public void createPlayer(User user) {
+	public boolean existsOtherUser(String name, String email, int currentUserId) {
 
-		String sql = "INSERT INTO characters(id_user, name, level, health, max_health, attack_points, defense_points, heal_points, tokens)"
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	    String sql = "SELECT id_user FROM users WHERE (name = ? OR email = ?)  AND id_user <> ? ";
 
-		try (Connection connection = DatabaseConnection.getConnection();
-				PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+	    try (Connection connection = DatabaseConnection.getConnection();
+	         PreparedStatement pst = connection.prepareStatement(sql)) {
 
-			pst.setInt(1, user.getId()); // id_user
-			pst.setString(2, user.getName()); // name
-			pst.setInt(3, 1); // level
-			pst.setInt(4, 100); // health
-			pst.setInt(5, 100); // max health
-			pst.setInt(6, 10); // attack points
-			pst.setInt(7, 20); // defense points
-			pst.setInt(8, 40); // heal points
-			pst.setInt(9, 0); // tokens
+	        pst.setString(1, name);
+	        pst.setString(2, email);
+	        pst.setInt(3, currentUserId);
 
-			pst.executeUpdate();
+	        ResultSet rs = pst.executeQuery();
 
-			ResultSet rs = pst.getGeneratedKeys();
+	        return rs.next();
 
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+
+	    return false;
 	}
-
-	// TODO: Modificar esto
-
-	/*
-	 * public void createEnemy(User user) {
-	 * 
-	 * String sql =
-	 * "INSERT INTO characters(id_user, name, level, health, max_health, attack_points, defense_points, heal_points, tokens)"
-	 * + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	 * 
-	 * try( Connection connection = DatabaseConnection.getConnection();
-	 * PreparedStatement pst = connection.prepareStatement(sql,
-	 * Statement.RETURN_GENERATED_KEYS) ){
-	 * 
-	 * pst.setInt(1, user.getId()); // id_user pst.setString(2, user.getName()); //
-	 * name pst.setInt(3, 1); // level pst.setInt(4, 100); // health pst.setInt(5,
-	 * 100); // max health pst.setInt(6, 10); // attack points pst.setInt(7, 20); //
-	 * defense points pst.setInt(8, 40); // defense points pst.setInt(9, 0); //
-	 * defense points
-	 * 
-	 * pst.executeUpdate();
-	 * 
-	 * ResultSet rs = pst.getGeneratedKeys();
-	 * 
-	 * }catch(SQLException ex) { ex.printStackTrace(); }
-	 * 
-	 * }
-	 
-
-	public boolean deletePlayer(int idUser) {
-
-		String sql = "DELETE FROM characters WHERE id_user = ?";
-
-		try (Connection connection = DatabaseConnection.getConnection();
-				PreparedStatement pst = connection.prepareStatement(sql)) {
-
-			pst.setInt(1, idUser);
-
-			int affectedRows = pst.executeUpdate();
-
-			if (affectedRows > 0) {
-
-				System.out.println("Player eliminado");
-
-				return true;
-			}
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-
-		return false;
-	}*/
 }

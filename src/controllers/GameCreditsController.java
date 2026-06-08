@@ -8,7 +8,7 @@ import javax.swing.JButton;
 
 import utils.ScreenManager;
 import views.GameCreditsView;
-import views.GameUpgradeTreeView;
+//import views.GameUpgradeTreeView;
 
 public class GameCreditsController {
 

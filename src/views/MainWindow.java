@@ -57,7 +57,7 @@ public class MainWindow extends JFrame {
 		navbar.setBackground(new Color(10,17,40));
 		
 		btnHome = new JButton("INICIO");
-		btnUsers = new JButton("USUARIO");
+		btnUsers = new JButton("USUARIOS");
 		btnPlay = new JButton("JUGAR");
 		
 		btnHome.setBackground(Color.WHITE);
